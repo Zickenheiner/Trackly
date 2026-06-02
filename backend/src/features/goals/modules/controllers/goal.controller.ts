@@ -51,11 +51,12 @@ export class GoalController {
     return this.toResponseDto(entity);
   }
 
-  @ApiOperation({ summary: 'Get all goals' })
+  @ApiOperation({ summary: 'Get all goals for the authenticated user' })
   @ApiResponse({ status: 200, type: [GoalResponseDto] })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Get()
-  async findAll(): Promise<GoalResponseDto[]> {
-    const entities = await this.goalService.findAll();
+  async findAll(@Req() req: { user: { sub: string } }): Promise<GoalResponseDto[]> {
+    const entities = await this.goalService.findAll(req.user.sub);
     return (entities ?? []).map((e) => this.toResponseDto(e));
   }
 

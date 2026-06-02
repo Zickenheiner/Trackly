@@ -16,8 +16,8 @@ export class GoalRepository implements IGoalRepository {
     private readonly goalMapper: GoalMapper,
   ) {}
 
-  async findAll(): Promise<GoalEntity[] | null> {
-    const goals = await this.goalModel.find().exec();
+  async findAll(userId: string): Promise<GoalEntity[] | null> {
+    const goals = await this.goalModel.find({ userId: new mongoose.Types.ObjectId(userId) }).exec();
     return goals ? goals.map((doc) => this.goalMapper.toEntity(doc)) : null;
   }
 

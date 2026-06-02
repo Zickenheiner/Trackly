@@ -11,8 +11,8 @@ export class GoalService implements IGoalService {
     private readonly goalRepository: IGoalRepository,
   ) {}
 
-  async findAll(): Promise<GoalEntity[] | null> {
-    return this.goalRepository.findAll();
+  async findAll(userId: string): Promise<GoalEntity[] | null> {
+    return this.goalRepository.findAll(userId);
   }
 
   async findById(id: string): Promise<GoalEntity | null> {
