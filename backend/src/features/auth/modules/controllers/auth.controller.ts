@@ -32,10 +32,11 @@ export class AuthController {
 
   @ApiOperation({ summary: 'Register a new user' })
   @ApiBody({ type: RegisterDto })
-  @ApiResponse({ status: 201, type: Boolean })
+  @ApiResponse({ status: 201, type: AuthResponseDto })
+  @ApiResponse({ status: 409, description: 'Email already in use' })
   @Public()
   @Post('register')
-  async register(@Body() dto: RegisterDto): Promise<boolean> {
+  async register(@Body() dto: RegisterDto): Promise<AuthResponseDto> {
     return this.authService.register(dto);
   }
 

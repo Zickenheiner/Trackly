@@ -23,11 +23,25 @@ export class AuthService implements IAuthService {
     private readonly configService: ConfigService,
   ) {}
 
-  async register(dto: RegisterDto): Promise<boolean> {
-    return this.userService.create({
-      ...dto,
-      password: dto.password,
-    });
+  async register(dto: RegisterDto): Promise<AuthResponseDto> {
+    await this.userService.create({ ...dto, password: dto.password });
+    const user = await this.userService.findByEmail(dto.email);
+    if (!user) throw new UnauthorizedException('User not found after registration');
+    const tokens = await this.generateTokens(user.getId(), user.getEmail());
+    await this.updateRefreshToken(user.getId(), tokens.refreshToken);
+    return {
+      accessToken: tokens.accessToken,
+      refreshToken: tokens.refreshToken,
+      user: {
+        id: user.getId(),
+        title: user.getTitle(),
+        firstName: user.getFirstName(),
+        lastName: user.getLastName(),
+        age: user.getAge(),
+        email: user.getEmail(),
+        currency: user.getCurrency(),
+      },
+    };
   }
 
   async login(dto: LoginDto): Promise<AuthResponseDto> {
