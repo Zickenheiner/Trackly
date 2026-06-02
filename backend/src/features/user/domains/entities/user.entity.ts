@@ -16,6 +16,7 @@ export class UserEntity {
   private password: string;
   private currency: string;
   private refreshToken: string;
+  private theme: string;
   private createdAt: Date;
 
   constructor(_id: User) {
@@ -92,6 +93,14 @@ export class UserEntity {
 
   setRefreshToken(value: string): void {
     this.refreshToken = value;
+  }
+
+  getTheme(): string {
+    return this.theme;
+  }
+
+  setTheme(value: string): void {
+    this.theme = value;
   }
 
   getCreatedAt(): Date {

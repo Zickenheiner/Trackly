@@ -10,6 +10,23 @@ import {
   MinLength,
 } from 'class-validator';
 
+export class UpdatePreferencesDto {
+  @ApiProperty({
+    description: 'Preferred theme',
+    example: 'dark',
+    enum: ['light', 'dark'],
+  })
+  @IsString()
+  @IsNotEmpty()
+  @IsIn(['light', 'dark'])
+  theme: 'light' | 'dark';
+}
+
+export class UserPreferencesDto {
+  @ApiProperty({ example: 'dark', enum: ['light', 'dark'] })
+  theme: string;
+}
+
 export class CreateUserDto {
   @ApiProperty({
     description: 'Title of the user (e.g. Mr, Mrs)',
