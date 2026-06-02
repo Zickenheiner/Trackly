@@ -3,6 +3,7 @@ const endpoints = {
     refresh: '/auth/refresh',
     register: '/auth/register',
     login: '/auth/login',
+    logout: '/auth/logout',
   },
 };
 
