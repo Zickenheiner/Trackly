@@ -1,5 +1,8 @@
 import type { GoalEntity } from '../entities/goal.entity';
-import type { CreateGoalRequestDto, UpdateGoalRequestDto } from '../../data/dtos/goal.dto';
+import type {
+  CreateGoalRequestDto,
+  UpdateGoalRequestDto,
+} from '../../data/dtos/goal.dto';
 import type { AddDepositRequestDto } from '../../data/dtos/deposit.dto';
 
 export interface GoalRepository {

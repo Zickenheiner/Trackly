@@ -1,4 +1,8 @@
-import { AddDepositDto, CreateGoalDto, UpdateGoalDto } from '@features/goals/domains/dtos/goal.dto';
+import {
+  AddDepositDto,
+  CreateGoalDto,
+  UpdateGoalDto,
+} from '@features/goals/domains/dtos/goal.dto';
 import { GoalEntity } from '@features/goals/domains/entities/goal.entity';
 
 export interface IGoalService {

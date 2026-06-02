@@ -1,6 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import GoalRepositoryImpl from '../../data/repositories/goal.repository.impl';
-import type { CreateGoalRequestDto, UpdateGoalRequestDto } from '../../data/dtos/goal.dto';
+import type {
+  CreateGoalRequestDto,
+  UpdateGoalRequestDto,
+} from '../../data/dtos/goal.dto';
 import type { AddDepositRequestDto } from '../../data/dtos/deposit.dto';
 
 const repository = new GoalRepositoryImpl();
@@ -51,8 +54,13 @@ export function useAddDeposit() {
   const queryClient = useQueryClient();
 
   const { mutate, mutateAsync, isPending, error, data } = useMutation({
-    mutationFn: ({ goalId, data }: { goalId: string; data: AddDepositRequestDto }) =>
-      repository.addDeposit(goalId, data),
+    mutationFn: ({
+      goalId,
+      data,
+    }: {
+      goalId: string;
+      data: AddDepositRequestDto;
+    }) => repository.addDeposit(goalId, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.all });
     },

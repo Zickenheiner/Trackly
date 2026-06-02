@@ -11,7 +11,10 @@ import {
 } from '@/core/components/ui/form';
 import { Input } from '@/core/components/ui/input';
 import { Button } from '@/core/components/ui/button';
-import { createGoalSchema, type CreateGoalFormData } from '../../domain/schemas/goal.schema';
+import {
+  createGoalSchema,
+  type CreateGoalFormData,
+} from '../../domain/schemas/goal.schema';
 
 interface Props {
   onSubmit: (data: CreateGoalFormData) => void;
@@ -27,7 +30,11 @@ const DEFAULT_VALUES: CreateGoalFormData = {
   description: undefined,
 };
 
-export default function GoalForm({ onSubmit, onCancel, isLoading = false }: Props) {
+export default function GoalForm({
+  onSubmit,
+  onCancel,
+  isLoading = false,
+}: Props) {
   const form = useForm<CreateGoalFormData>({
     resolver: zodResolver(createGoalSchema),
     defaultValues: DEFAULT_VALUES,
@@ -35,7 +42,11 @@ export default function GoalForm({ onSubmit, onCancel, isLoading = false }: Prop
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4" noValidate>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-4"
+        noValidate
+      >
         <FormField
           control={form.control}
           name="name"
@@ -43,7 +54,11 @@ export default function GoalForm({ onSubmit, onCancel, isLoading = false }: Prop
             <FormItem>
               <FormLabel>Nom</FormLabel>
               <FormControl>
-                <Input placeholder="Ex : Vacances d'été" autoComplete="off" {...field} />
+                <Input
+                  placeholder="Ex : Vacances d'été"
+                  autoComplete="off"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -86,7 +101,11 @@ export default function GoalForm({ onSubmit, onCancel, isLoading = false }: Prop
                   {...field}
                   value={field.value ?? ''}
                   onChange={(e) =>
-                    field.onChange(e.target.value === '' ? undefined : e.target.valueAsNumber)
+                    field.onChange(
+                      e.target.value === ''
+                        ? undefined
+                        : e.target.valueAsNumber,
+                    )
                   }
                 />
               </FormControl>
@@ -134,11 +153,18 @@ export default function GoalForm({ onSubmit, onCancel, isLoading = false }: Prop
         />
 
         {form.formState.errors.root && (
-          <p className="text-sm text-destructive">{form.formState.errors.root.message}</p>
+          <p className="text-sm text-destructive">
+            {form.formState.errors.root.message}
+          </p>
         )}
 
         <div className="flex justify-end gap-2 pt-2">
-          <Button type="button" variant="outline" onClick={onCancel} disabled={isLoading}>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={onCancel}
+            disabled={isLoading}
+          >
             Annuler
           </Button>
           <Button type="submit" disabled={isLoading}>
