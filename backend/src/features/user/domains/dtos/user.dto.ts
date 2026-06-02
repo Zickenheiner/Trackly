@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
+  IsIn,
   IsInt,
   IsNotEmpty,
   IsOptional,
@@ -136,4 +137,80 @@ export class UpdateUserDto {
   @IsString()
   @IsOptional()
   refreshToken?: string | null;
+}
+
+export class UpdateProfileDto {
+  @ApiProperty({
+    description: 'Title of the user',
+    example: 'Mr.',
+    required: false,
+    enum: ['Mr.', 'Mrs.'],
+  })
+  @IsString()
+  @IsIn(['Mr.', 'Mrs.'])
+  @IsOptional()
+  title?: string;
+
+  @ApiProperty({
+    description: 'First name of the user',
+    example: 'John',
+    required: false,
+  })
+  @IsString()
+  @IsOptional()
+  firstName?: string;
+
+  @ApiProperty({
+    description: 'Last name of the user',
+    example: 'Doe',
+    required: false,
+  })
+  @IsString()
+  @IsOptional()
+  lastName?: string;
+
+  @ApiProperty({
+    description: 'Age of the user',
+    example: 25,
+    required: false,
+  })
+  @IsInt()
+  @Min(0)
+  @IsOptional()
+  age?: number;
+
+  @ApiProperty({
+    description: 'Preferred currency ISO 4217 code',
+    example: 'EUR',
+    required: false,
+  })
+  @IsString()
+  @IsOptional()
+  currency?: string;
+}
+
+export class UserProfileDto {
+  @ApiProperty({ example: '68b4d59919d9b7a94b4fde21' })
+  id: string;
+
+  @ApiProperty({ example: 'Mr.', enum: ['Mr.', 'Mrs.'] })
+  title: string;
+
+  @ApiProperty({ example: 'John' })
+  firstName: string;
+
+  @ApiProperty({ example: 'Doe' })
+  lastName: string;
+
+  @ApiProperty({ example: 25 })
+  age: number;
+
+  @ApiProperty({ example: 'john.doe@example.com' })
+  email: string;
+
+  @ApiProperty({ example: 'EUR' })
+  currency: string;
+
+  @ApiProperty({ example: '2026-06-02T08:00:00.000Z' })
+  createdAt: string;
 }
