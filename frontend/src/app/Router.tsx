@@ -8,6 +8,7 @@ import LoginPage from '@/features/auth/presentation/pages/LoginPage';
 import ProfilePage from '@/features/profile/presentation/pages/ProfilePage';
 import GoalListPage from '@/features/goals/presentation/pages/GoalListPage';
 import DashboardPage from '@/features/dashboard/presentation/pages/DashboardPage';
+import StatisticsPage from '@/features/statistics/presentation/pages/StatisticsPage';
 
 export default function Router() {
   const PublicRoutes = () => {
@@ -35,6 +36,7 @@ export default function Router() {
         <Route path={routes.categories} element={<CategoryListPage />} />
         <Route path={routes.goals} element={<GoalListPage />} />
         <Route path={routes.profile} element={<ProfilePage />} />
+        <Route path={routes.statistics} element={<StatisticsPage />} />
       </Route>
     );
   };

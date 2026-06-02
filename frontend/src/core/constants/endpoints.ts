@@ -18,6 +18,9 @@ const endpoints = {
   dashboard: {
     summary: '/dashboard/summary',
   },
+  statistics: {
+    byCategory: '/statistics/by-category',
+  },
 };
 
 export default endpoints;
