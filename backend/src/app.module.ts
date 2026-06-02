@@ -9,6 +9,7 @@ import { UserBaseModule } from '@features/user/modules/user.module';
 import { AuthBaseModule } from '@features/auth/modules/auth.module';
 import { GoalBaseModule } from '@features/goals/modules/goal.module';
 import { DashboardBaseModule } from '@features/dashboard/modules/dashboard.module';
+import { StatisticsBaseModule } from '@features/statistics/modules/statistics.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { DashboardBaseModule } from '@features/dashboard/modules/dashboard.modul
     AuthBaseModule,
     GoalBaseModule,
     DashboardBaseModule,
+    StatisticsBaseModule,
   ],
   providers: [
     AtStrategy,
