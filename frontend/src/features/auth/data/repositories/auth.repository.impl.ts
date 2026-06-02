@@ -19,6 +19,10 @@ class AuthRepositoryImpl implements AuthRepository {
     const dto = await this.api.login(data);
     return this.mapper.toEntity(dto);
   }
+
+  async logout(): Promise<void> {
+    await this.api.logout();
+  }
 }
 
 export default AuthRepositoryImpl;

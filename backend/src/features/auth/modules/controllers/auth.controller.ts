@@ -62,11 +62,17 @@ export class AuthController {
   }
 
   @ApiOperation({ summary: 'Logout the current user' })
-  @ApiResponse({ status: 200, type: Boolean })
-  @HttpCode(HttpStatus.OK)
+  @ApiBearerAuth('AccessToken')
+  @ApiResponse({ status: 204, description: 'Logged out successfully' })
+  @ApiResponse({ status: 401, description: 'Token invalid or expired' })
+  @HttpCode(HttpStatus.NO_CONTENT)
   @Post('logout')
-  async logout(@Req() req: { user: { sub: string } }): Promise<boolean> {
-    return this.authService.logout(req.user.sub);
+  async logout(
+    @Req() req: { user: { sub: string } },
+    @Res({ passthrough: true }) res: Response,
+  ): Promise<void> {
+    await this.authService.logout(req.user.sub);
+    res.clearCookie('access_token');
   }
 
   @ApiOperation({ summary: 'Refresh access and refresh tokens' })
