@@ -4,6 +4,8 @@ const routes = {
   categories: '/categories',
   register: '/register',
   profile: '/profile',
+  transactions: '/transactions',
+  transactionCreate: '/transactions/new',
 };
 
 export default routes;
