@@ -3,6 +3,7 @@ import {
   ArrowLeftRight,
   Tag,
   Target,
+  User,
   type LucideIcon,
 } from 'lucide-react';
 import routes from '@/core/constants/routes';
@@ -18,4 +19,5 @@ export const navItems: NavItem[] = [
   { label: 'Transactions', to: routes.transactions, icon: ArrowLeftRight },
   { label: 'Catégories', to: routes.categories, icon: Tag },
   { label: 'Objectifs', to: routes.goals, icon: Target },
+  { label: 'Profil', to: routes.profile, icon: User },
 ];
