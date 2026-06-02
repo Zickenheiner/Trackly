@@ -96,6 +96,7 @@ const request = async <T = unknown>(config: Config): Promise<T> => {
       );
     }
 
+    if (retryResponse.status === 204) return undefined as T;
     return retryResponse.json() as Promise<T>;
   }
 
@@ -104,6 +105,7 @@ const request = async <T = unknown>(config: Config): Promise<T> => {
     throw new ApiError(json?.message ?? 'Erreur inconnue', response.status);
   }
 
+  if (response.status === 204) return undefined as T;
   return response.json() as Promise<T>;
 };
 
