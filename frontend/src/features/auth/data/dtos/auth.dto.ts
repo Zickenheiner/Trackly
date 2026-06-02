@@ -1,3 +1,8 @@
+export interface LoginRequestDto {
+  email: string;
+  password: string;
+}
+
 export interface RegisterRequestDto {
   title: 'Mr.' | 'Mrs.';
   firstName: string;

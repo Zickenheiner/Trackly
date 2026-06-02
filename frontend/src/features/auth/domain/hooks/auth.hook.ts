@@ -2,6 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { z } from 'zod';
 import AuthRepositoryImpl from '../../data/repositories/auth.repository.impl';
 import { setAccessToken, setRefreshToken } from '@/core/local/storage';
+import type { LoginRequestDto } from '../../data/dtos/auth.dto';
 
 const repository = new AuthRepositoryImpl();
 
@@ -20,6 +21,30 @@ export const registerSchema = z.object({
 });
 
 export type RegisterFormData = z.infer<typeof registerSchema>;
+
+export const loginSchema = z.object({
+  email: z.string().email('Email invalide'),
+  password: z.string().min(1, 'Le mot de passe est requis'),
+});
+
+export type LoginFormData = z.infer<typeof loginSchema>;
+
+export function useLogin() {
+  const { mutate, isPending, error, isSuccess } = useMutation({
+    mutationFn: (data: LoginRequestDto) => repository.login(data),
+    onSuccess: (auth) => {
+      setAccessToken(auth.accessToken);
+      setRefreshToken(auth.refreshToken);
+    },
+  });
+
+  return {
+    login: mutate,
+    loginIsPending: isPending,
+    loginError: error,
+    loginIsSuccess: isSuccess,
+  };
+}
 
 export function useRegister() {
   const { mutate, isPending, error, isSuccess } = useMutation({
