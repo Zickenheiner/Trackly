@@ -13,3 +13,9 @@ export interface CreateCategoryRequestDto {
   icon: string;
   color: string;
 }
+
+export interface UpdateCategoryRequestDto {
+  name?: string;
+  icon?: string;
+  color?: string;
+}

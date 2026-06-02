@@ -4,6 +4,7 @@ import methods from '@/core/constants/methods';
 import type {
   CategoryResponseDto,
   CreateCategoryRequestDto,
+  UpdateCategoryRequestDto,
 } from '../dtos/category.dto';
 
 class CategoryApi {
@@ -23,6 +24,24 @@ class CategoryApi {
       url: this.categoryBaseUrl,
       method: methods.POST,
       data,
+    });
+  }
+
+  async update(
+    id: string,
+    data: UpdateCategoryRequestDto,
+  ): Promise<CategoryResponseDto> {
+    return request<CategoryResponseDto>({
+      url: endpoints.categoryById(id),
+      method: methods.PATCH,
+      data,
+    });
+  }
+
+  async delete(id: string): Promise<void> {
+    return request<void>({
+      url: endpoints.categoryById(id),
+      method: methods.DELETE,
     });
   }
 }

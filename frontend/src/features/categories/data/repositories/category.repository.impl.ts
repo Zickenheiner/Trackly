@@ -1,6 +1,9 @@
 import type { CategoryRepository } from '../../domain/repositories/category.repository';
 import type { CategoryEntity } from '../../domain/entities/category.entity';
-import type { CreateCategoryRequestDto } from '../dtos/category.dto';
+import type {
+  CreateCategoryRequestDto,
+  UpdateCategoryRequestDto,
+} from '../dtos/category.dto';
 import CategoryApi from '../datasources/category.api';
 import CategoryMapper from '../mappers/category.mapper';
 
@@ -18,6 +21,18 @@ class CategoryRepositoryImpl implements CategoryRepository {
   async create(data: CreateCategoryRequestDto): Promise<CategoryEntity> {
     const dto = await this.categoryApi.create(data);
     return this.categoryMapper.toEntity(dto);
+  }
+
+  async update(
+    id: string,
+    data: UpdateCategoryRequestDto,
+  ): Promise<CategoryEntity> {
+    const dto = await this.categoryApi.update(id, data);
+    return this.categoryMapper.toEntity(dto);
+  }
+
+  async delete(id: string): Promise<void> {
+    await this.categoryApi.delete(id);
   }
 }
 
