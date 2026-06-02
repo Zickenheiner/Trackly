@@ -16,6 +16,7 @@ export class UserEntity {
   private password: string;
   private currency: string;
   private refreshToken: string;
+  private createdAt: Date;
 
   constructor(_id: User) {
     this.id = _id;
@@ -91,5 +92,13 @@ export class UserEntity {
 
   setRefreshToken(value: string): void {
     this.refreshToken = value;
+  }
+
+  getCreatedAt(): Date {
+    return this.createdAt;
+  }
+
+  setCreatedAt(value: Date): void {
+    this.createdAt = value;
   }
 }

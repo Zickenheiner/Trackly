@@ -1,7 +1,9 @@
 import { useMutation } from '@tanstack/react-query';
 import { z } from 'zod';
+import { useNavigate } from 'react-router-dom';
 import AuthRepositoryImpl from '../../data/repositories/auth.repository.impl';
-import { setAccessToken, setRefreshToken } from '@/core/local/storage';
+import { setAccessToken, setRefreshToken, clearTokens } from '@/core/local/storage';
+import routes from '@/core/constants/routes';
 import type { LoginRequestDto } from '../../data/dtos/auth.dto';
 
 const repository = new AuthRepositoryImpl();
@@ -70,5 +72,22 @@ export function useRegister() {
     registerIsPending: isPending,
     registerError: error,
     registerIsSuccess: isSuccess,
+  };
+}
+
+export function useLogout() {
+  const navigate = useNavigate();
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: () => repository.logout(),
+    onSettled: () => {
+      clearTokens();
+      navigate(routes.login, { replace: true });
+    },
+  });
+
+  return {
+    logout: mutate,
+    logoutIsPending: isPending,
   };
 }

@@ -14,6 +14,8 @@ export class UserMapper {
     entity.setPassword(doc.password);
     entity.setCurrency(doc.currency);
     entity.setRefreshToken(doc.refreshToken);
+    const withTimestamps = doc as UserDocument & { createdAt: Date };
+    entity.setCreatedAt(withTimestamps.createdAt);
     return entity;
   }
 }

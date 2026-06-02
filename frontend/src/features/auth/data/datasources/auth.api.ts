@@ -19,6 +19,13 @@ class AuthApi {
       data,
     });
   }
+
+  async logout(): Promise<void> {
+    return request<void>({
+      url: endpoints.auth.logout,
+      method: methods.POST,
+    });
+  }
 }
 
 export default AuthApi;
