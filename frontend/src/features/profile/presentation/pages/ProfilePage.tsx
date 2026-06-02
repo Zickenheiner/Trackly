@@ -5,6 +5,7 @@ import ProfileForm from '../components/ProfileForm';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/core/components/ui/card';
 import { Skeleton } from '@/core/components/ui/skeleton';
 import { Button } from '@/core/components/ui/button';
+import LogoutButton from '@/features/auth/presentation/components/LogoutButton';
 
 function ProfileSkeleton() {
   return (
@@ -53,9 +54,12 @@ export default function ProfilePage() {
       transition={{ duration: 0.35 }}
       className="container mx-auto px-4 sm:px-6 lg:px-8 py-10 max-w-2xl"
     >
-      <div className="flex items-center gap-3 mb-8">
-        <UserCircle className="h-8 w-8 text-primary" />
-        <h1 className="text-2xl font-semibold">Mon profil</h1>
+      <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center gap-3">
+          <UserCircle className="h-8 w-8 text-primary" />
+          <h1 className="text-2xl font-semibold">Mon profil</h1>
+        </div>
+        <LogoutButton />
       </div>
 
       <Card>
