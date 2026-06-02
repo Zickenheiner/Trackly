@@ -4,6 +4,7 @@ import { Badge } from '@/core/components/ui/badge';
 import { Progress } from '@/core/components/ui/progress';
 import type { GoalEntity } from '../../domain/entities/goal.entity';
 import AddDepositDialog from './AddDepositDialog';
+import GoalProgressDetail from './GoalProgressDetail';
 
 interface Props {
   goal: GoalEntity;
@@ -68,6 +69,8 @@ export default function GoalCard({ goal }: Props) {
         {goal.description && (
           <p className="line-clamp-2 text-sm text-muted-foreground">{goal.description}</p>
         )}
+
+        <GoalProgressDetail goal={goal} />
       </CardContent>
       {goal.status !== 'completed' && (
         <CardFooter className="pt-0">
