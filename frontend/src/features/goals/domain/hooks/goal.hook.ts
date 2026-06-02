@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import GoalRepositoryImpl from '../../data/repositories/goal.repository.impl';
-import type { CreateGoalRequestDto } from '../../data/dtos/goal.dto';
+import type { CreateGoalRequestDto, UpdateGoalRequestDto } from '../../data/dtos/goal.dto';
 import type { AddDepositRequestDto } from '../../data/dtos/deposit.dto';
 
 const repository = new GoalRepositoryImpl();
@@ -63,5 +63,43 @@ export function useAddDeposit() {
     addDepositAsync: mutateAsync,
     addDepositIsLoading: isPending,
     addDepositError: error,
+  };
+}
+
+export function useUpdateGoal() {
+  const queryClient = useQueryClient();
+
+  const { mutate, mutateAsync, isPending, error } = useMutation({
+    mutationFn: ({ id, data }: { id: string; data: UpdateGoalRequestDto }) =>
+      repository.update(id, data),
+    onSuccess: (_, { id }) => {
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.all });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.detail(id) });
+    },
+  });
+
+  return {
+    updateGoal: mutate,
+    updateGoalAsync: mutateAsync,
+    updateGoalIsLoading: isPending,
+    updateGoalError: error,
+  };
+}
+
+export function useDeleteGoal() {
+  const queryClient = useQueryClient();
+
+  const { mutate, mutateAsync, isPending, error } = useMutation({
+    mutationFn: (id: string) => repository.delete(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.all });
+    },
+  });
+
+  return {
+    deleteGoal: mutate,
+    deleteGoalAsync: mutateAsync,
+    deleteGoalIsLoading: isPending,
+    deleteGoalError: error,
   };
 }

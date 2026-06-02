@@ -5,6 +5,8 @@ import { Progress } from '@/core/components/ui/progress';
 import type { GoalEntity } from '../../domain/entities/goal.entity';
 import AddDepositDialog from './AddDepositDialog';
 import GoalProgressDetail from './GoalProgressDetail';
+import EditGoalDialog from './EditGoalDialog';
+import DeleteGoalDialog from './DeleteGoalDialog';
 
 interface Props {
   goal: GoalEntity;
@@ -35,9 +37,13 @@ export default function GoalCard({ goal }: Props) {
             <Target className="h-5 w-5 shrink-0 text-primary" aria-hidden />
             <CardTitle className="truncate text-base">{goal.name}</CardTitle>
           </div>
-          <Badge variant={goal.status === 'completed' ? 'default' : 'secondary'} className="shrink-0">
-            {goal.status === 'completed' ? 'Atteint' : 'En cours'}
-          </Badge>
+          <div className="flex shrink-0 items-center gap-1">
+            <Badge variant={goal.status === 'completed' ? 'default' : 'secondary'}>
+              {goal.status === 'completed' ? 'Atteint' : 'En cours'}
+            </Badge>
+            <EditGoalDialog goal={goal} />
+            <DeleteGoalDialog goalId={goal.id} goalName={goal.name} />
+          </div>
         </div>
       </CardHeader>
       <CardContent className="flex flex-col gap-3">

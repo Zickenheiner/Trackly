@@ -1,6 +1,6 @@
 import type { GoalRepository } from '../../domain/repositories/goal.repository';
 import type { GoalEntity } from '../../domain/entities/goal.entity';
-import type { CreateGoalRequestDto } from '../dtos/goal.dto';
+import type { CreateGoalRequestDto, UpdateGoalRequestDto } from '../dtos/goal.dto';
 import type { AddDepositRequestDto } from '../dtos/deposit.dto';
 import GoalApi from '../datasources/goal.api';
 import GoalMapper from '../mappers/goal.mapper';
@@ -29,6 +29,15 @@ class GoalRepositoryImpl implements GoalRepository {
   async addDeposit(goalId: string, data: AddDepositRequestDto): Promise<GoalEntity> {
     const dto = await this.api.addDeposit(goalId, data);
     return this.mapper.toEntity(dto);
+  }
+
+  async update(id: string, data: UpdateGoalRequestDto): Promise<GoalEntity> {
+    const dto = await this.api.update(id, data);
+    return this.mapper.toEntity(dto);
+  }
+
+  async delete(id: string): Promise<void> {
+    await this.api.delete(id);
   }
 }
 

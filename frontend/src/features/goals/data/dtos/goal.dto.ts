@@ -6,6 +6,13 @@ export interface CreateGoalRequestDto {
   description?: string;
 }
 
+export interface UpdateGoalRequestDto {
+  name?: string;
+  targetAmount?: number;
+  deadline?: string;
+  description?: string;
+}
+
 export interface GoalResponseDto {
   id: string;
   name: string;
