@@ -45,7 +45,8 @@ export class CreateGoalDto {
   targetAmount: number;
 
   @ApiProperty({
-    description: 'Deadline for the goal in ISO 8601 format (must be in the future)',
+    description:
+      'Deadline for the goal in ISO 8601 format (must be in the future)',
     example: '2027-01-01T00:00:00.000Z',
     required: false,
   })

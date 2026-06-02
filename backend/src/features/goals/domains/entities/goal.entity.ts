@@ -50,7 +50,10 @@ export class GoalEntity {
 
   getProgress(): number {
     if (!this.targetAmount || this.targetAmount === 0) return 0;
-    return Math.min(100, Math.round((this.savedAmount / this.targetAmount) * 100));
+    return Math.min(
+      100,
+      Math.round((this.savedAmount / this.targetAmount) * 100),
+    );
   }
 
   getDeadline(): Date {

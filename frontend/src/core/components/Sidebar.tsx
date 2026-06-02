@@ -2,6 +2,7 @@ import { cn } from '@/core/utils/cn';
 import { motion } from 'motion/react';
 import { NavLink } from 'react-router-dom';
 import { navItems } from '../constants/nav-items';
+import ThemeToggle from '@/features/theme/presentation/components/ThemeToggle';
 
 export default function Sidebar() {
   return (
@@ -46,6 +47,9 @@ export default function Sidebar() {
           );
         })}
       </nav>
+      <div className="border-t border-sidebar-border px-3 py-3">
+        <ThemeToggle showLabel />
+      </div>
     </aside>
   );
 }

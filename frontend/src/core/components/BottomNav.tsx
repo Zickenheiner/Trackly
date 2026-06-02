@@ -2,6 +2,7 @@ import { cn } from '@/core/utils/cn';
 import { motion } from 'motion/react';
 import { NavLink } from 'react-router-dom';
 import { navItems } from '../constants/nav-items';
+import ThemeToggle from '@/features/theme/presentation/components/ThemeToggle';
 
 export default function BottomNav() {
   return (
@@ -43,6 +44,11 @@ export default function BottomNav() {
             </li>
           );
         })}
+        <li className="flex-1 flex items-center justify-center">
+          <ThemeToggle
+            className="flex-col gap-1 py-2.5 text-xs text-sidebar-foreground/60 hover:text-sidebar-foreground px-0 rounded-none w-full justify-center"
+          />
+        </li>
       </ul>
     </nav>
   );

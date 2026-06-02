@@ -50,7 +50,8 @@ export default function EditGoalDialog({ goal }: Props) {
         <DialogHeader>
           <DialogTitle>Modifier l'objectif</DialogTitle>
           <DialogDescription>
-            Modifiez le nom, le montant cible ou la date limite de votre objectif.
+            Modifiez le nom, le montant cible ou la date limite de votre
+            objectif.
           </DialogDescription>
         </DialogHeader>
         <EditGoalForm

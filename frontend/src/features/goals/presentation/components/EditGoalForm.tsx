@@ -11,7 +11,10 @@ import {
 } from '@/core/components/ui/form';
 import { Input } from '@/core/components/ui/input';
 import { Button } from '@/core/components/ui/button';
-import { updateGoalSchema, type UpdateGoalFormData } from '../../domain/schemas/goal.schema';
+import {
+  updateGoalSchema,
+  type UpdateGoalFormData,
+} from '../../domain/schemas/goal.schema';
 import type { GoalEntity } from '../../domain/entities/goal.entity';
 
 interface Props {
@@ -21,7 +24,12 @@ interface Props {
   isLoading?: boolean;
 }
 
-export default function EditGoalForm({ goal, onSubmit, onCancel, isLoading = false }: Props) {
+export default function EditGoalForm({
+  goal,
+  onSubmit,
+  onCancel,
+  isLoading = false,
+}: Props) {
   const deadlineValue = goal.deadline
     ? goal.deadline.toISOString().split('T')[0]
     : undefined;
@@ -38,7 +46,11 @@ export default function EditGoalForm({ goal, onSubmit, onCancel, isLoading = fal
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4" noValidate>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-4"
+        noValidate
+      >
         <FormField
           control={form.control}
           name="name"
@@ -46,7 +58,11 @@ export default function EditGoalForm({ goal, onSubmit, onCancel, isLoading = fal
             <FormItem>
               <FormLabel>Nom</FormLabel>
               <FormControl>
-                <Input placeholder="Ex : Vacances d'été" autoComplete="off" {...field} />
+                <Input
+                  placeholder="Ex : Vacances d'été"
+                  autoComplete="off"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -113,11 +129,18 @@ export default function EditGoalForm({ goal, onSubmit, onCancel, isLoading = fal
         />
 
         {form.formState.errors.root && (
-          <p className="text-sm text-destructive">{form.formState.errors.root.message}</p>
+          <p className="text-sm text-destructive">
+            {form.formState.errors.root.message}
+          </p>
         )}
 
         <div className="flex justify-end gap-2 pt-2">
-          <Button type="button" variant="outline" onClick={onCancel} disabled={isLoading}>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={onCancel}
+            disabled={isLoading}
+          >
             Annuler
           </Button>
           <Button type="submit" disabled={isLoading}>

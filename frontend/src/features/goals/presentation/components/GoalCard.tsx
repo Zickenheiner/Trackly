@@ -1,5 +1,11 @@
 import { Target, CalendarClock, Trophy } from 'lucide-react';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/core/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/core/components/ui/card';
 import { Badge } from '@/core/components/ui/badge';
 import { Progress } from '@/core/components/ui/progress';
 import { cn } from '@/core/utils/cn';
@@ -27,23 +33,29 @@ export default function GoalCard({ goal }: Props) {
   }).format(goal.savedAmount);
 
   const deadlineLabel = goal.deadline
-    ? new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }).format(
-        goal.deadline,
-      )
+    ? new Intl.DateTimeFormat('fr-FR', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      }).format(goal.deadline)
     : null;
 
   return (
     <Card
       className={cn(
         'overflow-hidden transition-shadow hover:shadow-md',
-        isCompleted && 'border-green-500/60 bg-green-50/30 dark:bg-green-950/10',
+        isCompleted &&
+          'border-green-500/60 bg-green-50/30 dark:bg-green-950/10',
       )}
     >
       <CardHeader className="pb-2">
         <div className="flex items-start justify-between gap-2">
           <div className="flex min-w-0 items-center gap-2">
             {isCompleted ? (
-              <Trophy className="h-5 w-5 shrink-0 text-yellow-500" aria-hidden />
+              <Trophy
+                className="h-5 w-5 shrink-0 text-yellow-500"
+                aria-hidden
+              />
             ) : (
               <Target className="h-5 w-5 shrink-0 text-primary" aria-hidden />
             )}
@@ -88,7 +100,9 @@ export default function GoalCard({ goal }: Props) {
         )}
 
         {goal.description && (
-          <p className="line-clamp-2 text-sm text-muted-foreground">{goal.description}</p>
+          <p className="line-clamp-2 text-sm text-muted-foreground">
+            {goal.description}
+          </p>
         )}
 
         <GoalProgressDetail goal={goal} />

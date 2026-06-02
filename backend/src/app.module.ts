@@ -5,6 +5,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { AccessTokenGuard } from '@core/guards/access-token.guard';
 import { AtStrategy } from '@core/strategies/at.strategy';
 import { CategoryBaseModule } from '@features/categories/modules/category.module';
+import { TransactionBaseModule } from '@features/transactions/modules/transaction.module';
 import { UserBaseModule } from '@features/user/modules/user.module';
 import { AuthBaseModule } from '@features/auth/modules/auth.module';
 import { GoalBaseModule } from '@features/goals/modules/goal.module';
@@ -28,6 +29,7 @@ import { StatisticsBaseModule } from '@features/statistics/modules/statistics.mo
       inject: [ConfigService],
     }),
     CategoryBaseModule,
+    TransactionBaseModule,
     UserBaseModule,
     AuthBaseModule,
     GoalBaseModule,

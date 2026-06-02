@@ -12,7 +12,10 @@ export const updateProfileSchema = z.object({
   title: z.enum(['Mr.', 'Mrs.']),
   firstName: z.string().min(1, 'Le prénom est requis'),
   lastName: z.string().min(1, 'Le nom est requis'),
-  age: z.coerce.number().min(18, 'Vous devez avoir au moins 18 ans').max(120, 'Âge invalide'),
+  age: z.coerce
+    .number()
+    .min(18, 'Vous devez avoir au moins 18 ans')
+    .max(120, 'Âge invalide'),
   currency: z.string().min(1, 'La devise est requise'),
 });
 

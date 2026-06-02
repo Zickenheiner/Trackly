@@ -10,6 +10,7 @@ const endpoints = {
   },
   categories: '/categories',
   categoryById: (id: string) => `/categories/${id}`,
+  transactions: '/transactions',
   goals: {
     base: '/goals',
     byId: (id: string) => `/goals/${id}`,

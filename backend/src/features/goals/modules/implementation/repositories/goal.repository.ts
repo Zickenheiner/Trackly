@@ -1,9 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { IGoalRepository } from '../../../interfaces/repositories/goal.irepository';
 import { GoalMapper } from '../mappers/goal.mapper';
-import { Goal, GoalDocument } from '@features/goals/domains/schemas/goal.schema';
+import {
+  Goal,
+  GoalDocument,
+} from '@features/goals/domains/schemas/goal.schema';
 import { Model } from 'mongoose';
-import { AddDepositDto, CreateGoalDto, UpdateGoalDto } from '@features/goals/domains/dtos/goal.dto';
+import {
+  AddDepositDto,
+  CreateGoalDto,
+  UpdateGoalDto,
+} from '@features/goals/domains/dtos/goal.dto';
 import { GoalEntity } from '@features/goals/domains/entities/goal.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
@@ -17,7 +24,9 @@ export class GoalRepository implements IGoalRepository {
   ) {}
 
   async findAll(userId: string): Promise<GoalEntity[] | null> {
-    const goals = await this.goalModel.find({ userId: new mongoose.Types.ObjectId(userId) }).exec();
+    const goals = await this.goalModel
+      .find({ userId: new mongoose.Types.ObjectId(userId) })
+      .exec();
     return goals ? goals.map((doc) => this.goalMapper.toEntity(doc)) : null;
   }
 
@@ -43,9 +52,11 @@ export class GoalRepository implements IGoalRepository {
   async update(id: string, dto: UpdateGoalDto): Promise<GoalEntity | null> {
     const updatePayload: Partial<UpdateGoalDto> & { status?: string } = {};
     if (dto.name !== undefined) updatePayload.name = dto.name;
-    if (dto.targetAmount !== undefined) updatePayload.targetAmount = dto.targetAmount;
+    if (dto.targetAmount !== undefined)
+      updatePayload.targetAmount = dto.targetAmount;
     if (dto.deadline !== undefined) updatePayload.deadline = dto.deadline;
-    if (dto.description !== undefined) updatePayload.description = dto.description;
+    if (dto.description !== undefined)
+      updatePayload.description = dto.description;
 
     const updatedGoal = await this.goalModel
       .findByIdAndUpdate(id, { $set: updatePayload }, { new: true })
@@ -63,7 +74,8 @@ export class GoalRepository implements IGoalRepository {
     if (!goal) return null;
 
     const newSavedAmount = (goal.savedAmount ?? 0) + dto.amount;
-    const newStatus = newSavedAmount >= goal.targetAmount ? 'completed' : goal.status;
+    const newStatus =
+      newSavedAmount >= goal.targetAmount ? 'completed' : goal.status;
 
     const updated = await this.goalModel
       .findByIdAndUpdate(

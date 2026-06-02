@@ -1,7 +1,11 @@
 import endpoints from '@/core/constants/endpoints';
 import request from '@/core/config/api';
 import methods from '@/core/constants/methods';
-import type { LoginRequestDto, RegisterRequestDto, AuthResponseDto } from '../dtos/auth.dto';
+import type {
+  LoginRequestDto,
+  RegisterRequestDto,
+  AuthResponseDto,
+} from '../dtos/auth.dto';
 
 class AuthApi {
   async register(data: RegisterRequestDto): Promise<AuthResponseDto> {

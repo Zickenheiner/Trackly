@@ -200,11 +200,7 @@ export default function RegisterForm() {
           </motion.p>
         )}
 
-        <Button
-          type="submit"
-          className="w-full"
-          disabled={registerIsPending}
-        >
+        <Button type="submit" className="w-full" disabled={registerIsPending}>
           {registerIsPending ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />

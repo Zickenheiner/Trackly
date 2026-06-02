@@ -23,7 +23,9 @@ function GoalListError() {
   return (
     <div className="container mx-auto flex min-h-[50vh] flex-col items-center justify-center gap-4 px-4 py-6">
       <AlertCircle className="h-12 w-12 text-destructive" />
-      <p className="text-muted-foreground">Impossible de charger les objectifs.</p>
+      <p className="text-muted-foreground">
+        Impossible de charger les objectifs.
+      </p>
       <Button variant="outline" onClick={() => window.location.reload()}>
         Réessayer
       </Button>
@@ -35,7 +37,9 @@ function GoalListEmpty() {
   return (
     <div className="container mx-auto flex min-h-[50vh] flex-col items-center justify-center gap-4 px-4 py-6">
       <Inbox className="h-12 w-12 text-muted-foreground" />
-      <p className="text-muted-foreground">Aucun objectif d'épargne pour l'instant.</p>
+      <p className="text-muted-foreground">
+        Aucun objectif d'épargne pour l'instant.
+      </p>
       <CreateGoalDialog />
     </div>
   );
