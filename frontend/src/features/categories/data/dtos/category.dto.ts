@@ -7,3 +7,9 @@ export interface CategoryResponseDto {
 }
 
 export type GetCategoriesResponseDto = CategoryResponseDto[];
+
+export interface CreateCategoryRequestDto {
+  name: string;
+  icon: string;
+  color: string;
+}
