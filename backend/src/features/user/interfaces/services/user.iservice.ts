@@ -1,4 +1,9 @@
-import { CreateUserDto, UpdateProfileDto, UpdateUserDto, UserProfileDto } from '@features/user/domains/dtos/user.dto';
+import {
+  CreateUserDto,
+  UpdateProfileDto,
+  UpdateUserDto,
+  UserProfileDto,
+} from '@features/user/domains/dtos/user.dto';
 import { UserEntity } from '@features/user/domains/entities/user.entity';
 
 export interface IUserService {

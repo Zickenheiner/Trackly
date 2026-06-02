@@ -4,5 +4,4 @@ import { Module } from '@nestjs/common';
   imports: [],
   exports: [],
 })
-
 export class UserModule {}

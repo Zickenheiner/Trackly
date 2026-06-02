@@ -4,7 +4,10 @@ import { Model } from 'mongoose';
 import { IUserRepository } from '../../../interfaces/repositories/user.irepository';
 import { User, UserDocument } from '@features/user/domains/schemas/user.schema';
 import { UserEntity } from '@features/user/domains/entities/user.entity';
-import { CreateUserDto, UpdateUserDto } from '@features/user/domains/dtos/user.dto';
+import {
+  CreateUserDto,
+  UpdateUserDto,
+} from '@features/user/domains/dtos/user.dto';
 import { UserMapper } from '../mappers/user.mapper';
 
 @Injectable()

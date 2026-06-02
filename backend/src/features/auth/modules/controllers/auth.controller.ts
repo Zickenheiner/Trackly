@@ -18,7 +18,12 @@ import {
 } from '@nestjs/swagger';
 import type { Response } from 'express';
 import { IAuthService } from '@features/auth/interfaces/services/auth.iservice';
-import { LoginDto, RegisterDto, TokensDto, AuthResponseDto } from '@features/auth/domains/dtos/auth.dto';
+import {
+  LoginDto,
+  RegisterDto,
+  TokensDto,
+  AuthResponseDto,
+} from '@features/auth/domains/dtos/auth.dto';
 import { Public } from '@core/decorators/public.decorator';
 import { AuthGuard } from '@nestjs/passport';
 
@@ -82,7 +87,9 @@ export class AuthController {
   @UseGuards(AuthGuard('jwt-refresh'))
   @HttpCode(HttpStatus.OK)
   @Post('refresh')
-  async refreshTokens(@Req() req: { user: { sub: string; refreshToken: string } }): Promise<TokensDto> {
+  async refreshTokens(
+    @Req() req: { user: { sub: string; refreshToken: string } },
+  ): Promise<TokensDto> {
     const user = req.user;
     return this.authService.refreshTokens(user.sub, user.refreshToken);
   }

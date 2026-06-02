@@ -8,6 +8,8 @@ const endpoints = {
   users: {
     me: '/users/me',
   },
+  categories: '/categories',
+  categoryById: (id: string) => `/categories/${id}`,
 };
 
 export default endpoints;

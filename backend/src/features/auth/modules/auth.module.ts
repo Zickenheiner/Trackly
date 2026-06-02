@@ -6,10 +6,7 @@ import { UserBaseModule } from '@features/user/modules/user.module';
 import { RtStrategy } from '@core/strategies/rt.strategy';
 
 @Module({
-  imports: [
-    JwtModule.register({}),
-    UserBaseModule,
-  ],
+  imports: [JwtModule.register({}), UserBaseModule],
   controllers: [AuthController],
   providers: [
     RtStrategy,

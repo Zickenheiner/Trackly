@@ -1,4 +1,9 @@
-import { CreateUserDto, UpdateProfileDto, UpdateUserDto, UserProfileDto } from '@features/user/domains/dtos/user.dto';
+import {
+  CreateUserDto,
+  UpdateProfileDto,
+  UpdateUserDto,
+  UserProfileDto,
+} from '@features/user/domains/dtos/user.dto';
 import { UserEntity } from '@features/user/domains/entities/user.entity';
 import { IUserService } from '@features/user/interfaces/services/user.iservice';
 import { Public } from '@core/decorators/public.decorator';
@@ -13,7 +18,14 @@ import {
   Post,
   Req,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
 @ApiTags('users')
 @Controller('users')
@@ -35,7 +47,9 @@ export class UserController {
   @ApiResponse({ status: 200, type: UserProfileDto })
   @ApiResponse({ status: 401, description: 'Non authentifié' })
   @Get('me')
-  async getProfile(@Req() req: { user: { sub: string } }): Promise<UserProfileDto> {
+  async getProfile(
+    @Req() req: { user: { sub: string } },
+  ): Promise<UserProfileDto> {
     return this.userService.getProfile(req.user.sub);
   }
 

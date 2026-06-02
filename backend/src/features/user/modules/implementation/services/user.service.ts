@@ -1,7 +1,17 @@
-import { ConflictException, Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { IUserService } from '../../../interfaces/services/user.iservice';
 import { IUserRepository } from '@features/user/interfaces/repositories/user.irepository';
-import { CreateUserDto, UpdateProfileDto, UpdateUserDto, UserProfileDto } from '@features/user/domains/dtos/user.dto';
+import {
+  CreateUserDto,
+  UpdateProfileDto,
+  UpdateUserDto,
+  UserProfileDto,
+} from '@features/user/domains/dtos/user.dto';
 import { UserEntity } from '@features/user/domains/entities/user.entity';
 import * as argon2 from 'argon2';
 
@@ -60,7 +70,10 @@ export class UserService implements IUserService {
     return this.toProfileDto(user);
   }
 
-  async updateProfile(userId: string, dto: UpdateProfileDto): Promise<UserProfileDto> {
+  async updateProfile(
+    userId: string,
+    dto: UpdateProfileDto,
+  ): Promise<UserProfileDto> {
     const updated = await this.userRepository.update(userId, dto);
     if (!updated) throw new NotFoundException('User not found');
     const user = await this.userRepository.findById(userId);
