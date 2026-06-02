@@ -7,6 +7,7 @@ import CategoryListPage from '@/features/categories/presentation/pages/CategoryL
 import RegisterPage from '@/features/auth/presentation/pages/RegisterPage';
 import LoginPage from '@/features/auth/presentation/pages/LoginPage';
 import ProfilePage from '@/features/profile/presentation/pages/ProfilePage';
+import GoalListPage from '@/features/goals/presentation/pages/GoalListPage';
 
 export default function Router() {
   const PublicRoutes = () => {
@@ -25,6 +26,7 @@ export default function Router() {
           <Route path={routes.home} element={<h1>Private Route</h1>} />
           <Route path={routes.categories} element={<CategoryListPage />} />
           <Route path={routes.profile} element={<ProfilePage />} />
+          <Route path={routes.goals} element={<GoalListPage />} />
         </Route>
       </Route>
     );

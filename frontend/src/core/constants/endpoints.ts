@@ -10,6 +10,10 @@ const endpoints = {
   },
   categories: '/categories',
   categoryById: (id: string) => `/categories/${id}`,
+  goals: {
+    base: '/goals',
+    byId: (id: string) => `/goals/${id}`,
+  },
 };
 
 export default endpoints;
