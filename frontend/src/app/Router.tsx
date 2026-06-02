@@ -23,7 +23,31 @@ export default function Router() {
       <Route element={<Private redirect={routes.login} />}>
         <Route element={<Layout />}>
           <Route path={routes.home} element={<h1>Private Route</h1>} />
+          <Route
+            path={routes.dashboard}
+            element={
+              <div className="container mx-auto px-4 py-6 sm:px-6 lg:px-8">
+                <h1 className="text-2xl font-semibold">Dashboard</h1>
+              </div>
+            }
+          />
+          <Route
+            path={routes.transactions}
+            element={
+              <div className="container mx-auto px-4 py-6 sm:px-6 lg:px-8">
+                <h1 className="text-2xl font-semibold">Transactions</h1>
+              </div>
+            }
+          />
           <Route path={routes.categories} element={<CategoryListPage />} />
+          <Route
+            path={routes.goals}
+            element={
+              <div className="container mx-auto px-4 py-6 sm:px-6 lg:px-8">
+                <h1 className="text-2xl font-semibold">Objectifs</h1>
+              </div>
+            }
+          />
           <Route path={routes.profile} element={<ProfilePage />} />
         </Route>
       </Route>
