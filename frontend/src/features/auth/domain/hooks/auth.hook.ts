@@ -6,19 +6,25 @@ import type { LoginRequestDto } from '../../data/dtos/auth.dto';
 
 const repository = new AuthRepositoryImpl();
 
-export const registerSchema = z.object({
-  title: z.enum(['Mr.', 'Mrs.']),
-  firstName: z.string().min(1, 'Le prénom est requis'),
-  lastName: z.string().min(1, 'Le nom est requis'),
-  age: z.coerce.number().min(18, 'Vous devez avoir au moins 18 ans'),
-  email: z.string().email('Email invalide'),
-  password: z
-    .string()
-    .min(8, 'Le mot de passe doit contenir au moins 8 caractères')
-    .regex(/[A-Z]/, 'Le mot de passe doit contenir au moins une majuscule')
-    .regex(/[0-9]/, 'Le mot de passe doit contenir au moins un chiffre'),
-  currency: z.string().optional(),
-});
+export const registerSchema = z
+  .object({
+    title: z.enum(['Mr.', 'Mrs.']),
+    firstName: z.string().min(1, 'Le prénom est requis'),
+    lastName: z.string().min(1, 'Le nom est requis'),
+    age: z.coerce.number().min(18, 'Vous devez avoir au moins 18 ans'),
+    email: z.string().email('Email invalide'),
+    password: z
+      .string()
+      .min(8, 'Le mot de passe doit contenir au moins 8 caractères')
+      .regex(/[A-Z]/, 'Le mot de passe doit contenir au moins une majuscule')
+      .regex(/[0-9]/, 'Le mot de passe doit contenir au moins un chiffre'),
+    confirmPassword: z.string().min(1, 'La confirmation est requise'),
+    currency: z.string().optional(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'Les mots de passe ne correspondent pas',
+    path: ['confirmPassword'],
+  });
 
 export type RegisterFormData = z.infer<typeof registerSchema>;
 

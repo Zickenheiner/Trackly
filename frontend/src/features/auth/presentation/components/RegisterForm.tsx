@@ -42,11 +42,12 @@ export default function RegisterForm() {
       age: 18,
       email: '',
       password: '',
+      confirmPassword: '',
       currency: 'EUR',
     },
   });
 
-  const onSubmit = (data: RegisterFormData) => {
+  const onSubmit = ({ confirmPassword: _, ...data }: RegisterFormData) => {
     register(data, {
       onSuccess: () => {
         navigate(routes.home);
@@ -157,6 +158,20 @@ export default function RegisterForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Mot de passe</FormLabel>
+              <FormControl>
+                <Input type="password" placeholder="••••••••" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="confirmPassword"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Confirmer le mot de passe</FormLabel>
               <FormControl>
                 <Input type="password" placeholder="••••••••" {...field} />
               </FormControl>
