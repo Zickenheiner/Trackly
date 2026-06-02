@@ -18,6 +18,8 @@
     "fix": "npx prettier --write src"
   },
   "dependencies": {
+    "@fontsource-variable/dm-sans": "^5.2.8",
+    "@fontsource/jetbrains-mono": "^5.2.8",
     "@hookform/resolvers": "^5.4.0",
     "@radix-ui/react-slot": "^1.2.4",
     "@tailwindcss/vite": "^4.1.11",

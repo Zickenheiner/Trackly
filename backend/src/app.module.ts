@@ -5,6 +5,8 @@ import { APP_GUARD } from '@nestjs/core';
 import { AccessTokenGuard } from '@core/guards/access-token.guard';
 import { AtStrategy } from '@core/strategies/at.strategy';
 import { CategoryBaseModule } from '@features/categories/modules/category.module';
+import { UserBaseModule } from '@features/user/modules/user.module';
+import { AuthBaseModule } from '@features/auth/modules/auth.module';
 
 @Module({
   imports: [
@@ -23,6 +25,8 @@ import { CategoryBaseModule } from '@features/categories/modules/category.module
       inject: [ConfigService],
     }),
     CategoryBaseModule,
+    UserBaseModule,
+    AuthBaseModule,
   ],
   providers: [
     AtStrategy,
