@@ -6,7 +6,6 @@ const routes = {
   goals: '/goals',
   register: '/register',
   profile: '/profile',
-  transactionCreate: '/transactions/new',
 };
 
 export default routes;
