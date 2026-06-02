@@ -8,6 +8,7 @@ import { CategoryBaseModule } from '@features/categories/modules/category.module
 import { UserBaseModule } from '@features/user/modules/user.module';
 import { AuthBaseModule } from '@features/auth/modules/auth.module';
 import { GoalBaseModule } from '@features/goals/modules/goal.module';
+import { DashboardBaseModule } from '@features/dashboard/modules/dashboard.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { GoalBaseModule } from '@features/goals/modules/goal.module';
     UserBaseModule,
     AuthBaseModule,
     GoalBaseModule,
+    DashboardBaseModule,
   ],
   providers: [
     AtStrategy,
