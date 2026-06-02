@@ -1,4 +1,7 @@
-import { CreateUserDto, UpdateUserDto } from '@features/user/domains/dtos/user.dto';
+import {
+  CreateUserDto,
+  UpdateUserDto,
+} from '@features/user/domains/dtos/user.dto';
 import { UserEntity } from '@features/user/domains/entities/user.entity';
 import { IUserService } from '@features/user/interfaces/services/user.iservice';
 import { Public } from '@core/decorators/public.decorator';
@@ -12,7 +15,13 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
 @ApiTags('users')
 @Controller('users')

@@ -10,6 +10,7 @@ export class CategoryMapper {
     entity.setIcon(doc.icon);
     entity.setColor(doc.color);
     entity.setIsDefault(doc.isDefault);
+    entity.setUserId(doc.userId ? doc.userId.toString() : null);
     return entity;
   }
 }

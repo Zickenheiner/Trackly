@@ -10,6 +10,7 @@ import {
   Param,
   Patch,
   Post,
+  Req,
 } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
 import {
@@ -39,8 +40,8 @@ export class CategoryController {
     description: 'Unauthenticated',
   })
   @Get()
-  async findAll() {
-    return this.categoryService.findAll();
+  async findAll(@Req() req: { user: { sub: string } }) {
+    return this.categoryService.findAll(req.user.sub);
   }
 
   @ApiOperation({
@@ -66,8 +67,11 @@ export class CategoryController {
     description: 'Category name already used',
   })
   @Post()
-  async create(@Body() dto: CreateCategoryDto) {
-    return this.categoryService.create(dto);
+  async create(
+    @Body() dto: CreateCategoryDto,
+    @Req() req: { user: { sub: string } },
+  ) {
+    return this.categoryService.create(dto, req.user.sub);
   }
 
   @ApiOperation({
@@ -98,8 +102,12 @@ export class CategoryController {
     description: 'Category not found',
   })
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() dto: UpdateCategoryDto) {
-    return this.categoryService.update(id, dto);
+  async update(
+    @Param('id') id: string,
+    @Body() dto: UpdateCategoryDto,
+    @Req() req: { user: { sub: string } },
+  ) {
+    return this.categoryService.update(id, dto, req.user.sub);
   }
 
   @ApiOperation({
@@ -129,7 +137,7 @@ export class CategoryController {
   })
   @HttpCode(204)
   @Delete(':id')
-  async delete(@Param('id') id: string) {
-    return this.categoryService.delete(id);
+  async delete(@Param('id') id: string, @Req() req: { user: { sub: string } }) {
+    return this.categoryService.delete(id, req.user.sub);
   }
 }

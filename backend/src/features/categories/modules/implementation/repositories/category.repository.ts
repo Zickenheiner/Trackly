@@ -21,15 +21,20 @@ export class CategoryRepository implements ICategoryRepository {
     private readonly categoryMapper: CategoryMapper,
   ) {}
 
-  async findAll(): Promise<CategoryEntity[] | null> {
-    const categories = await this.categoryModel.find().exec();
+  async findAll(userId: string): Promise<CategoryEntity[] | null> {
+    const categories = await this.categoryModel
+      .find({ $or: [{ isDefault: true }, { userId }] })
+      .exec();
     return categories
       ? categories.map((doc) => this.categoryMapper.toEntity(doc))
       : null;
   }
 
-  async findByName(name: string): Promise<CategoryEntity | null> {
-    const category = await this.categoryModel.findOne({ name }).exec();
+  async findByName(
+    name: string,
+    userId: string,
+  ): Promise<CategoryEntity | null> {
+    const category = await this.categoryModel.findOne({ name, userId }).exec();
     return category ? this.categoryMapper.toEntity(category) : null;
   }
 
@@ -38,8 +43,15 @@ export class CategoryRepository implements ICategoryRepository {
     return category ? this.categoryMapper.toEntity(category) : null;
   }
 
-  async create(dto: CreateCategoryDto): Promise<CategoryEntity> {
-    const document = new this.categoryModel({ ...dto, isDefault: false });
+  async create(
+    dto: CreateCategoryDto,
+    userId: string,
+  ): Promise<CategoryEntity> {
+    const document = new this.categoryModel({
+      ...dto,
+      isDefault: false,
+      userId,
+    });
     const created = await document.save();
     return this.categoryMapper.toEntity(created);
   }

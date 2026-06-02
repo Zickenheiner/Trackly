@@ -8,7 +8,12 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as argon2 from 'argon2';
 import { IAuthService } from '../../../interfaces/services/auth.iservice';
-import { RegisterDto, LoginDto, TokensDto, AuthResponseDto } from '@features/auth/domains/dtos/auth.dto';
+import {
+  RegisterDto,
+  LoginDto,
+  TokensDto,
+  AuthResponseDto,
+} from '@features/auth/domains/dtos/auth.dto';
 import { IUserService } from '@features/user/interfaces/services/user.iservice';
 import { IUserRepository } from '@features/user/interfaces/repositories/user.irepository';
 
@@ -26,7 +31,8 @@ export class AuthService implements IAuthService {
   async register(dto: RegisterDto): Promise<AuthResponseDto> {
     await this.userService.create({ ...dto, password: dto.password });
     const user = await this.userService.findByEmail(dto.email);
-    if (!user) throw new UnauthorizedException('User not found after registration');
+    if (!user)
+      throw new UnauthorizedException('User not found after registration');
     const tokens = await this.generateTokens(user.getId(), user.getEmail());
     await this.updateRefreshToken(user.getId(), tokens.refreshToken);
     return {
@@ -74,12 +80,18 @@ export class AuthService implements IAuthService {
     return this.userRepository.update(userId, { refreshToken: null });
   }
 
-  async refreshTokens(userId: string, refreshToken: string): Promise<TokensDto> {
+  async refreshTokens(
+    userId: string,
+    refreshToken: string,
+  ): Promise<TokensDto> {
     const user = await this.userService.findById(userId);
     if (!user || !user.getRefreshToken()) {
       throw new ForbiddenException('Access denied');
     }
-    const tokenMatch = await argon2.verify(user.getRefreshToken(), refreshToken);
+    const tokenMatch = await argon2.verify(
+      user.getRefreshToken(),
+      refreshToken,
+    );
     if (!tokenMatch) {
       throw new ForbiddenException('Access denied');
     }
@@ -88,7 +100,10 @@ export class AuthService implements IAuthService {
     return tokens;
   }
 
-  private async generateTokens(userId: string, email: string): Promise<TokensDto> {
+  private async generateTokens(
+    userId: string,
+    email: string,
+  ): Promise<TokensDto> {
     const payload = { sub: userId, email };
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(payload, {
@@ -103,7 +118,10 @@ export class AuthService implements IAuthService {
     return { accessToken, refreshToken };
   }
 
-  private async updateRefreshToken(userId: string, refreshToken: string): Promise<void> {
+  private async updateRefreshToken(
+    userId: string,
+    refreshToken: string,
+  ): Promise<void> {
     const hashed = await argon2.hash(refreshToken);
     await this.userRepository.update(userId, { refreshToken: hashed });
   }

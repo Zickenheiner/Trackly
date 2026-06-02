@@ -1,4 +1,9 @@
-import { RegisterDto, LoginDto, TokensDto, AuthResponseDto } from '@features/auth/domains/dtos/auth.dto';
+import {
+  RegisterDto,
+  LoginDto,
+  TokensDto,
+  AuthResponseDto,
+} from '@features/auth/domains/dtos/auth.dto';
 
 export interface IAuthService {
   register(dto: RegisterDto): Promise<AuthResponseDto>;

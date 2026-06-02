@@ -1,7 +1,10 @@
 import { ConflictException, Inject, Injectable } from '@nestjs/common';
 import { IUserService } from '../../../interfaces/services/user.iservice';
 import { IUserRepository } from '@features/user/interfaces/repositories/user.irepository';
-import { CreateUserDto, UpdateUserDto } from '@features/user/domains/dtos/user.dto';
+import {
+  CreateUserDto,
+  UpdateUserDto,
+} from '@features/user/domains/dtos/user.dto';
 import { UserEntity } from '@features/user/domains/entities/user.entity';
 import * as argon2 from 'argon2';
 

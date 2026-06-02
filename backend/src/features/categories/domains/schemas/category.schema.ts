@@ -19,6 +19,14 @@ export class Category {
 
   @Prop({ required: true, type: Boolean, default: false })
   isDefault: boolean;
+
+  @Prop({
+    required: false,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    default: null,
+  })
+  userId: mongoose.Types.ObjectId;
 }
 
 export const CategorySchema = SchemaFactory.createForClass(Category);

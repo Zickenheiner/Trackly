@@ -5,8 +5,12 @@ import {
 import { CategoryEntity } from '@features/categories/domains/entities/category.entity';
 
 export interface ICategoryService {
-  findAll(): Promise<CategoryEntity[] | null>;
-  create(dto: CreateCategoryDto): Promise<CategoryEntity>;
-  update(id: string, dto: UpdateCategoryDto): Promise<CategoryEntity>;
-  delete(id: string): Promise<void>;
+  findAll(userId: string): Promise<CategoryEntity[] | null>;
+  create(dto: CreateCategoryDto, userId: string): Promise<CategoryEntity>;
+  update(
+    id: string,
+    dto: UpdateCategoryDto,
+    userId: string,
+  ): Promise<CategoryEntity>;
+  delete(id: string, userId: string): Promise<void>;
 }

@@ -5,10 +5,10 @@ import {
 import { CategoryEntity } from '@features/categories/domains/entities/category.entity';
 
 export interface ICategoryRepository {
-  findAll(): Promise<CategoryEntity[] | null>;
-  findByName(name: string): Promise<CategoryEntity | null>;
+  findAll(userId: string): Promise<CategoryEntity[] | null>;
+  findByName(name: string, userId: string): Promise<CategoryEntity | null>;
   findById(id: string): Promise<CategoryEntity | null>;
-  create(dto: CreateCategoryDto): Promise<CategoryEntity>;
+  create(dto: CreateCategoryDto, userId: string): Promise<CategoryEntity>;
   update(id: string, dto: UpdateCategoryDto): Promise<CategoryEntity | null>;
   delete(id: string): Promise<boolean>;
 }

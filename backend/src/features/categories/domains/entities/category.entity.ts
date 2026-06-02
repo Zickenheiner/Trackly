@@ -32,6 +32,14 @@ export class CategoryEntity {
   })
   private isDefault: boolean;
 
+  @ApiProperty({
+    example: '68b4d59919d9b7a94b4fde21',
+    description:
+      'The identifier of the user owning the category, null if default',
+    nullable: true,
+  })
+  private userId: string | null;
+
   constructor(_id: Category) {
     this.id = _id;
   }
@@ -62,6 +70,10 @@ export class CategoryEntity {
     return this.isDefault;
   }
 
+  getUserId(): string | null {
+    return this.userId;
+  }
+
   //———————SETTER———————
 
   setName(value: string): void {
@@ -78,5 +90,9 @@ export class CategoryEntity {
 
   setIsDefault(value: boolean): void {
     this.isDefault = value;
+  }
+
+  setUserId(value: string | null): void {
+    this.userId = value;
   }
 }
