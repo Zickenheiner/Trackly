@@ -83,3 +83,68 @@ export class TokensDto {
   })
   refreshToken: string;
 }
+
+export class AuthUserDto {
+  @ApiProperty({
+    description: 'User unique identifier',
+    example: '68b4d59919d9b7a94b4fde21',
+  })
+  id: string;
+
+  @ApiProperty({
+    description: 'Title of the user',
+    example: 'Mr.',
+    enum: ['Mr.', 'Mrs.'],
+  })
+  title: string;
+
+  @ApiProperty({
+    description: 'First name of the user',
+    example: 'John',
+  })
+  firstName: string;
+
+  @ApiProperty({
+    description: 'Last name of the user',
+    example: 'Doe',
+  })
+  lastName: string;
+
+  @ApiProperty({
+    description: 'Age of the user',
+    example: 30,
+  })
+  age: number;
+
+  @ApiProperty({
+    description: 'Email address of the user',
+    example: 'john.doe@example.com',
+  })
+  email: string;
+
+  @ApiProperty({
+    description: 'Preferred currency code',
+    example: 'EUR',
+  })
+  currency: string;
+}
+
+export class AuthResponseDto {
+  @ApiProperty({
+    description: 'JWT access token',
+    example: 'eyJhbGciOiJIUzI1NiJ9...',
+  })
+  accessToken: string;
+
+  @ApiProperty({
+    description: 'JWT refresh token',
+    example: 'eyJhbGciOiJIUzI1NiJ9...',
+  })
+  refreshToken: string;
+
+  @ApiProperty({
+    description: 'Authenticated user data',
+    type: AuthUserDto,
+  })
+  user: AuthUserDto;
+}

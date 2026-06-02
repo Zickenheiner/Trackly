@@ -18,7 +18,7 @@ import {
 } from '@nestjs/swagger';
 import type { Response } from 'express';
 import { IAuthService } from '@features/auth/interfaces/services/auth.iservice';
-import { LoginDto, RegisterDto, TokensDto } from '@features/auth/domains/dtos/auth.dto';
+import { LoginDto, RegisterDto, TokensDto, AuthResponseDto } from '@features/auth/domains/dtos/auth.dto';
 import { Public } from '@core/decorators/public.decorator';
 import { AuthGuard } from '@nestjs/passport';
 
@@ -41,21 +41,23 @@ export class AuthController {
 
   @ApiOperation({ summary: 'Login with email and password' })
   @ApiBody({ type: LoginDto })
-  @ApiResponse({ status: 200, type: TokensDto })
+  @ApiResponse({ status: 200, type: AuthResponseDto })
+  @ApiResponse({ status: 401, description: 'Invalid credentials' })
+  @ApiResponse({ status: 400, description: 'Validation failed' })
   @Public()
   @HttpCode(HttpStatus.OK)
   @Post('login')
   async login(
     @Body() dto: LoginDto,
     @Res({ passthrough: true }) res: Response,
-  ): Promise<TokensDto> {
-    const tokens = await this.authService.login(dto);
-    res.cookie('access_token', tokens.accessToken, {
+  ): Promise<AuthResponseDto> {
+    const result = await this.authService.login(dto);
+    res.cookie('access_token', result.accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
     });
-    return tokens;
+    return result;
   }
 
   @ApiOperation({ summary: 'Logout the current user' })

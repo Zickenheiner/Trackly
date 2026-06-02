@@ -8,7 +8,7 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as argon2 from 'argon2';
 import { IAuthService } from '../../../interfaces/services/auth.iservice';
-import { RegisterDto, LoginDto, TokensDto } from '@features/auth/domains/dtos/auth.dto';
+import { RegisterDto, LoginDto, TokensDto, AuthResponseDto } from '@features/auth/domains/dtos/auth.dto';
 import { IUserService } from '@features/user/interfaces/services/user.iservice';
 import { IUserRepository } from '@features/user/interfaces/repositories/user.irepository';
 
@@ -30,7 +30,7 @@ export class AuthService implements IAuthService {
     });
   }
 
-  async login(dto: LoginDto): Promise<TokensDto> {
+  async login(dto: LoginDto): Promise<AuthResponseDto> {
     const user = await this.userService.findByEmail(dto.email);
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
@@ -41,7 +41,19 @@ export class AuthService implements IAuthService {
     }
     const tokens = await this.generateTokens(user.getId(), user.getEmail());
     await this.updateRefreshToken(user.getId(), tokens.refreshToken);
-    return tokens;
+    return {
+      accessToken: tokens.accessToken,
+      refreshToken: tokens.refreshToken,
+      user: {
+        id: user.getId(),
+        title: user.getTitle(),
+        firstName: user.getFirstName(),
+        lastName: user.getLastName(),
+        age: user.getAge(),
+        email: user.getEmail(),
+        currency: user.getCurrency(),
+      },
+    };
   }
 
   async logout(userId: string): Promise<boolean> {
