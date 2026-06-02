@@ -99,11 +99,7 @@ export default function LoginForm() {
           </motion.p>
         )}
 
-        <Button
-          type="submit"
-          className="w-full"
-          disabled={loginIsPending}
-        >
+        <Button type="submit" className="w-full" disabled={loginIsPending}>
           {loginIsPending ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />

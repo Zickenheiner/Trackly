@@ -1,4 +1,9 @@
-import { AddDepositDto, CreateGoalDto, GoalResponseDto, UpdateGoalDto } from '@features/goals/domains/dtos/goal.dto';
+import {
+  AddDepositDto,
+  CreateGoalDto,
+  GoalResponseDto,
+  UpdateGoalDto,
+} from '@features/goals/domains/dtos/goal.dto';
 import { GoalEntity } from '@features/goals/domains/entities/goal.entity';
 import { IGoalService } from '@features/goals/interfaces/services/goal.iservice';
 import {
@@ -35,7 +40,11 @@ export class GoalController {
 
   @ApiOperation({ summary: 'Create a savings goal' })
   @ApiBody({ type: CreateGoalDto })
-  @ApiResponse({ status: 201, type: GoalResponseDto, description: 'Goal created' })
+  @ApiResponse({
+    status: 201,
+    type: GoalResponseDto,
+    description: 'Goal created',
+  })
   @ApiResponse({ status: 400, description: 'Validation failed' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @HttpCode(HttpStatus.CREATED)
@@ -55,7 +64,9 @@ export class GoalController {
   @ApiResponse({ status: 200, type: [GoalResponseDto] })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Get()
-  async findAll(@Req() req: { user: { sub: string } }): Promise<GoalResponseDto[]> {
+  async findAll(
+    @Req() req: { user: { sub: string } },
+  ): Promise<GoalResponseDto[]> {
     const entities = await this.goalService.findAll(req.user.sub);
     return (entities ?? []).map((e) => this.toResponseDto(e));
   }
@@ -76,7 +87,11 @@ export class GoalController {
   @ApiOperation({ summary: 'Update a savings goal' })
   @ApiParam({ name: 'id', type: String })
   @ApiBody({ type: UpdateGoalDto })
-  @ApiResponse({ status: 200, type: GoalResponseDto, description: 'Goal updated' })
+  @ApiResponse({
+    status: 200,
+    type: GoalResponseDto,
+    description: 'Goal updated',
+  })
   @ApiResponse({ status: 400, description: 'Validation failed' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 404, description: 'Goal not found' })
@@ -121,7 +136,12 @@ export class GoalController {
   @ApiOperation({ summary: 'Add a deposit to a savings goal' })
   @ApiParam({ name: 'id', type: String })
   @ApiBody({ type: AddDepositDto })
-  @ApiResponse({ status: 200, type: GoalResponseDto, description: 'Deposit added, returns updated goal with status: completed when target is reached' })
+  @ApiResponse({
+    status: 200,
+    type: GoalResponseDto,
+    description:
+      'Deposit added, returns updated goal with status: completed when target is reached',
+  })
   @ApiResponse({ status: 400, description: 'Validation failed' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 404, description: 'Goal not found' })

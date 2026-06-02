@@ -44,7 +44,8 @@ export default function CreateGoalDialog() {
         <DialogHeader>
           <DialogTitle>Nouvel objectif d'épargne</DialogTitle>
           <DialogDescription>
-            Définissez un objectif financier avec un montant cible et une date limite.
+            Définissez un objectif financier avec un montant cible et une date
+            limite.
           </DialogDescription>
         </DialogHeader>
         <GoalForm

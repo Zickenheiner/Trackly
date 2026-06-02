@@ -21,7 +21,10 @@ import {
 } from '@/core/components/ui/form';
 import { Input } from '@/core/components/ui/input';
 import { Button } from '@/core/components/ui/button';
-import { addDepositSchema, type AddDepositFormData } from '../../domain/schemas/deposit.schema';
+import {
+  addDepositSchema,
+  type AddDepositFormData,
+} from '../../domain/schemas/deposit.schema';
 import { useAddDeposit } from '../../domain/hooks/goal.hook';
 
 interface Props {
@@ -80,7 +83,11 @@ export default function AddDepositDialog({ goalId, goalName }: Props) {
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4" noValidate>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-4"
+            noValidate
+          >
             <FormField
               control={form.control}
               name="amount"
@@ -113,7 +120,9 @@ export default function AddDepositDialog({ goalId, goalName }: Props) {
                       type="date"
                       {...field}
                       value={field.value ?? ''}
-                      onChange={(e) => field.onChange(e.target.value || undefined)}
+                      onChange={(e) =>
+                        field.onChange(e.target.value || undefined)
+                      }
                     />
                   </FormControl>
                   <FormMessage />
@@ -122,7 +131,9 @@ export default function AddDepositDialog({ goalId, goalName }: Props) {
             />
 
             {form.formState.errors.root && (
-              <p className="text-sm text-destructive">{form.formState.errors.root.message}</p>
+              <p className="text-sm text-destructive">
+                {form.formState.errors.root.message}
+              </p>
             )}
 
             <div className="flex justify-end gap-2 pt-2">
@@ -135,7 +146,9 @@ export default function AddDepositDialog({ goalId, goalName }: Props) {
                 Annuler
               </Button>
               <Button type="submit" disabled={addDepositIsLoading}>
-                {addDepositIsLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                {addDepositIsLoading && (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                )}
                 Valider
               </Button>
             </div>

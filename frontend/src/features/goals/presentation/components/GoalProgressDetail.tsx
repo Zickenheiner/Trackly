@@ -20,14 +20,17 @@ function estimateCompletionDate(goal: GoalEntity): Date | null {
   if (monthlyAverage <= 0) return null;
 
   const monthsRemaining = remaining / monthlyAverage;
-  const estimatedDate = new Date(now.getTime() + monthsRemaining * 30.44 * 24 * 60 * 60 * 1000);
+  const estimatedDate = new Date(
+    now.getTime() + monthsRemaining * 30.44 * 24 * 60 * 60 * 1000,
+  );
 
   return estimatedDate;
 }
 
 export default function GoalProgressDetail({ goal }: Props) {
   const remaining = goal.targetAmount - goal.savedAmount;
-  const estimatedDate = goal.status === 'completed' ? null : estimateCompletionDate(goal);
+  const estimatedDate =
+    goal.status === 'completed' ? null : estimateCompletionDate(goal);
 
   const formattedRemaining = new Intl.NumberFormat('fr-FR', {
     style: 'currency',

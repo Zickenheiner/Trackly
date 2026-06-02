@@ -42,8 +42,12 @@ const CURRENCIES = [
 ];
 
 export default function ProfileForm({ profile }: Props) {
-  const { updateProfile, updateProfileIsPending, updateProfileError, updateProfileIsSuccess } =
-    useUpdateProfile();
+  const {
+    updateProfile,
+    updateProfileIsPending,
+    updateProfileError,
+    updateProfileIsSuccess,
+  } = useUpdateProfile();
 
   const form = useForm<UpdateProfileFormData>({
     resolver: zodResolver(updateProfileSchema),
@@ -172,7 +176,11 @@ export default function ProfileForm({ profile }: Props) {
         />
 
         <motion.div whileTap={{ scale: 0.98 }}>
-          <Button type="submit" className="w-full" disabled={updateProfileIsPending}>
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={updateProfileIsPending}
+          >
             {updateProfileIsPending ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />

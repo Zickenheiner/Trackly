@@ -44,12 +44,15 @@ export default function DeleteGoalDialog({ goalId, goalName }: Props) {
           <AlertDialogTitle>Supprimer l'objectif</AlertDialogTitle>
           <AlertDialogDescription>
             Êtes-vous sûr de vouloir supprimer l'objectif{' '}
-            <span className="font-semibold">{goalName}</span> ? Les versements associés seront
-            conservés dans l'historique. Cette action est irréversible.
+            <span className="font-semibold">{goalName}</span> ? Les versements
+            associés seront conservés dans l'historique. Cette action est
+            irréversible.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={deleteGoalIsLoading}>Annuler</AlertDialogCancel>
+          <AlertDialogCancel disabled={deleteGoalIsLoading}>
+            Annuler
+          </AlertDialogCancel>
           <AlertDialogAction
             onClick={onConfirm}
             disabled={deleteGoalIsLoading}

@@ -1,7 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { IGoalService } from '../../../interfaces/services/goal.iservice';
 import { IGoalRepository } from '@features/goals/interfaces/repositories/goal.irepository';
-import { AddDepositDto, CreateGoalDto, UpdateGoalDto } from '@features/goals/domains/dtos/goal.dto';
+import {
+  AddDepositDto,
+  CreateGoalDto,
+  UpdateGoalDto,
+} from '@features/goals/domains/dtos/goal.dto';
 import { GoalEntity } from '@features/goals/domains/entities/goal.entity';
 
 @Injectable()

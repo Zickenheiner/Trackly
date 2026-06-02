@@ -1,7 +1,10 @@
 import endpoints from '@/core/constants/endpoints';
 import request from '@/core/config/api';
 import methods from '@/core/constants/methods';
-import type { UserProfileResponseDto, UpdateProfileRequestDto } from '../dtos/user-profile.dto';
+import type {
+  UserProfileResponseDto,
+  UpdateProfileRequestDto,
+} from '../dtos/user-profile.dto';
 
 class UserProfileApi {
   constructor(private readonly baseUrl: string = endpoints.users.me) {}
@@ -13,7 +16,9 @@ class UserProfileApi {
     });
   }
 
-  async updateMe(data: UpdateProfileRequestDto): Promise<UserProfileResponseDto> {
+  async updateMe(
+    data: UpdateProfileRequestDto,
+  ): Promise<UserProfileResponseDto> {
     return request<UserProfileResponseDto>({
       url: this.baseUrl,
       method: methods.PATCH,
