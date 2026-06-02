@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { PlusCircle, Loader2 } from 'lucide-react';
+import { PlusCircle, Loader2, Trophy } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { toast } from 'sonner';
 import {
   Dialog,
   DialogContent,
@@ -42,7 +43,7 @@ export default function AddDepositDialog({ goalId, goalName }: Props) {
 
   const onSubmit = async (data: AddDepositFormData) => {
     try {
-      await addDepositAsync({
+      const result = await addDepositAsync({
         goalId,
         data: {
           amount: data.amount,
@@ -51,6 +52,13 @@ export default function AddDepositDialog({ goalId, goalName }: Props) {
       });
       form.reset();
       setOpen(false);
+      if (result.status === 'completed') {
+        toast.success('Objectif atteint !', {
+          description: `Félicitations ! Vous avez atteint votre objectif « ${goalName} ».`,
+          icon: <Trophy className="h-5 w-5 text-yellow-500" />,
+          duration: 6000,
+        });
+      }
     } catch {
       void 0;
     }

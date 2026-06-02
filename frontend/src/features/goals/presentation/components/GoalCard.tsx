@@ -1,7 +1,8 @@
-import { Target, CalendarClock } from 'lucide-react';
+import { Target, CalendarClock, Trophy } from 'lucide-react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/core/components/ui/card';
 import { Badge } from '@/core/components/ui/badge';
 import { Progress } from '@/core/components/ui/progress';
+import { cn } from '@/core/utils/cn';
 import type { GoalEntity } from '../../domain/entities/goal.entity';
 import AddDepositDialog from './AddDepositDialog';
 import GoalProgressDetail from './GoalProgressDetail';
@@ -13,6 +14,8 @@ interface Props {
 }
 
 export default function GoalCard({ goal }: Props) {
+  const isCompleted = goal.status === 'completed';
+
   const formattedTarget = new Intl.NumberFormat('fr-FR', {
     style: 'currency',
     currency: 'EUR',
@@ -30,16 +33,28 @@ export default function GoalCard({ goal }: Props) {
     : null;
 
   return (
-    <Card className="overflow-hidden transition-shadow hover:shadow-md">
+    <Card
+      className={cn(
+        'overflow-hidden transition-shadow hover:shadow-md',
+        isCompleted && 'border-green-500/60 bg-green-50/30 dark:bg-green-950/10',
+      )}
+    >
       <CardHeader className="pb-2">
         <div className="flex items-start justify-between gap-2">
           <div className="flex min-w-0 items-center gap-2">
-            <Target className="h-5 w-5 shrink-0 text-primary" aria-hidden />
+            {isCompleted ? (
+              <Trophy className="h-5 w-5 shrink-0 text-yellow-500" aria-hidden />
+            ) : (
+              <Target className="h-5 w-5 shrink-0 text-primary" aria-hidden />
+            )}
             <CardTitle className="truncate text-base">{goal.name}</CardTitle>
           </div>
           <div className="flex shrink-0 items-center gap-1">
-            <Badge variant={goal.status === 'completed' ? 'default' : 'secondary'}>
-              {goal.status === 'completed' ? 'Atteint' : 'En cours'}
+            <Badge
+              variant={isCompleted ? 'default' : 'secondary'}
+              className={cn(isCompleted && 'bg-green-600 hover:bg-green-700')}
+            >
+              {isCompleted ? 'Atteint' : 'En cours'}
             </Badge>
             <EditGoalDialog goal={goal} />
             <DeleteGoalDialog goalId={goal.id} goalName={goal.name} />

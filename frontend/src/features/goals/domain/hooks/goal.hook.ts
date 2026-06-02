@@ -50,7 +50,7 @@ export function useCreateGoal() {
 export function useAddDeposit() {
   const queryClient = useQueryClient();
 
-  const { mutate, mutateAsync, isPending, error } = useMutation({
+  const { mutate, mutateAsync, isPending, error, data } = useMutation({
     mutationFn: ({ goalId, data }: { goalId: string; data: AddDepositRequestDto }) =>
       repository.addDeposit(goalId, data),
     onSuccess: () => {
@@ -63,6 +63,7 @@ export function useAddDeposit() {
     addDepositAsync: mutateAsync,
     addDepositIsLoading: isPending,
     addDepositError: error,
+    addDepositResult: data,
   };
 }
 
