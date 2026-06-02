@@ -1,5 +1,6 @@
 import {
   CreateUserDto,
+  UpdatePreferencesDto,
   UpdateUserDto,
 } from '@features/user/domains/dtos/user.dto';
 import { UserEntity } from '@features/user/domains/entities/user.entity';
@@ -11,4 +12,5 @@ export interface IUserRepository {
   create(dto: CreateUserDto): Promise<boolean>;
   update(id: string, dto: UpdateUserDto): Promise<boolean>;
   delete(id: string): Promise<boolean>;
+  updatePreferences(id: string, dto: UpdatePreferencesDto): Promise<boolean>;
 }

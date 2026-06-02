@@ -1,7 +1,9 @@
 import {
   CreateUserDto,
+  UpdatePreferencesDto,
   UpdateProfileDto,
   UpdateUserDto,
+  UserPreferencesDto,
   UserProfileDto,
 } from '@features/user/domains/dtos/user.dto';
 import { UserEntity } from '@features/user/domains/entities/user.entity';
@@ -82,6 +84,20 @@ export class UserController {
     @Body() dto: UpdateProfileDto,
   ): Promise<UserProfileDto> {
     return this.userService.updateProfile(req.user.sub, dto);
+  }
+
+  @ApiOperation({ summary: 'Update current user theme preference' })
+  @ApiBearerAuth('AccessToken')
+  @ApiBody({ type: UpdatePreferencesDto })
+  @ApiResponse({ status: 200, type: UserPreferencesDto })
+  @ApiResponse({ status: 400, description: 'Validation échouée' })
+  @ApiResponse({ status: 401, description: 'Non authentifié' })
+  @Patch('me/preferences')
+  async updatePreferences(
+    @Req() req: { user: { sub: string } },
+    @Body() dto: UpdatePreferencesDto,
+  ): Promise<UserPreferencesDto> {
+    return this.userService.updatePreferences(req.user.sub, dto);
   }
 
   @ApiOperation({ summary: 'Update user' })
