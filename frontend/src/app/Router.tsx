@@ -24,14 +24,7 @@ export default function Router() {
   const PrivateRoutes = () => {
     return (
       <Route element={<Private redirect={routes.login} />}>
-        <Route
-          path={routes.dashboard}
-          element={
-            <div className="container mx-auto px-4 py-6 sm:px-6 lg:px-8">
-              <h1 className="text-2xl font-semibold">Dashboard</h1>
-            </div>
-          }
-        />
+        <Route path={routes.dashboard} element={<DashboardPage />} />
         <Route path={routes.transactions} element={<TransactionListPage />} />
         <Route path={routes.categories} element={<CategoryListPage />} />
         <Route path={routes.goals} element={<GoalListPage />} />
