@@ -5,6 +5,9 @@ const endpoints = {
     login: '/auth/login',
     logout: '/auth/logout',
   },
+  users: {
+    me: '/users/me',
+  },
 };
 
 export default endpoints;
