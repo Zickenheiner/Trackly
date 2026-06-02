@@ -12,7 +12,7 @@ import GoalListPage from '@/features/goals/presentation/pages/GoalListPage';
 export default function Router() {
   const PublicRoutes = () => {
     return (
-      <Route element={<Public redirect={routes.home} />}>
+      <Route element={<Public redirect={routes.dashboard} />}>
         <Route path={routes.login} element={<LoginPage />} />
         <Route path={routes.register} element={<RegisterPage />} />
       </Route>
@@ -22,7 +22,6 @@ export default function Router() {
   const PrivateRoutes = () => {
     return (
       <Route element={<Private redirect={routes.login} />}>
-        <Route path={routes.home} element={<h1>Private Route</h1>} />
         <Route
           path={routes.dashboard}
           element={
