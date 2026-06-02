@@ -23,7 +23,7 @@ export class GoalService implements IGoalService {
     return this.goalRepository.create(dto, userId);
   }
 
-  async update(id: string, dto: UpdateGoalDto): Promise<boolean> {
+  async update(id: string, dto: UpdateGoalDto): Promise<GoalEntity | null> {
     return this.goalRepository.update(id, dto);
   }
 

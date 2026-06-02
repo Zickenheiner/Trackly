@@ -73,23 +73,49 @@ export class GoalController {
     return this.toResponseDto(entity);
   }
 
-  @ApiOperation({ summary: 'Update a goal' })
+  @ApiOperation({ summary: 'Update a savings goal' })
   @ApiParam({ name: 'id', type: String })
   @ApiBody({ type: UpdateGoalDto })
-  @ApiResponse({ status: 200, type: Boolean })
+  @ApiResponse({ status: 200, type: GoalResponseDto, description: 'Goal updated' })
+  @ApiResponse({ status: 400, description: 'Validation failed' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 404, description: 'Goal not found' })
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() dto: UpdateGoalDto): Promise<boolean> {
-    return this.goalService.update(id, dto);
+  async update(
+    @Param('id') id: string,
+    @Body() dto: UpdateGoalDto,
+    @Req() req: { user: { sub: string } },
+  ): Promise<GoalResponseDto> {
+    const existing = await this.goalService.findById(id);
+    if (!existing || existing.getUserId().toString() !== req.user.sub) {
+      throw new NotFoundException('Goal not found');
+    }
+    const updated = await this.goalService.update(id, dto);
+    if (!updated) {
+      throw new NotFoundException('Goal not found');
+    }
+    return this.toResponseDto(updated);
   }
 
-  @ApiOperation({ summary: 'Delete a goal' })
+  @ApiOperation({ summary: 'Delete a savings goal' })
   @ApiParam({ name: 'id', type: String })
-  @ApiResponse({ status: 200, type: Boolean })
+  @ApiResponse({ status: 204, description: 'Goal deleted' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 404, description: 'Goal not found' })
+  @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
-  async delete(@Param('id') id: string): Promise<boolean> {
-    return this.goalService.delete(id);
+  async delete(
+    @Param('id') id: string,
+    @Req() req: { user: { sub: string } },
+  ): Promise<void> {
+    const existing = await this.goalService.findById(id);
+    if (!existing || existing.getUserId().toString() !== req.user.sub) {
+      throw new NotFoundException('Goal not found');
+    }
+    const deleted = await this.goalService.delete(id);
+    if (!deleted) {
+      throw new NotFoundException('Goal not found');
+    }
   }
 
   @ApiOperation({ summary: 'Add a deposit to a savings goal' })

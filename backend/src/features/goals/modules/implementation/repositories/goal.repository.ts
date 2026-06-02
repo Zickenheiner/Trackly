@@ -40,11 +40,17 @@ export class GoalRepository implements IGoalRepository {
     return created ? this.goalMapper.toEntity(created) : null;
   }
 
-  async update(id: string, dto: UpdateGoalDto): Promise<boolean> {
+  async update(id: string, dto: UpdateGoalDto): Promise<GoalEntity | null> {
+    const updatePayload: Partial<UpdateGoalDto> & { status?: string } = {};
+    if (dto.name !== undefined) updatePayload.name = dto.name;
+    if (dto.targetAmount !== undefined) updatePayload.targetAmount = dto.targetAmount;
+    if (dto.deadline !== undefined) updatePayload.deadline = dto.deadline;
+    if (dto.description !== undefined) updatePayload.description = dto.description;
+
     const updatedGoal = await this.goalModel
-      .findByIdAndUpdate(id, dto, { new: true })
+      .findByIdAndUpdate(id, { $set: updatePayload }, { new: true })
       .exec();
-    return !!updatedGoal;
+    return updatedGoal ? this.goalMapper.toEntity(updatedGoal) : null;
   }
 
   async delete(id: string): Promise<boolean> {
