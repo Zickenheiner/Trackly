@@ -1,7 +1,7 @@
-import { NavLink } from 'react-router-dom';
-import { motion } from 'motion/react';
 import { cn } from '@/core/utils/cn';
-import { navItems } from './nav-items';
+import { motion } from 'motion/react';
+import { NavLink } from 'react-router-dom';
+import { navItems } from '../constants/nav-items';
 
 export default function BottomNav() {
   return (

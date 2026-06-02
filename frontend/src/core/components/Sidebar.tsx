@@ -1,8 +1,7 @@
-import { NavLink } from 'react-router-dom';
-import { motion } from 'motion/react';
 import { cn } from '@/core/utils/cn';
-import LogoutButton from '@/features/auth/presentation/components/LogoutButton';
-import { navItems } from './nav-items';
+import { motion } from 'motion/react';
+import { NavLink } from 'react-router-dom';
+import { navItems } from '../constants/nav-items';
 
 export default function Sidebar() {
   return (
@@ -47,9 +46,6 @@ export default function Sidebar() {
           );
         })}
       </nav>
-      <div className="border-t border-sidebar-border p-3">
-        <LogoutButton />
-      </div>
     </aside>
   );
 }
