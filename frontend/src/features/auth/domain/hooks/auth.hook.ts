@@ -2,7 +2,11 @@ import { useMutation } from '@tanstack/react-query';
 import { z } from 'zod';
 import { useNavigate } from 'react-router-dom';
 import AuthRepositoryImpl from '../../data/repositories/auth.repository.impl';
-import { setAccessToken, setRefreshToken, clearTokens } from '@/core/local/storage';
+import {
+  setAccessToken,
+  setRefreshToken,
+  clearTokens,
+} from '@/core/local/storage';
 import routes from '@/core/constants/routes';
 import type { LoginRequestDto } from '../../data/dtos/auth.dto';
 

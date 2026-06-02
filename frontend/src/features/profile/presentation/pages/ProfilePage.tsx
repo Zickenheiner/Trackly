@@ -2,7 +2,13 @@ import { motion } from 'motion/react';
 import { AlertCircle, UserCircle } from 'lucide-react';
 import { useProfile } from '../../domain/hooks/user-profile.hook';
 import ProfileForm from '../components/ProfileForm';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/core/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/core/components/ui/card';
 import { Skeleton } from '@/core/components/ui/skeleton';
 import { Button } from '@/core/components/ui/button';
 import LogoutButton from '@/features/auth/presentation/components/LogoutButton';
