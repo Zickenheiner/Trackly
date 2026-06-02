@@ -121,7 +121,7 @@ export class GoalController {
   @ApiOperation({ summary: 'Add a deposit to a savings goal' })
   @ApiParam({ name: 'id', type: String })
   @ApiBody({ type: AddDepositDto })
-  @ApiResponse({ status: 200, type: GoalResponseDto, description: 'Deposit added, returns updated goal' })
+  @ApiResponse({ status: 200, type: GoalResponseDto, description: 'Deposit added, returns updated goal with status: completed when target is reached' })
   @ApiResponse({ status: 400, description: 'Validation failed' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 404, description: 'Goal not found' })
@@ -129,7 +129,12 @@ export class GoalController {
   async addDeposit(
     @Param('id') id: string,
     @Body() dto: AddDepositDto,
+    @Req() req: { user: { sub: string } },
   ): Promise<GoalResponseDto> {
+    const existing = await this.goalService.findById(id);
+    if (!existing || existing.getUserId().toString() !== req.user.sub) {
+      throw new NotFoundException('Goal not found');
+    }
     const entity = await this.goalService.addDeposit(id, dto);
     if (!entity) {
       throw new NotFoundException('Goal not found');
