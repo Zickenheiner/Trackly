@@ -15,6 +15,9 @@ const endpoints = {
     byId: (id: string) => `/goals/${id}`,
     deposits: (id: string) => `/goals/${id}/deposits`,
   },
+  dashboard: {
+    summary: '/dashboard/summary',
+  },
 };
 
 export default endpoints;
