@@ -8,8 +8,10 @@ import { IUserService } from '../../../interfaces/services/user.iservice';
 import { IUserRepository } from '@features/user/interfaces/repositories/user.irepository';
 import {
   CreateUserDto,
+  UpdatePreferencesDto,
   UpdateProfileDto,
   UpdateUserDto,
+  UserPreferencesDto,
   UserProfileDto,
 } from '@features/user/domains/dtos/user.dto';
 import { UserEntity } from '@features/user/domains/entities/user.entity';
@@ -79,5 +81,16 @@ export class UserService implements IUserService {
     const user = await this.userRepository.findById(userId);
     if (!user) throw new NotFoundException('User not found');
     return this.toProfileDto(user);
+  }
+
+  async updatePreferences(
+    userId: string,
+    dto: UpdatePreferencesDto,
+  ): Promise<UserPreferencesDto> {
+    const updated = await this.userRepository.updatePreferences(userId, dto);
+    if (!updated) throw new NotFoundException('User not found');
+    const user = await this.userRepository.findById(userId);
+    if (!user) throw new NotFoundException('User not found');
+    return { theme: user.getTheme() };
   }
 }

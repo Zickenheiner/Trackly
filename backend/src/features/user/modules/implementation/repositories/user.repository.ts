@@ -6,6 +6,7 @@ import { User, UserDocument } from '@features/user/domains/schemas/user.schema';
 import { UserEntity } from '@features/user/domains/entities/user.entity';
 import {
   CreateUserDto,
+  UpdatePreferencesDto,
   UpdateUserDto,
 } from '@features/user/domains/dtos/user.dto';
 import { UserMapper } from '../mappers/user.mapper';
@@ -49,5 +50,12 @@ export class UserRepository implements IUserRepository {
   async delete(id: string): Promise<boolean> {
     const result = await this.userModel.findByIdAndDelete(id).exec();
     return !!result;
+  }
+
+  async updatePreferences(id: string, dto: UpdatePreferencesDto): Promise<boolean> {
+    const updated = await this.userModel
+      .findByIdAndUpdate(id, { theme: dto.theme }, { new: true })
+      .exec();
+    return !!updated;
   }
 }
