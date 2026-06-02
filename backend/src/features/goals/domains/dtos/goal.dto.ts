@@ -8,6 +8,25 @@ import {
   Min,
 } from 'class-validator';
 
+export class AddDepositDto {
+  @ApiProperty({
+    description: 'Amount to deposit (must be > 0)',
+    example: 100,
+  })
+  @IsNumber()
+  @Min(0.01)
+  amount: number;
+
+  @ApiProperty({
+    description: 'Date of the deposit in ISO 8601 format (defaults to today)',
+    example: '2026-06-02T00:00:00.000Z',
+    required: false,
+  })
+  @IsOptional()
+  @IsDateString()
+  date?: string;
+}
+
 export class CreateGoalDto {
   @ApiProperty({
     description: 'Name of the savings goal',

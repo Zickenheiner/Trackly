@@ -1,4 +1,4 @@
-import { CreateGoalDto, GoalResponseDto, UpdateGoalDto } from '@features/goals/domains/dtos/goal.dto';
+import { AddDepositDto, CreateGoalDto, GoalResponseDto, UpdateGoalDto } from '@features/goals/domains/dtos/goal.dto';
 import { GoalEntity } from '@features/goals/domains/entities/goal.entity';
 import { IGoalService } from '@features/goals/interfaces/services/goal.iservice';
 import {
@@ -89,6 +89,25 @@ export class GoalController {
   @Delete(':id')
   async delete(@Param('id') id: string): Promise<boolean> {
     return this.goalService.delete(id);
+  }
+
+  @ApiOperation({ summary: 'Add a deposit to a savings goal' })
+  @ApiParam({ name: 'id', type: String })
+  @ApiBody({ type: AddDepositDto })
+  @ApiResponse({ status: 200, type: GoalResponseDto, description: 'Deposit added, returns updated goal' })
+  @ApiResponse({ status: 400, description: 'Validation failed' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 404, description: 'Goal not found' })
+  @Post(':id/deposits')
+  async addDeposit(
+    @Param('id') id: string,
+    @Body() dto: AddDepositDto,
+  ): Promise<GoalResponseDto> {
+    const entity = await this.goalService.addDeposit(id, dto);
+    if (!entity) {
+      throw new NotFoundException('Goal not found');
+    }
+    return this.toResponseDto(entity);
   }
 
   private toResponseDto(entity: GoalEntity): GoalResponseDto {

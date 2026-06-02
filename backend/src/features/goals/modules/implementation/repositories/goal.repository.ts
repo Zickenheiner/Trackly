@@ -3,7 +3,7 @@ import { IGoalRepository } from '../../../interfaces/repositories/goal.ireposito
 import { GoalMapper } from '../mappers/goal.mapper';
 import { Goal, GoalDocument } from '@features/goals/domains/schemas/goal.schema';
 import { Model } from 'mongoose';
-import { CreateGoalDto, UpdateGoalDto } from '@features/goals/domains/dtos/goal.dto';
+import { AddDepositDto, CreateGoalDto, UpdateGoalDto } from '@features/goals/domains/dtos/goal.dto';
 import { GoalEntity } from '@features/goals/domains/entities/goal.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
@@ -50,5 +50,22 @@ export class GoalRepository implements IGoalRepository {
   async delete(id: string): Promise<boolean> {
     const result = await this.goalModel.findByIdAndDelete(id).exec();
     return !!result;
+  }
+
+  async addDeposit(id: string, dto: AddDepositDto): Promise<GoalEntity | null> {
+    const goal = await this.goalModel.findById(id).exec();
+    if (!goal) return null;
+
+    const newSavedAmount = (goal.savedAmount ?? 0) + dto.amount;
+    const newStatus = newSavedAmount >= goal.targetAmount ? 'completed' : goal.status;
+
+    const updated = await this.goalModel
+      .findByIdAndUpdate(
+        id,
+        { savedAmount: newSavedAmount, status: newStatus },
+        { new: true },
+      )
+      .exec();
+    return updated ? this.goalMapper.toEntity(updated) : null;
   }
 }

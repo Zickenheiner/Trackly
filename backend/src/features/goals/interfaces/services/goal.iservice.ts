@@ -1,4 +1,4 @@
-import { CreateGoalDto, UpdateGoalDto } from '@features/goals/domains/dtos/goal.dto';
+import { AddDepositDto, CreateGoalDto, UpdateGoalDto } from '@features/goals/domains/dtos/goal.dto';
 import { GoalEntity } from '@features/goals/domains/entities/goal.entity';
 
 export interface IGoalService {
@@ -7,4 +7,5 @@ export interface IGoalService {
   create(dto: CreateGoalDto, userId: string): Promise<GoalEntity | null>;
   update(id: string, dto: UpdateGoalDto): Promise<boolean>;
   delete(id: string): Promise<boolean>;
+  addDeposit(id: string, dto: AddDepositDto): Promise<GoalEntity | null>;
 }
