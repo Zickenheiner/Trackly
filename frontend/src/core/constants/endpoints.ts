@@ -13,6 +13,7 @@ const endpoints = {
   goals: {
     base: '/goals',
     byId: (id: string) => `/goals/${id}`,
+    deposits: (id: string) => `/goals/${id}/deposits`,
   },
 };
 

@@ -1,8 +1,9 @@
 import { Target, CalendarClock } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/core/components/ui/card';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/core/components/ui/card';
 import { Badge } from '@/core/components/ui/badge';
 import { Progress } from '@/core/components/ui/progress';
 import type { GoalEntity } from '../../domain/entities/goal.entity';
+import AddDepositDialog from './AddDepositDialog';
 
 interface Props {
   goal: GoalEntity;
@@ -68,6 +69,11 @@ export default function GoalCard({ goal }: Props) {
           <p className="line-clamp-2 text-sm text-muted-foreground">{goal.description}</p>
         )}
       </CardContent>
+      {goal.status !== 'completed' && (
+        <CardFooter className="pt-0">
+          <AddDepositDialog goalId={goal.id} goalName={goal.name} />
+        </CardFooter>
+      )}
     </Card>
   );
 }

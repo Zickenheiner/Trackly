@@ -1,6 +1,7 @@
 import type { GoalRepository } from '../../domain/repositories/goal.repository';
 import type { GoalEntity } from '../../domain/entities/goal.entity';
 import type { CreateGoalRequestDto } from '../dtos/goal.dto';
+import type { AddDepositRequestDto } from '../dtos/deposit.dto';
 import GoalApi from '../datasources/goal.api';
 import GoalMapper from '../mappers/goal.mapper';
 
@@ -22,6 +23,11 @@ class GoalRepositoryImpl implements GoalRepository {
 
   async create(data: CreateGoalRequestDto): Promise<GoalEntity> {
     const dto = await this.api.create(data);
+    return this.mapper.toEntity(dto);
+  }
+
+  async addDeposit(goalId: string, data: AddDepositRequestDto): Promise<GoalEntity> {
+    const dto = await this.api.addDeposit(goalId, data);
     return this.mapper.toEntity(dto);
   }
 }
