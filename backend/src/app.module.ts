@@ -9,6 +9,8 @@ import { TransactionBaseModule } from '@features/transactions/modules/transactio
 import { UserBaseModule } from '@features/user/modules/user.module';
 import { AuthBaseModule } from '@features/auth/modules/auth.module';
 import { GoalBaseModule } from '@features/goals/modules/goal.module';
+import { DashboardBaseModule } from '@features/dashboard/modules/dashboard.module';
+import { StatisticsBaseModule } from '@features/statistics/modules/statistics.module';
 
 @Module({
   imports: [
@@ -31,6 +33,8 @@ import { GoalBaseModule } from '@features/goals/modules/goal.module';
     UserBaseModule,
     AuthBaseModule,
     GoalBaseModule,
+    DashboardBaseModule,
+    StatisticsBaseModule,
   ],
   providers: [
     AtStrategy,

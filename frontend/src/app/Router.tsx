@@ -8,6 +8,8 @@ import LoginPage from '@/features/auth/presentation/pages/LoginPage';
 import ProfilePage from '@/features/profile/presentation/pages/ProfilePage';
 import TransactionListPage from '@/features/transactions/presentation/pages/TransactionListPage';
 import GoalListPage from '@/features/goals/presentation/pages/GoalListPage';
+import DashboardPage from '@/features/dashboard/presentation/pages/DashboardPage';
+import StatisticsPage from '@/features/statistics/presentation/pages/StatisticsPage';
 
 export default function Router() {
   const PublicRoutes = () => {
@@ -22,18 +24,12 @@ export default function Router() {
   const PrivateRoutes = () => {
     return (
       <Route element={<Private redirect={routes.login} />}>
-        <Route
-          path={routes.dashboard}
-          element={
-            <div className="container mx-auto px-4 py-6 sm:px-6 lg:px-8">
-              <h1 className="text-2xl font-semibold">Dashboard</h1>
-            </div>
-          }
-        />
+        <Route path={routes.dashboard} element={<DashboardPage />} />
         <Route path={routes.transactions} element={<TransactionListPage />} />
         <Route path={routes.categories} element={<CategoryListPage />} />
         <Route path={routes.goals} element={<GoalListPage />} />
         <Route path={routes.profile} element={<ProfilePage />} />
+        <Route path={routes.statistics} element={<StatisticsPage />} />
       </Route>
     );
   };

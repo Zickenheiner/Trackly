@@ -6,6 +6,7 @@ const routes = {
   goals: '/goals',
   register: '/register',
   profile: '/profile',
+  statistics: '/statistics',
 };
 
 export default routes;
