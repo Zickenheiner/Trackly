@@ -2,15 +2,14 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsDateString, IsIn, IsOptional, IsString } from 'class-validator';
 
 export class DashboardSummaryQueryDto {
-  @ApiPropertyOptional({
+  @ApiProperty({
     description: 'Period for the summary',
     enum: ['week', 'month', 'year'],
     example: 'month',
   })
-  @IsOptional()
   @IsString()
   @IsIn(['week', 'month', 'year'])
-  period?: 'week' | 'month' | 'year';
+  period: 'week' | 'month' | 'year';
 
   @ApiPropertyOptional({
     description: 'Reference date in ISO 8601 format, defaults to today',

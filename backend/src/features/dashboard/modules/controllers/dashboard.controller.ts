@@ -14,6 +14,7 @@ export class DashboardController {
 
   @ApiOperation({ summary: 'Get dashboard summary (balance, income, expenses, recent transactions)' })
   @ApiResponse({ status: 200, type: DashboardSummaryResponseDto, description: 'Dashboard summary' })
+  @ApiResponse({ status: 400, description: 'Invalid period value' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Get('summary')
   async getSummary(

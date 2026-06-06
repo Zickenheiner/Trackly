@@ -13,7 +13,7 @@ export class DashboardService implements IDashboardService {
   ) {}
 
   async getSummary(userId: string, query: DashboardSummaryQueryDto): Promise<DashboardSummaryResponseDto> {
-    const period = query.period ?? 'month';
+    const period = query.period;
     const referenceDate = query.date ? new Date(query.date) : new Date();
 
     const { start, end } = this.computePeriodBounds(period, referenceDate);
