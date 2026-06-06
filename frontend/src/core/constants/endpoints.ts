@@ -21,6 +21,7 @@ const endpoints = {
   },
   statistics: {
     byCategory: '/statistics/by-category',
+    monthly: '/statistics/monthly',
   },
 };
 
