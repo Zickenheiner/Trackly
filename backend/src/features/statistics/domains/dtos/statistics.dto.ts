@@ -1,5 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsDateString, IsIn, IsOptional, IsString } from 'class-validator';
+import { IsDateString, IsIn, IsInt, IsOptional, IsString, Min } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class StatsByCategoryQueryDto {
   @ApiPropertyOptional({
@@ -65,4 +66,47 @@ export class CategoryStatDto {
     example: 25.3,
   })
   percentage: number;
+}
+
+export class MonthlyStatsQueryDto {
+  @ApiPropertyOptional({
+    description: 'Number of months to display (default 6)',
+    example: 6,
+    minimum: 1,
+  })
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  @Min(1)
+  months?: number;
+
+  @ApiPropertyOptional({
+    description: 'Type of transactions to include',
+    enum: ['income', 'expense', 'both'],
+    example: 'both',
+  })
+  @IsOptional()
+  @IsString()
+  @IsIn(['income', 'expense', 'both'])
+  type?: 'income' | 'expense' | 'both';
+}
+
+export class MonthlyStatDto {
+  @ApiProperty({
+    description: 'Month in YYYY-MM format',
+    example: '2026-03',
+  })
+  month: string;
+
+  @ApiProperty({
+    description: 'Total income for the month',
+    example: 2000,
+  })
+  income: number;
+
+  @ApiProperty({
+    description: 'Total expenses for the month',
+    example: 1500.5,
+  })
+  expenses: number;
 }

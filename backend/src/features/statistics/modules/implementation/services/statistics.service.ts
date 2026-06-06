@@ -2,7 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { IStatisticsService } from '@features/statistics/interfaces/services/statistics.iservice';
-import { StatsByCategoryQueryDto, CategoryStatDto } from '@features/statistics/domains/dtos/statistics.dto';
+import {
+  StatsByCategoryQueryDto,
+  CategoryStatDto,
+  MonthlyStatsQueryDto,
+  MonthlyStatDto,
+} from '@features/statistics/domains/dtos/statistics.dto';
 import { Transaction, TransactionDocument } from '@features/dashboard/domains/schemas/transaction.schema';
 import { Category, CategoryDocument } from '@features/categories/domains/schemas/category.schema';
 
@@ -75,6 +80,51 @@ export class StatisticsService implements IStatisticsService {
     }
 
     return result.sort((a, b) => b.total - a.total);
+  }
+
+  async getMonthlyStats(userId: string, query: MonthlyStatsQueryDto): Promise<MonthlyStatDto[]> {
+    const months = query.months ?? 6;
+    const type = query.type ?? 'both';
+
+    const now = new Date();
+    const endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
+    const startDate = new Date(now.getFullYear(), now.getMonth() - months + 1, 1, 0, 0, 0, 0);
+
+    const typeFilter = type === 'both' ? ['income', 'expense'] : [type];
+
+    const transactions = await this.transactionModel
+      .find({
+        userId,
+        type: { $in: typeFilter },
+        date: { $gte: startDate, $lte: endDate },
+      })
+      .exec();
+
+    const monthMap = new Map<string, MonthlyStatDto>();
+
+    for (let i = 0; i < months; i++) {
+      const d = new Date(now.getFullYear(), now.getMonth() - months + 1 + i, 1);
+      const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+      monthMap.set(key, { month: key, income: 0, expenses: 0 });
+    }
+
+    for (const tx of transactions) {
+      const txDate = new Date(tx.date);
+      const key = `${txDate.getFullYear()}-${String(txDate.getMonth() + 1).padStart(2, '0')}`;
+      const entry = monthMap.get(key);
+
+      if (!entry) {
+        continue;
+      }
+
+      if (tx.type === 'income') {
+        entry.income += tx.amount;
+      } else {
+        entry.expenses += tx.amount;
+      }
+    }
+
+    return Array.from(monthMap.values()).sort((a, b) => a.month.localeCompare(b.month));
   }
 
   private computePeriodBounds(period: string, referenceDate: Date): { start: Date; end: Date } {
