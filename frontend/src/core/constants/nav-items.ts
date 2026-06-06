@@ -3,6 +3,7 @@ import {
   ArrowLeftRight,
   Tag,
   Target,
+  PieChart,
   User,
   type LucideIcon,
 } from 'lucide-react';
@@ -19,5 +20,6 @@ export const navItems: NavItem[] = [
   { label: 'Transactions', to: routes.transactions, icon: ArrowLeftRight },
   { label: 'Catégories', to: routes.categories, icon: Tag },
   { label: 'Objectifs', to: routes.goals, icon: Target },
+  { label: 'Statistiques', to: routes.statistics, icon: PieChart },
   { label: 'Profil', to: routes.profile, icon: User },
 ];
