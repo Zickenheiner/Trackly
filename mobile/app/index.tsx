@@ -7,5 +7,5 @@ export default function Index() {
 
   if (status === 'loading') return <Loading />;
   if (status === 'authenticated') return <Redirect href="/dashboard" />;
-  return <Redirect href="/register" />;
+  return <Redirect href="/login" />;
 }

@@ -2,20 +2,18 @@ import { Link } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 import { Screen } from '@/core/ui/Screen';
 import { colors } from '@/core/ui/colors';
-import { RegisterForm } from '@/features/auth/RegisterForm';
+import { LoginForm } from '@/features/auth/LoginForm';
 
-export default function RegisterScreen() {
+export default function LoginScreen() {
   return (
     <Screen scroll>
-      <Text style={styles.title}>Créer un compte</Text>
-      <Text style={styles.subtitle}>
-        Inscrivez-vous pour commencer à suivre votre budget.
-      </Text>
-      <RegisterForm />
+      <Text style={styles.title}>Connexion</Text>
+      <Text style={styles.subtitle}>Content de vous revoir sur Trackly.</Text>
+      <LoginForm />
       <View style={styles.footer}>
-        <Text style={styles.footerText}>Déjà un compte ?</Text>
-        <Link href="/login" style={styles.link}>
-          Se connecter
+        <Text style={styles.footerText}>Pas encore de compte ?</Text>
+        <Link href="/register" style={styles.link}>
+          Créer un compte
         </Link>
       </View>
     </Screen>

@@ -6,7 +6,7 @@ export default function AppLayout() {
   const { status } = useAuth();
 
   if (status === 'loading') return <Loading />;
-  if (status === 'unauthenticated') return <Redirect href="/register" />;
+  if (status === 'unauthenticated') return <Redirect href="/login" />;
 
   return <Stack screenOptions={{ headerShown: false }} />;
 }
