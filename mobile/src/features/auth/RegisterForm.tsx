@@ -103,6 +103,7 @@ export function RegisterForm() {
         render={({ field: { value, onChange, onBlur } }) => (
           <TextField
             label="Âge"
+            placeholder="Ex. 25"
             value={value}
             onChangeText={onChange}
             onBlur={onBlur}

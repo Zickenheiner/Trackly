@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { Link } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 import { Screen } from '@/core/ui/Screen';
+import { Card } from '@/core/ui/Card';
 import { useTheme } from '@/core/theme/theme-context';
 import { ThemeToggle } from '@/core/theme/ThemeToggle';
 import type { Palette } from '@/core/theme/palettes';
@@ -13,8 +14,8 @@ export default function DashboardScreen() {
 
   return (
     <Screen>
-      <View style={styles.header}>
-        <Text style={styles.title}>Dashboard</Text>
+      <Text style={styles.title}>Dashboard</Text>
+      <Card>
         <Text style={styles.text}>
           Écran de démonstration — page d'accueil après authentification.
         </Text>
@@ -22,7 +23,7 @@ export default function DashboardScreen() {
         <Link href="/profile" style={styles.link}>
           Mon profil
         </Link>
-      </View>
+      </Card>
       <View style={styles.footer}>
         <LogoutButton />
       </View>
@@ -32,9 +33,6 @@ export default function DashboardScreen() {
 
 const createStyles = (colors: Palette) =>
   StyleSheet.create({
-    header: {
-      gap: 12,
-    },
     title: {
       fontSize: 28,
       fontWeight: '700',

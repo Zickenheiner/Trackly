@@ -27,7 +27,7 @@ export function ProfileForm({ profile }: { profile: UserProfile }) {
       title: profile.title,
       firstName: profile.firstName,
       lastName: profile.lastName,
-      age: String(profile.age),
+      age: profile.age != null ? String(profile.age) : '',
       currency: profile.currency,
     },
   });
@@ -102,6 +102,7 @@ export function ProfileForm({ profile }: { profile: UserProfile }) {
         render={({ field: { value, onChange, onBlur } }) => (
           <TextField
             label="Âge"
+            placeholder="Ex. 25"
             value={value}
             onChangeText={onChange}
             onBlur={onBlur}

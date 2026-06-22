@@ -84,7 +84,7 @@ export async function request<T = unknown>(
 
   const response = await fetch(`${API_URL}${config.url}`, init);
 
-  if (response.status === 401 && !isRefreshing) {
+  if (response.status === 401 && token && !isRefreshing) {
     isRefreshing = true;
     const newToken = await tryRefresh();
     isRefreshing = false;

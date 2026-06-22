@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { Link } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 import { Screen } from '@/core/ui/Screen';
+import { Card } from '@/core/ui/Card';
 import { useTheme } from '@/core/theme/theme-context';
 import type { Palette } from '@/core/theme/palettes';
 import { RegisterForm } from '@/features/auth/RegisterForm';
@@ -16,7 +17,9 @@ export default function RegisterScreen() {
       <Text style={styles.subtitle}>
         Inscrivez-vous pour commencer à suivre votre budget.
       </Text>
-      <RegisterForm />
+      <Card>
+        <RegisterForm />
+      </Card>
       <View style={styles.footer}>
         <Text style={styles.footerText}>Déjà un compte ?</Text>
         <Link href="/login" style={styles.link}>

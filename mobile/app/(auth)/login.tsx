@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { Link } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 import { Screen } from '@/core/ui/Screen';
+import { Card } from '@/core/ui/Card';
 import { useTheme } from '@/core/theme/theme-context';
 import type { Palette } from '@/core/theme/palettes';
 import { LoginForm } from '@/features/auth/LoginForm';
@@ -14,7 +15,9 @@ export default function LoginScreen() {
     <Screen scroll>
       <Text style={styles.title}>Connexion</Text>
       <Text style={styles.subtitle}>Content de vous revoir sur Trackly.</Text>
-      <LoginForm />
+      <Card>
+        <LoginForm />
+      </Card>
       <View style={styles.footer}>
         <Text style={styles.footerText}>Pas encore de compte ?</Text>
         <Link href="/register" style={styles.link}>

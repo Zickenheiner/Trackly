@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Screen } from '@/core/ui/Screen';
+import { Card } from '@/core/ui/Card';
 import { Loading } from '@/core/ui/Loading';
 import { useTheme } from '@/core/theme/theme-context';
 import type { Palette } from '@/core/theme/palettes';
@@ -28,11 +29,13 @@ export default function ProfileScreen() {
   return (
     <Screen scroll>
       <Text style={styles.title}>Mon profil</Text>
-      <View style={styles.emailBlock}>
-        <Text style={styles.label}>Email</Text>
-        <Text style={styles.email}>{profile.email}</Text>
-      </View>
-      <ProfileForm profile={profile} />
+      <Card>
+        <View style={styles.emailBlock}>
+          <Text style={styles.label}>Email</Text>
+          <Text style={styles.email}>{profile.email}</Text>
+        </View>
+        <ProfileForm profile={profile} />
+      </Card>
     </Screen>
   );
 }

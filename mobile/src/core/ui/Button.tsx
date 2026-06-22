@@ -53,8 +53,8 @@ export function Button({
 const createStyles = (colors: Palette) =>
   StyleSheet.create({
     base: {
-      height: 50,
-      borderRadius: 10,
+      height: 44,
+      borderRadius: 8,
       alignItems: 'center',
       justifyContent: 'center',
       paddingHorizontal: 16,

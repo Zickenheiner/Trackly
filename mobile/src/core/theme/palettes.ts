@@ -2,35 +2,50 @@ export type ThemeName = 'light' | 'dark';
 
 export interface Palette {
   background: string;
+  card: string;
   surface: string;
   text: string;
   textMuted: string;
   border: string;
   primary: string;
   primaryText: string;
+  accent: string;
+  accentText: string;
   danger: string;
+  success: string;
+  warning: string;
 }
 
 export const lightColors: Palette = {
-  background: '#ffffff',
-  surface: '#f4f4f5',
-  text: '#18181b',
-  textMuted: '#71717a',
-  border: '#e4e4e7',
-  primary: '#6366f1',
+  background: '#f8fafc',
+  card: '#ffffff',
+  surface: '#f1f5f9',
+  text: '#0f172b',
+  textMuted: '#62748e',
+  border: '#e2e8f0',
+  primary: '#615fff',
   primaryText: '#ffffff',
-  danger: '#dc2626',
+  accent: '#eef2ff',
+  accentText: '#432dd7',
+  danger: '#ff2056',
+  success: '#00bc7d',
+  warning: '#fe9a00',
 };
 
 export const darkColors: Palette = {
-  background: '#09090b',
-  surface: '#1c1c1f',
-  text: '#fafafa',
-  textMuted: '#a1a1aa',
-  border: '#27272a',
-  primary: '#818cf8',
-  primaryText: '#09090b',
-  danger: '#f87171',
+  background: '#0f172b',
+  card: '#1d293d',
+  surface: '#1d293d',
+  text: '#f1f5f9',
+  textMuted: '#90a1b9',
+  border: '#314158',
+  primary: '#615fff',
+  primaryText: '#ffffff',
+  accent: '#314158',
+  accentText: '#f1f5f9',
+  danger: '#ff2056',
+  success: '#00bc7d',
+  warning: '#fe9a00',
 };
 
 export const palettes: Record<ThemeName, Palette> = {
