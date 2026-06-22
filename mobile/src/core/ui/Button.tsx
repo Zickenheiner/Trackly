@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import {
   ActivityIndicator,
   Pressable,
@@ -5,7 +6,8 @@ import {
   Text,
   type PressableProps,
 } from 'react-native';
-import { colors } from './colors';
+import { useTheme } from '@/core/theme/theme-context';
+import type { Palette } from '@/core/theme/palettes';
 
 interface ButtonProps extends PressableProps {
   label: string;
@@ -20,7 +22,10 @@ export function Button({
   disabled,
   ...props
 }: ButtonProps) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const isDisabled = disabled || loading;
+
   return (
     <Pressable
       style={({ pressed }) => [
@@ -45,34 +50,35 @@ export function Button({
   );
 }
 
-const styles = StyleSheet.create({
-  base: {
-    height: 50,
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 16,
-  },
-  primary: {
-    backgroundColor: colors.primary,
-  },
-  ghost: {
-    backgroundColor: 'transparent',
-  },
-  pressed: {
-    opacity: 0.85,
-  },
-  disabled: {
-    opacity: 0.5,
-  },
-  primaryLabel: {
-    color: colors.primaryText,
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  ghostLabel: {
-    color: colors.primary,
-    fontSize: 15,
-    fontWeight: '600',
-  },
-});
+const createStyles = (colors: Palette) =>
+  StyleSheet.create({
+    base: {
+      height: 50,
+      borderRadius: 10,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingHorizontal: 16,
+    },
+    primary: {
+      backgroundColor: colors.primary,
+    },
+    ghost: {
+      backgroundColor: 'transparent',
+    },
+    pressed: {
+      opacity: 0.85,
+    },
+    disabled: {
+      opacity: 0.5,
+    },
+    primaryLabel: {
+      color: colors.primaryText,
+      fontSize: 16,
+      fontWeight: '600',
+    },
+    ghostLabel: {
+      color: colors.primary,
+      fontSize: 15,
+      fontWeight: '600',
+    },
+  });

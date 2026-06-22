@@ -1,9 +1,11 @@
+import { useMemo } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Button } from '@/core/ui/Button';
 import { TextField } from '@/core/ui/TextField';
-import { colors } from '@/core/ui/colors';
+import { useTheme } from '@/core/theme/theme-context';
+import type { Palette } from '@/core/theme/palettes';
 import { useRegister } from './use-register';
 import { registerSchema, type RegisterFormValues } from './register.schema';
 import type { Civility } from './auth.types';
@@ -11,6 +13,8 @@ import type { Civility } from './auth.types';
 const CIVILITIES: Civility[] = ['Mr.', 'Mrs.'];
 
 export function RegisterForm() {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const registerMutation = useRegister();
   const {
     control,
@@ -156,9 +160,7 @@ export function RegisterForm() {
       />
 
       {registerMutation.isError ? (
-        <Text style={styles.serverError}>
-          {registerMutation.error.message}
-        </Text>
+        <Text style={styles.serverError}>{registerMutation.error.message}</Text>
       ) : null}
 
       <Button
@@ -170,44 +172,45 @@ export function RegisterForm() {
   );
 }
 
-const styles = StyleSheet.create({
-  form: {
-    gap: 16,
-  },
-  civility: {
-    gap: 6,
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: colors.text,
-  },
-  segmented: {
-    flexDirection: 'row',
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: 10,
-    overflow: 'hidden',
-  },
-  segment: {
-    flex: 1,
-    paddingVertical: 12,
-    alignItems: 'center',
-    backgroundColor: colors.surface,
-  },
-  segmentActive: {
-    backgroundColor: colors.primary,
-  },
-  segmentText: {
-    color: colors.text,
-    fontWeight: '600',
-  },
-  segmentTextActive: {
-    color: colors.primaryText,
-    fontWeight: '600',
-  },
-  serverError: {
-    color: colors.danger,
-    fontSize: 14,
-  },
-});
+const createStyles = (colors: Palette) =>
+  StyleSheet.create({
+    form: {
+      gap: 16,
+    },
+    civility: {
+      gap: 6,
+    },
+    label: {
+      fontSize: 14,
+      fontWeight: '600',
+      color: colors.text,
+    },
+    segmented: {
+      flexDirection: 'row',
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderRadius: 10,
+      overflow: 'hidden',
+    },
+    segment: {
+      flex: 1,
+      paddingVertical: 12,
+      alignItems: 'center',
+      backgroundColor: colors.surface,
+    },
+    segmentActive: {
+      backgroundColor: colors.primary,
+    },
+    segmentText: {
+      color: colors.text,
+      fontWeight: '600',
+    },
+    segmentTextActive: {
+      color: colors.primaryText,
+      fontWeight: '600',
+    },
+    serverError: {
+      color: colors.danger,
+      fontSize: 14,
+    },
+  });

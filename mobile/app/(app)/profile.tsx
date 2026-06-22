@@ -1,11 +1,15 @@
+import { useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Screen } from '@/core/ui/Screen';
 import { Loading } from '@/core/ui/Loading';
-import { colors } from '@/core/ui/colors';
+import { useTheme } from '@/core/theme/theme-context';
+import type { Palette } from '@/core/theme/palettes';
 import { ProfileForm } from '@/features/profile/ProfileForm';
 import { useProfile } from '@/features/profile/use-profile';
 
 export default function ProfileScreen() {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const { data: profile, isLoading, isError, error } = useProfile();
 
   if (isLoading) return <Loading />;
@@ -33,26 +37,27 @@ export default function ProfileScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  title: {
-    fontSize: 28,
-    fontWeight: '700',
-    color: colors.text,
-  },
-  emailBlock: {
-    gap: 6,
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: colors.text,
-  },
-  email: {
-    fontSize: 16,
-    color: colors.textMuted,
-  },
-  error: {
-    fontSize: 15,
-    color: colors.danger,
-  },
-});
+const createStyles = (colors: Palette) =>
+  StyleSheet.create({
+    title: {
+      fontSize: 28,
+      fontWeight: '700',
+      color: colors.text,
+    },
+    emailBlock: {
+      gap: 6,
+    },
+    label: {
+      fontSize: 14,
+      fontWeight: '600',
+      color: colors.text,
+    },
+    email: {
+      fontSize: 16,
+      color: colors.textMuted,
+    },
+    error: {
+      fontSize: 15,
+      color: colors.danger,
+    },
+  });

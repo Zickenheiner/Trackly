@@ -1,9 +1,11 @@
+import { useMemo } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Button } from '@/core/ui/Button';
 import { TextField } from '@/core/ui/TextField';
-import { colors } from '@/core/ui/colors';
+import { useTheme } from '@/core/theme/theme-context';
+import type { Palette } from '@/core/theme/palettes';
 import type { Civility } from '@/features/auth/auth.types';
 import { useUpdateProfile } from './use-update-profile';
 import { profileSchema, type ProfileFormValues } from './profile.schema';
@@ -12,6 +14,8 @@ import type { UserProfile } from './profile.types';
 const CIVILITIES: Civility[] = ['Mr.', 'Mrs.'];
 
 export function ProfileForm({ profile }: { profile: UserProfile }) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const updateMutation = useUpdateProfile();
   const {
     control,
@@ -139,48 +143,49 @@ export function ProfileForm({ profile }: { profile: UserProfile }) {
   );
 }
 
-const styles = StyleSheet.create({
-  form: {
-    gap: 16,
-  },
-  civility: {
-    gap: 6,
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: colors.text,
-  },
-  segmented: {
-    flexDirection: 'row',
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: 10,
-    overflow: 'hidden',
-  },
-  segment: {
-    flex: 1,
-    paddingVertical: 12,
-    alignItems: 'center',
-    backgroundColor: colors.surface,
-  },
-  segmentActive: {
-    backgroundColor: colors.primary,
-  },
-  segmentText: {
-    color: colors.text,
-    fontWeight: '600',
-  },
-  segmentTextActive: {
-    color: colors.primaryText,
-    fontWeight: '600',
-  },
-  serverError: {
-    color: colors.danger,
-    fontSize: 14,
-  },
-  success: {
-    color: colors.primary,
-    fontSize: 14,
-  },
-});
+const createStyles = (colors: Palette) =>
+  StyleSheet.create({
+    form: {
+      gap: 16,
+    },
+    civility: {
+      gap: 6,
+    },
+    label: {
+      fontSize: 14,
+      fontWeight: '600',
+      color: colors.text,
+    },
+    segmented: {
+      flexDirection: 'row',
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderRadius: 10,
+      overflow: 'hidden',
+    },
+    segment: {
+      flex: 1,
+      paddingVertical: 12,
+      alignItems: 'center',
+      backgroundColor: colors.surface,
+    },
+    segmentActive: {
+      backgroundColor: colors.primary,
+    },
+    segmentText: {
+      color: colors.text,
+      fontWeight: '600',
+    },
+    segmentTextActive: {
+      color: colors.primaryText,
+      fontWeight: '600',
+    },
+    serverError: {
+      color: colors.danger,
+      fontSize: 14,
+    },
+    success: {
+      color: colors.primary,
+      fontSize: 14,
+    },
+  });

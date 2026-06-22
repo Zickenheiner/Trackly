@@ -1,13 +1,17 @@
+import { useMemo } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { StyleSheet, Text, View } from 'react-native';
 import { Button } from '@/core/ui/Button';
 import { TextField } from '@/core/ui/TextField';
-import { colors } from '@/core/ui/colors';
+import { useTheme } from '@/core/theme/theme-context';
+import type { Palette } from '@/core/theme/palettes';
 import { useLogin } from './use-login';
 import { loginSchema, type LoginFormValues } from './login.schema';
 
 export function LoginForm() {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const loginMutation = useLogin();
   const {
     control,
@@ -68,12 +72,13 @@ export function LoginForm() {
   );
 }
 
-const styles = StyleSheet.create({
-  form: {
-    gap: 16,
-  },
-  serverError: {
-    color: colors.danger,
-    fontSize: 14,
-  },
-});
+const createStyles = (colors: Palette) =>
+  StyleSheet.create({
+    form: {
+      gap: 16,
+    },
+    serverError: {
+      color: colors.danger,
+      fontSize: 14,
+    },
+  });
