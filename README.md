@@ -1,14 +1,25 @@
-# Template Fullstack
+# Trackly
 
-Template de démarrage pour une application web fullstack avec authentification JWT, prêt pour le développement local et le déploiement en production.
+Application de gestion de finances personnelles : suivi des transactions (revenus / dépenses), catégories, objectifs d'épargne, tableau de bord et statistiques. Authentification JWT, web et mobile.
+
+## Fonctionnalités
+
+- **Authentification** — inscription / connexion via JWT (access + refresh) en cookies HTTP-only
+- **Transactions** — création, liste et suivi des revenus et dépenses
+- **Catégories** — classement des transactions par catégorie
+- **Tableau de bord** — solde, revenus et dépenses avec sélecteur de période
+- **Statistiques** — répartition par catégorie (camembert) et évolution mensuelle
+- **Objectifs** — suivi d'objectifs d'épargne
+- **Profil & thème** — préférences utilisateur, bascule thème clair / sombre
 
 ## Stack technique
 
 | Couche              | Technologie                                             |
 | ------------------- | ------------------------------------------------------- |
-| **Frontend**        | React 19, TypeScript, Vite 7                            |
+| **Frontend web**    | React 19, TypeScript, Vite 7                            |
 | **UI**              | shadcn/ui, Tailwind CSS v4, Radix UI, Motion            |
 | **State / Forms**   | TanStack Query v5, Zustand v5, React Hook Form + Zod v4 |
+| **Mobile**          | Expo 54, React Native 0.81, TypeScript                  |
 | **Backend**         | NestJS 11, TypeScript, SWC                              |
 | **Base de données** | MongoDB 7 (dev) / 4.4 (prod) via Mongoose 8             |
 | **Auth**            | JWT (access + refresh) dans cookies HTTP-only           |
@@ -133,7 +144,7 @@ make dev-down              # Arrêter tous les services
 │   ├── Dockerfile.prod
 │   └── package.json
 │
-├── frontend/               # App React
+├── frontend/               # App web React
 │   ├── src/
 │   │   ├── app/            # Router, Provider (TanStack Query)
 │   │   ├── core/           # Config API, endpoints, routes, utils
@@ -141,6 +152,11 @@ make dev-down              # Arrêter tous les services
 │   ├── nginx.conf          # Config Nginx pour la prod (SPA fallback, gzip, cache)
 │   ├── Dockerfile.dev
 │   ├── Dockerfile.prod
+│   └── package.json
+│
+├── mobile/                 # App mobile Expo / React Native
+│   ├── App.tsx
+│   ├── app.json            # Config Expo
 │   └── package.json
 │
 ├── docker-compose.dev.yml  # Stack développement (volumes, hot-reload)
@@ -202,6 +218,23 @@ Scripts de scaffolding dans `frontend/` :
 ./feature.sh <nom>               # Crée l'arborescence d'une feature
 ./files.sh <fichier> <feature>   # Génère les fichiers de base (API, repo, mapper, DTO, entity, hook)
 ```
+
+---
+
+## Application mobile (Expo)
+
+L'app mobile est un projet **Expo / React Native** situé dans `mobile/`. Elle n'est pas conteneurisée : elle se lance directement avec le CLI Expo.
+
+```bash
+cd mobile
+npm install
+npm start        # Démarre le serveur de développement Expo (Metro)
+npm run ios      # Lance sur le simulateur iOS
+npm run android  # Lance sur l'émulateur Android
+npm run web      # Lance dans le navigateur
+```
+
+Scanner le QR code affiché par `npm start` avec l'app **Expo Go** pour tester sur un appareil physique.
 
 ---
 
