@@ -72,7 +72,7 @@ const request = async <T = unknown>(config: Config): Promise<T> => {
 
   const response = await fetch(buildUrl(config.url, config.query), init);
 
-  if (response.status === 401 && !isRefreshing) {
+  if (response.status === 401 && token && !isRefreshing) {
     isRefreshing = true;
     const newToken = await tryRefresh();
     isRefreshing = false;
