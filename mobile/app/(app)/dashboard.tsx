@@ -1,19 +1,28 @@
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { Screen } from '@/core/ui/Screen';
 import { colors } from '@/core/ui/colors';
+import { LogoutButton } from '@/features/auth/LogoutButton';
 
 export default function DashboardScreen() {
   return (
     <Screen>
-      <Text style={styles.title}>Dashboard</Text>
-      <Text style={styles.text}>
-        Écran de démonstration — page d'accueil après authentification.
-      </Text>
+      <View style={styles.header}>
+        <Text style={styles.title}>Dashboard</Text>
+        <Text style={styles.text}>
+          Écran de démonstration — page d'accueil après authentification.
+        </Text>
+      </View>
+      <View style={styles.footer}>
+        <LogoutButton />
+      </View>
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
+  header: {
+    gap: 8,
+  },
   title: {
     fontSize: 28,
     fontWeight: '700',
@@ -22,5 +31,8 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 15,
     color: colors.textMuted,
+  },
+  footer: {
+    marginTop: 'auto',
   },
 });

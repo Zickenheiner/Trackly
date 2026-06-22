@@ -21,3 +21,10 @@ export function login(payload: LoginPayload): Promise<AuthResponse> {
     data: payload,
   });
 }
+
+export function logout(): Promise<void> {
+  return request<void>({
+    url: endpoints.auth.logout,
+    method: 'POST',
+  });
+}
