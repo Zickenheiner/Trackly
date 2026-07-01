@@ -25,6 +25,10 @@ class TransactionRepositoryImpl implements TransactionRepository {
     const dto = await this.transactionApi.update(id, data);
     return this.transactionMapper.toEntity(dto);
   }
+
+  async delete(id: string): Promise<void> {
+    await this.transactionApi.delete(id);
+  }
 }
 
 export default TransactionRepositoryImpl;

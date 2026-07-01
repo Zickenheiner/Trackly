@@ -32,6 +32,13 @@ class TransactionApi {
       data,
     });
   }
+
+  async delete(id: string): Promise<void> {
+    return request<void>({
+      url: endpoints.transactions.byId(id),
+      method: methods.DELETE,
+    });
+  }
 }
 
 export default TransactionApi;

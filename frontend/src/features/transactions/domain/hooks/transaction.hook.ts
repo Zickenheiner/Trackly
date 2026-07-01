@@ -54,3 +54,23 @@ export function useUpdateTransaction() {
     updateTransactionError: error,
   };
 }
+
+export function useDeleteTransaction() {
+  const queryClient = useQueryClient();
+
+  const { mutate, mutateAsync, isPending, error } = useMutation({
+    mutationFn: (id: string) => repository.delete(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.all });
+      queryClient.invalidateQueries({ queryKey: ['dashboard'] });
+      queryClient.invalidateQueries({ queryKey: ['statistics'] });
+    },
+  });
+
+  return {
+    deleteTransaction: mutate,
+    deleteTransactionAsync: mutateAsync,
+    deleteTransactionIsLoading: isPending,
+    deleteTransactionError: error,
+  };
+}
