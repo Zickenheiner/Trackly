@@ -45,9 +45,7 @@ export default function BottomNav() {
           );
         })}
         <li className="flex-1 flex items-center justify-center">
-          <ThemeToggle
-            className="flex-col gap-1 py-2.5 text-xs text-sidebar-foreground/60 hover:text-sidebar-foreground px-0 rounded-none w-full justify-center"
-          />
+          <ThemeToggle className="flex-col gap-1 py-2.5 text-xs text-sidebar-foreground/60 hover:text-sidebar-foreground px-0 rounded-none w-full justify-center" />
         </li>
       </ul>
     </nav>

@@ -8,11 +8,19 @@ import CategoryLegend from '../components/CategoryLegend';
 import PeriodSelector from '../components/PeriodSelector';
 import MonthlyBarChart from '../components/MonthlyBarChart';
 import MonthsSelector from '../components/MonthsSelector';
-import { Card, CardContent, CardHeader, CardTitle } from '@/core/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@/core/components/ui/card';
 import { Skeleton } from '@/core/components/ui/skeleton';
 import { Button } from '@/core/components/ui/button';
 import { Separator } from '@/core/components/ui/separator';
-import { ToggleGroup, ToggleGroupItem } from '@/core/components/ui/toggle-group';
+import {
+  ToggleGroup,
+  ToggleGroupItem,
+} from '@/core/components/ui/toggle-group';
 
 type Period = 'week' | 'month' | 'year';
 type MonthsCount = 6 | 12;
@@ -77,20 +85,24 @@ export default function StatisticsPage() {
   const [months, setMonths] = useState<MonthsCount>(6);
   const [monthlyType, setMonthlyType] = useState<MonthlyType>('both');
 
-  const { categoryStats, categoryStatsIsLoading, categoryStatsError } = useCategoryStats({
-    period,
-  });
+  const { categoryStats, categoryStatsIsLoading, categoryStatsError } =
+    useCategoryStats({
+      period,
+    });
 
-  const { monthlyStats, monthlyStatsIsLoading, monthlyStatsError } = useMonthlyStats({
-    months,
-    type: monthlyType,
-  });
+  const { monthlyStats, monthlyStatsIsLoading, monthlyStatsError } =
+    useMonthlyStats({
+      months,
+      type: monthlyType,
+    });
 
-  if (categoryStatsIsLoading || monthlyStatsIsLoading) return <StatisticsSkeleton />;
+  if (categoryStatsIsLoading || monthlyStatsIsLoading)
+    return <StatisticsSkeleton />;
   if (categoryStatsError || monthlyStatsError)
     return <StatisticsError onRetry={() => window.location.reload()} />;
 
-  const totalExpenses = categoryStats?.reduce((sum, stat) => sum + stat.total, 0) ?? 0;
+  const totalExpenses =
+    categoryStats?.reduce((sum, stat) => sum + stat.total, 0) ?? 0;
 
   return (
     <motion.div
@@ -105,7 +117,9 @@ export default function StatisticsPage() {
         <CardHeader>
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
-              <CardTitle className="text-base">Évolution mois par mois</CardTitle>
+              <CardTitle className="text-base">
+                Évolution mois par mois
+              </CardTitle>
               <p className="text-sm text-muted-foreground mt-1">
                 Visualisez vos revenus et dépenses dans le temps
               </p>
@@ -114,7 +128,9 @@ export default function StatisticsPage() {
               <ToggleGroup
                 type="single"
                 value={monthlyType}
-                onValueChange={(v) => { if (v) setMonthlyType(v as MonthlyType); }}
+                onValueChange={(v) => {
+                  if (v) setMonthlyType(v as MonthlyType);
+                }}
                 size="sm"
               >
                 <ToggleGroupItem value="both">Les deux</ToggleGroupItem>
@@ -138,12 +154,17 @@ export default function StatisticsPage() {
         <CardHeader>
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
-              <CardTitle className="text-base">Répartition des dépenses par catégorie</CardTitle>
+              <CardTitle className="text-base">
+                Répartition des dépenses par catégorie
+              </CardTitle>
               {categoryStats && categoryStats.length > 0 && (
                 <p className="text-sm text-muted-foreground mt-1">
                   Total :{' '}
                   <span className="font-medium text-foreground">
-                    {totalExpenses.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}
+                    {totalExpenses.toLocaleString('fr-FR', {
+                      style: 'currency',
+                      currency: 'EUR',
+                    })}
                   </span>
                 </p>
               )}

@@ -31,10 +31,7 @@ export default function TransactionFilters({
   const { categories, categoriesIsLoading } = useCategoryList();
 
   const hasActiveFilters = Boolean(
-    filters.type ||
-      filters.categoryId ||
-      filters.startDate ||
-      filters.endDate,
+    filters.type || filters.categoryId || filters.startDate || filters.endDate,
   );
 
   const handleTypeChange = (value: string) => {
@@ -91,9 +88,7 @@ export default function TransactionFilters({
             <SelectTrigger id="filter-category" className="w-full">
               <SelectValue
                 placeholder={
-                  categoriesIsLoading
-                    ? 'Chargement…'
-                    : 'Toutes les catégories'
+                  categoriesIsLoading ? 'Chargement…' : 'Toutes les catégories'
                 }
               />
             </SelectTrigger>

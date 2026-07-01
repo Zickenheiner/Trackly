@@ -31,9 +31,7 @@ export default function ThemeToggle({ className, showLabel = false }: Props) {
       >
         {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
       </motion.div>
-      {showLabel && (
-        <span>{isDark ? 'Mode clair' : 'Mode sombre'}</span>
-      )}
+      {showLabel && <span>{isDark ? 'Mode clair' : 'Mode sombre'}</span>}
     </button>
   );
 }

@@ -16,7 +16,10 @@ export default function CategoryLegend({ stats }: Props) {
       {stats.map((stat) => (
         <motion.div
           key={stat.category.id}
-          variants={{ hidden: { opacity: 0, x: -10 }, visible: { opacity: 1, x: 0 } }}
+          variants={{
+            hidden: { opacity: 0, x: -10 },
+            visible: { opacity: 1, x: 0 },
+          }}
           className="flex items-center justify-between gap-3 py-1"
         >
           <div className="flex items-center gap-2 min-w-0">
@@ -30,7 +33,10 @@ export default function CategoryLegend({ stats }: Props) {
           </div>
           <div className="flex items-center gap-3 flex-shrink-0">
             <span className="text-sm font-medium tabular-nums">
-              {stat.total.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}
+              {stat.total.toLocaleString('fr-FR', {
+                style: 'currency',
+                currency: 'EUR',
+              })}
             </span>
             <span className="text-xs text-muted-foreground tabular-nums w-12 text-right">
               {stat.percentage.toFixed(1)} %

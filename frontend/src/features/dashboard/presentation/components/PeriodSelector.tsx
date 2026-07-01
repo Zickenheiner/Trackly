@@ -1,4 +1,7 @@
-import { ToggleGroup, ToggleGroupItem } from '@/core/components/ui/toggle-group';
+import {
+  ToggleGroup,
+  ToggleGroupItem,
+} from '@/core/components/ui/toggle-group';
 
 type Period = 'week' | 'month' | 'year';
 

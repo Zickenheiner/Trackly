@@ -20,7 +20,10 @@ const MONTHS_OPTIONS: { value: MonthsCount; label: string }[] = [
 
 export default function MonthsSelector({ value, onChange }: Props) {
   return (
-    <Select value={String(value)} onValueChange={(v) => onChange(Number(v) as MonthsCount)}>
+    <Select
+      value={String(value)}
+      onValueChange={(v) => onChange(Number(v) as MonthsCount)}
+    >
       <SelectTrigger className="w-44">
         <SelectValue />
       </SelectTrigger>

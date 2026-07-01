@@ -12,7 +12,6 @@ import { motion } from 'motion/react';
 import { Button } from '@/core/components/ui/button';
 import { Skeleton } from '@/core/components/ui/skeleton';
 import CreateTransactionDialog from '../components/CreateTransactionDialog';
-import CreateIncomeDialog from '../components/CreateIncomeDialog';
 import EditTransactionDialog from '../components/EditTransactionDialog';
 import DeleteTransactionDialog from '../components/DeleteTransactionDialog';
 import TransactionFilters from '../components/TransactionFilters';
@@ -31,9 +30,8 @@ const INITIAL_FILTERS: TransactionFiltersValue = {
 };
 
 export default function TransactionListPage() {
-  const [filters, setFilters] = useState<TransactionFiltersValue>(
-    INITIAL_FILTERS,
-  );
+  const [filters, setFilters] =
+    useState<TransactionFiltersValue>(INITIAL_FILTERS);
   const [editing, setEditing] = useState<TransactionEntity | null>(null);
   const [deleting, setDeleting] = useState<TransactionEntity | null>(null);
 
@@ -48,10 +46,7 @@ export default function TransactionListPage() {
   } = useTransactionList(filters);
 
   const hasActiveFilters = Boolean(
-    filters.type ||
-      filters.categoryId ||
-      filters.startDate ||
-      filters.endDate,
+    filters.type || filters.categoryId || filters.startDate || filters.endDate,
   );
 
   const currentPage = transactionsPage ?? filters.page ?? 1;
@@ -83,7 +78,6 @@ export default function TransactionListPage() {
           </p>
         </div>
         <div className="flex flex-col gap-2 sm:flex-row">
-          <CreateIncomeDialog />
           <CreateTransactionDialog />
         </div>
       </div>
@@ -139,8 +133,11 @@ export default function TransactionListPage() {
                 <p className="text-sm text-muted-foreground">
                   Page {currentPage} sur {totalPages}
                   {typeof transactionsTotal === 'number' && (
-                    <> · {transactionsTotal} transaction
-                      {transactionsTotal > 1 ? 's' : ''}</>
+                    <>
+                      {' '}
+                      · {transactionsTotal} transaction
+                      {transactionsTotal > 1 ? 's' : ''}
+                    </>
                   )}
                 </p>
                 <div className="flex items-center gap-2">
