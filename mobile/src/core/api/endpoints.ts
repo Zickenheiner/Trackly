@@ -8,6 +8,9 @@ const endpoints = {
   users: {
     me: '/users/me',
   },
+  dashboard: {
+    summary: '/dashboard/summary',
+  },
 };
 
 export default endpoints;
