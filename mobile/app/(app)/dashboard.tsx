@@ -15,6 +15,7 @@ import { PeriodSelector } from '@/features/dashboard/PeriodSelector';
 import { useDashboardSummary } from '@/features/dashboard/use-dashboard-summary';
 import type { DashboardPeriod } from '@/features/dashboard/dashboard.types';
 import { CategoryStatsSection } from '@/features/statistics/CategoryStatsSection';
+import { MonthlyStatsSection } from '@/features/statistics/MonthlyStatsSection';
 
 const PERIOD_LABELS: Record<DashboardPeriod, string> = {
   week: 'de la semaine',
@@ -87,6 +88,8 @@ export default function DashboardScreen() {
           </Card>
 
           <CategoryStatsSection period={period} currency={currency} />
+
+          <MonthlyStatsSection currency={currency} />
         </>
       )}
 
