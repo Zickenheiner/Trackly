@@ -1,5 +1,7 @@
 import {
   CreateTransactionDto,
+  GetTransactionsQueryDto,
+  GetTransactionsResponseDto,
   UpdateTransactionDto,
 } from '@features/transactions/domains/dtos/transaction.dto';
 import { TransactionEntity } from '@features/transactions/domains/entities/transaction.entity';
@@ -8,11 +10,13 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   HttpCode,
   Inject,
   Param,
   Patch,
   Post,
+  Query,
   Req,
 } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
@@ -23,6 +27,28 @@ export class TransactionController {
     @Inject('ITransactionService')
     private readonly transactionService: ITransactionService,
   ) {}
+
+  @ApiOperation({
+    summary: 'List transactions',
+    description:
+      'List transactions of the authenticated user with optional filters and pagination',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Paginated list of transactions',
+    type: GetTransactionsResponseDto,
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthenticated',
+  })
+  @Get()
+  async findAll(
+    @Query() query: GetTransactionsQueryDto,
+    @Req() req: { user: { sub: string } },
+  ) {
+    return this.transactionService.findAll(req.user.sub, query);
+  }
 
   @ApiOperation({
     summary: 'Create a transaction',

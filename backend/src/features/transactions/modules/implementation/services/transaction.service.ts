@@ -9,6 +9,8 @@ import { ITransactionRepository } from '@features/transactions/interfaces/reposi
 import { ICategoryService } from '@features/categories/interfaces/services/category.iservice';
 import {
   CreateTransactionDto,
+  GetTransactionsQueryDto,
+  GetTransactionsResponseDto,
   UpdateTransactionDto,
 } from '@features/transactions/domains/dtos/transaction.dto';
 import { TransactionEntity } from '@features/transactions/domains/entities/transaction.entity';
@@ -32,6 +34,21 @@ export class TransactionService implements ITransactionService {
       throw new NotFoundException('Category not found');
     }
     return this.transactionRepository.create(dto, userId);
+  }
+
+  async findAll(
+    userId: string,
+    query: GetTransactionsQueryDto,
+  ): Promise<GetTransactionsResponseDto> {
+    const page = query.page ?? 1;
+    const limit = query.limit ?? 20;
+    const { data, total } = await this.transactionRepository.findByFilters(
+      userId,
+      query,
+      page,
+      limit,
+    );
+    return { data, total, page, limit };
   }
 
   async update(

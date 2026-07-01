@@ -8,6 +8,7 @@ import {
 import { Model } from 'mongoose';
 import {
   CreateTransactionDto,
+  GetTransactionsQueryDto,
   UpdateTransactionDto,
 } from '@features/transactions/domains/dtos/transaction.dto';
 import { TransactionEntity } from '@features/transactions/domains/entities/transaction.entity';
@@ -48,6 +49,62 @@ export class TransactionRepository implements ITransactionRepository {
       created,
       category as CategoryDocument,
     );
+  }
+
+  async findByFilters(
+    userId: string,
+    query: GetTransactionsQueryDto,
+    page: number,
+    limit: number,
+  ): Promise<{ data: TransactionEntity[]; total: number }> {
+    const filter: {
+      userId: string;
+      type?: string;
+      categoryId?: string;
+      date?: { $gte?: Date; $lte?: Date };
+    } = { userId };
+    if (query.type !== undefined) {
+      filter.type = query.type;
+    }
+    if (query.categoryId !== undefined) {
+      filter.categoryId = query.categoryId;
+    }
+    if (query.startDate !== undefined || query.endDate !== undefined) {
+      filter.date = {};
+      if (query.startDate !== undefined) {
+        filter.date.$gte = new Date(query.startDate);
+      }
+      if (query.endDate !== undefined) {
+        filter.date.$lte = new Date(query.endDate);
+      }
+    }
+
+    const total = await this.transactionModel.countDocuments(filter).exec();
+    const transactions = await this.transactionModel
+      .find(filter)
+      .sort({ date: -1 })
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .exec();
+
+    const categoryIds = transactions.map(
+      (transaction) => transaction.categoryId,
+    );
+    const categories = await this.categoryModel
+      .find({ _id: { $in: categoryIds } })
+      .exec();
+    const categoryMap = new Map(
+      categories.map((category) => [category._id.toString(), category]),
+    );
+
+    const data = transactions.map((transaction) =>
+      this.transactionMapper.toEntity(
+        transaction,
+        categoryMap.get(transaction.categoryId.toString()) as CategoryDocument,
+      ),
+    );
+
+    return { data, total };
   }
 
   async findOwnerId(id: string): Promise<string | null> {
