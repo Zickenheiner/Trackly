@@ -17,3 +17,16 @@ export interface CategoryStat {
   total: number;
   percentage: number;
 }
+
+export type MonthlyStatsType = 'income' | 'expense' | 'both';
+
+export interface MonthlyStatsQuery {
+  months?: number;
+  type?: MonthlyStatsType;
+}
+
+export interface MonthlyStat {
+  month: string; // format 'YYYY-MM'
+  income: number;
+  expenses: number;
+}
