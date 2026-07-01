@@ -234,53 +234,25 @@ npm run android  # Lance sur l'émulateur Android
 npm run web      # Lance dans le navigateur
 ```
 
-### Deux façons de tester sur un appareil physique
+### Tester sur un appareil physique (Expo Go)
 
-| Mode          | Prérequis                              | Quand l'utiliser                                                    |
-| ------------- | -------------------------------------- | ------------------------------------------------------------------ |
-| **Expo Go**   | App Expo Go installée depuis le store  | Tests rapides, tant qu'aucune lib native non supportée n'est ajoutée |
-| **Dev build** | App de développement compilée via EAS  | Recommandé ici : l'app utilise `expo-secure-store` (module natif)   |
-
-L'app déclare un **scheme** (`trackly`) dans `app.json`, nécessaire au dev build pour s'ouvrir depuis le QR code.
-
-#### Expo Go
+L'app n'utilise que des modules **embarqués dans Expo Go** (`expo-secure-store`, `expo-router`, `react-native-svg`, etc.) : aucun dev build ni compte Apple payant n'est nécessaire.
 
 ```bash
 cd mobile
 npm start
 ```
 
-Scanner le QR code avec l'app **Expo Go** (ou l'appareil photo iOS, qui propose de l'ouvrir dans Expo Go).
+Scanner le QR code avec l'app **Expo Go** (installée depuis l'App Store / Play Store). Sur iOS, l'appareil photo propose directement d'ouvrir le projet dans Expo Go.
 
-#### Dev build (EAS)
-
-Le dev build permet un développement **100 % sans fil** : l'app se compile dans le cloud EAS, s'installe par lien OTA, puis le rechargement du JS se fait via Metro sur le réseau local. Les profils de build sont définis dans `mobile/eas.json` (`development`, `preview`, `production`).
-
-```bash
-cd mobile
-eas login                 # Compte Expo (accès au projet requis)
-eas init                  # Une seule fois pour l'équipe : lie le projet (extra.eas.projectId)
-
-npm run device:register   # Enregistre l'iPhone (UDID) par QR/lien — une fois par appareil
-npm run build:dev:ios     # Compile l'app de dev (cloud), retourne un lien d'installation OTA
-```
-
-Une fois l'app installée sur le téléphone :
-
-```bash
-npm run start:dev-client
-```
-
-Scripts EAS disponibles : `build:dev:ios`, `build:dev:android`, `build:preview:ios`, `build:preview:android`, `device:register`.
-
-Chaque développeur enregistre **son** appareil (`eas device:create`) ; l'ajout d'un nouvel appareil nécessite de régénérer le profil de provisioning au build suivant (EAS le propose automatiquement).
+> Un build EAS n'est requis que si l'on ajoute plus tard une lib native **non** supportée par Expo Go. Les profils `preview` et `production` restent définis dans `mobile/eas.json` (scripts `build:preview:ios` / `build:preview:android`).
 
 #### Metro cherche `localhost` sur le téléphone ?
 
 Si le QR encode `localhost` (le téléphone tente alors de se joindre lui-même), forcer l'IP LAN de la machine :
 
 ```bash
-REACT_NATIVE_PACKAGER_HOSTNAME=<IP_LAN_DU_MAC> npm start --dev-client
+REACT_NATIVE_PACKAGER_HOSTNAME=<IP_LAN_DU_MAC> npm start
 ```
 
 Vérifier aussi que le téléphone et la machine sont sur le **même réseau Wi-Fi** (sans VPN). En dernier recours (Wi-Fi isolé), utiliser `npm start -- --tunnel`.
