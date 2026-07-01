@@ -17,9 +17,16 @@ const endpoints = {
   },
   categories: {
     list: '/categories',
+    byId: (id: string) => `/categories/${id}`,
   },
   transactions: {
     base: '/transactions',
+    byId: (id: string) => `/transactions/${id}`,
+  },
+  goals: {
+    base: '/goals',
+    byId: (id: string) => `/goals/${id}`,
+    deposits: (id: string) => `/goals/${id}/deposits`,
   },
 };
 
