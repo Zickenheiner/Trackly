@@ -258,17 +258,20 @@ Le dev build permet un développement **100 % sans fil** : l'app se compile dans
 
 ```bash
 cd mobile
-eas login                                         # Compte Expo (accès au projet requis)
-eas init                                          # Lie le projet EAS (écrit extra.eas.projectId)
-eas device:create                                 # Enregistre l'iPhone (UDID) par QR/lien
-eas build --profile development --platform ios    # Compile l'app de dev
+eas login                 # Compte Expo (accès au projet requis)
+eas init                  # Une seule fois pour l'équipe : lie le projet (extra.eas.projectId)
+
+npm run device:register   # Enregistre l'iPhone (UDID) par QR/lien — une fois par appareil
+npm run build:dev:ios     # Compile l'app de dev (cloud), retourne un lien d'installation OTA
 ```
 
 Une fois l'app installée sur le téléphone :
 
 ```bash
-npm start --dev-client
+npm run start:dev-client
 ```
+
+Scripts EAS disponibles : `build:dev:ios`, `build:dev:android`, `build:preview:ios`, `build:preview:android`, `device:register`.
 
 Chaque développeur enregistre **son** appareil (`eas device:create`) ; l'ajout d'un nouvel appareil nécessite de régénérer le profil de provisioning au build suivant (EAS le propose automatiquement).
 
