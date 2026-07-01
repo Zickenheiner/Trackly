@@ -8,8 +8,10 @@ export function useCreateTransaction() {
     mutationFn: (payload: CreateTransactionPayload) =>
       createTransaction(payload),
     onSuccess: () => {
-      // Le dashboard (solde, transactions récentes) et les statistiques
-      // dépendent des transactions : on les rafraîchit après création.
+      // La liste, le dashboard (solde, transactions récentes) et les
+      // statistiques dépendent des transactions : on les rafraîchit après
+      // création.
+      queryClient.invalidateQueries({ queryKey: ['transactions'] });
       queryClient.invalidateQueries({ queryKey: ['dashboard'] });
       queryClient.invalidateQueries({ queryKey: ['statistics'] });
     },

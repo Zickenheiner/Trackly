@@ -9,12 +9,13 @@ import { useTheme } from '@/core/theme/theme-context';
 import type { Palette } from '@/core/theme/palettes';
 import { CategoryPicker } from './CategoryPicker';
 import { useCreateTransaction } from './use-create-transaction';
+import { useUpdateTransaction } from './use-update-transaction';
 import {
   parseAmount,
   transactionFormSchema,
   type TransactionFormValues,
 } from './transaction.schema';
-import type { TransactionType } from './transaction.types';
+import type { Transaction, TransactionType } from './transaction.types';
 
 /** Date du jour au format AAAA-MM-JJ (heure locale). */
 function todayIso(): string {
@@ -24,9 +25,19 @@ function todayIso(): string {
   return local.toISOString().slice(0, 10);
 }
 
+/** Extrait la partie AAAA-MM-JJ d'une date ISO. */
+function toDateInput(iso: string): string {
+  return iso.slice(0, 10);
+}
+
 const COPY: Record<
   TransactionType,
-  { labelField: string; labelPlaceholder: string; submit: string; success: string }
+  {
+    labelField: string;
+    labelPlaceholder: string;
+    submit: string;
+    success: string;
+  }
 > = {
   expense: {
     labelField: 'Libellé',
@@ -44,7 +55,8 @@ const COPY: Record<
 
 function errorMessage(error: unknown): string {
   if (error instanceof ApiError) {
-    if (error.status === 404) return 'La catégorie sélectionnée est introuvable.';
+    if (error.status === 404)
+      return 'La catégorie sélectionnée est introuvable.';
     if (error.status === 400) {
       return 'Validation échouée. Vérifiez les champs du formulaire.';
     }
@@ -52,11 +64,24 @@ function errorMessage(error: unknown): string {
   return 'Une erreur est survenue. Veuillez réessayer.';
 }
 
-export function TransactionForm({ type }: { type: TransactionType }) {
+interface TransactionFormProps {
+  type: TransactionType;
+  transaction?: Transaction;
+  onSuccess?: () => void;
+}
+
+export function TransactionForm({
+  type,
+  transaction,
+  onSuccess,
+}: TransactionFormProps) {
   const { colors } = useTheme();
   const styles = useMemo(() => createStyles(colors), [colors]);
   const copy = COPY[type];
+  const isEditing = Boolean(transaction);
   const createMutation = useCreateTransaction();
+  const updateMutation = useUpdateTransaction();
+  const mutation = isEditing ? updateMutation : createMutation;
 
   const {
     control,
@@ -65,37 +90,57 @@ export function TransactionForm({ type }: { type: TransactionType }) {
     formState: { errors },
   } = useForm<TransactionFormValues>({
     resolver: zodResolver(transactionFormSchema),
-    defaultValues: {
-      amount: '',
-      label: '',
-      categoryId: '',
-      date: todayIso(),
-      note: '',
-    },
+    defaultValues: transaction
+      ? {
+          amount: String(transaction.amount),
+          label: transaction.label,
+          categoryId: transaction.category.id,
+          date: toDateInput(transaction.date),
+          note: transaction.note ?? '',
+        }
+      : {
+          amount: '',
+          label: '',
+          categoryId: '',
+          date: todayIso(),
+          note: '',
+        },
   });
 
   const onSubmit = handleSubmit((values) => {
-    createMutation.mutate(
-      {
-        type,
-        amount: parseAmount(values.amount),
-        label: values.label,
-        categoryId: values.categoryId,
-        date: new Date(`${values.date}T00:00:00`).toISOString(),
-        note: values.note?.trim() ? values.note.trim() : undefined,
-      },
-      {
-        onSuccess: () => {
-          reset({
-            amount: '',
-            label: '',
-            categoryId: '',
-            date: todayIso(),
-            note: '',
-          });
+    const payload = {
+      type,
+      amount: parseAmount(values.amount),
+      label: values.label,
+      categoryId: values.categoryId,
+      date: new Date(`${values.date}T00:00:00`).toISOString(),
+      note: values.note?.trim() ? values.note.trim() : undefined,
+    };
+
+    if (transaction) {
+      updateMutation.mutate(
+        { id: transaction.id, payload },
+        {
+          onSuccess: () => {
+            onSuccess?.();
+          },
         },
+      );
+      return;
+    }
+
+    createMutation.mutate(payload, {
+      onSuccess: () => {
+        reset({
+          amount: '',
+          label: '',
+          categoryId: '',
+          date: todayIso(),
+          note: '',
+        });
+        onSuccess?.();
       },
-    );
+    });
   });
 
   return (
@@ -178,19 +223,19 @@ export function TransactionForm({ type }: { type: TransactionType }) {
         )}
       />
 
-      {createMutation.isError ? (
-        <Text style={styles.serverError}>
-          {errorMessage(createMutation.error)}
-        </Text>
+      {mutation.isError ? (
+        <Text style={styles.serverError}>{errorMessage(mutation.error)}</Text>
       ) : null}
-      {createMutation.isSuccess ? (
-        <Text style={styles.success}>{copy.success}</Text>
+      {mutation.isSuccess ? (
+        <Text style={styles.success}>
+          {isEditing ? 'Modifications enregistrées.' : copy.success}
+        </Text>
       ) : null}
 
       <Button
-        label={copy.submit}
+        label={isEditing ? 'Enregistrer les modifications' : copy.submit}
         onPress={onSubmit}
-        loading={createMutation.isPending}
+        loading={mutation.isPending}
       />
     </View>
   );
