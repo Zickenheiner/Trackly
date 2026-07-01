@@ -29,12 +29,15 @@ export function RegisterForm() {
       age: '',
       email: '',
       password: '',
+      confirmPassword: '',
       currency: 'EUR',
     },
   });
 
   const onSubmit = handleSubmit((values) => {
-    registerMutation.mutate({ ...values, age: Number(values.age) });
+    // confirmPassword ne sert qu'à la validation côté client : on l'exclut du payload.
+    const { confirmPassword: _confirmPassword, ...payload } = values;
+    registerMutation.mutate({ ...payload, age: Number(payload.age) });
   });
 
   return (
@@ -52,10 +55,15 @@ export function RegisterForm() {
                   <Pressable
                     key={option}
                     onPress={() => onChange(option)}
-                    style={[styles.segment, active ? styles.segmentActive : null]}
+                    style={[
+                      styles.segment,
+                      active ? styles.segmentActive : null,
+                    ]}
                   >
                     <Text
-                      style={active ? styles.segmentTextActive : styles.segmentText}
+                      style={
+                        active ? styles.segmentTextActive : styles.segmentText
+                      }
                     >
                       {option}
                     </Text>
@@ -140,6 +148,21 @@ export function RegisterForm() {
             onBlur={onBlur}
             secureTextEntry
             error={errors.password?.message}
+          />
+        )}
+      />
+
+      <Controller
+        control={control}
+        name="confirmPassword"
+        render={({ field: { value, onChange, onBlur } }) => (
+          <TextField
+            label="Confirmer le mot de passe"
+            value={value}
+            onChangeText={onChange}
+            onBlur={onBlur}
+            secureTextEntry
+            error={errors.confirmPassword?.message}
           />
         )}
       />
