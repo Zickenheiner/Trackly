@@ -1,29 +1,89 @@
 import { useMemo } from 'react';
 import { Link } from 'expo-router';
-import { StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { Screen } from '@/core/ui/Screen';
 import { Card } from '@/core/ui/Card';
+import { Button } from '@/core/ui/Button';
 import { useTheme } from '@/core/theme/theme-context';
 import { ThemeToggle } from '@/core/theme/ThemeToggle';
 import type { Palette } from '@/core/theme/palettes';
 import { LogoutButton } from '@/features/auth/LogoutButton';
+import { useProfile } from '@/features/profile/use-profile';
+import { SummaryCard } from '@/features/dashboard/SummaryCard';
+import { RecentTransactionItem } from '@/features/dashboard/RecentTransactionItem';
+import { useDashboardSummary } from '@/features/dashboard/use-dashboard-summary';
 
 export default function DashboardScreen() {
   const { colors } = useTheme();
   const styles = useMemo(() => createStyles(colors), [colors]);
 
+  const { data: profile } = useProfile();
+  const currency = profile?.currency ?? 'EUR';
+
+  const { data: summary, isLoading, isError, error, refetch } =
+    useDashboardSummary('month');
+
   return (
-    <Screen>
-      <Text style={styles.title}>Dashboard</Text>
+    <Screen scroll>
+      <Text style={styles.title}>Tableau de bord</Text>
+
+      {isLoading ? (
+        <View style={styles.centered}>
+          <ActivityIndicator color={colors.primary} />
+        </View>
+      ) : isError || !summary ? (
+        <Card style={styles.errorCard}>
+          <Text style={styles.errorText}>
+            {error?.message ?? 'Impossible de charger le tableau de bord.'}
+          </Text>
+          <Button label="Réessayer" variant="ghost" onPress={() => refetch()} />
+        </Card>
+      ) : (
+        <>
+          <SummaryCard
+            title="Solde actuel"
+            amount={summary.balance}
+            currency={currency}
+          />
+          <View style={styles.row}>
+            <SummaryCard
+              title="Revenus du mois"
+              amount={summary.income}
+              currency={currency}
+              variant="income"
+            />
+            <SummaryCard
+              title="Dépenses du mois"
+              amount={summary.expenses}
+              currency={currency}
+              variant="expense"
+            />
+          </View>
+
+          <Card>
+            <Text style={styles.sectionTitle}>Transactions récentes</Text>
+            {summary.recentTransactions.length === 0 ? (
+              <Text style={styles.empty}>Aucune transaction récente.</Text>
+            ) : (
+              summary.recentTransactions.map((transaction) => (
+                <RecentTransactionItem
+                  key={transaction.id}
+                  transaction={transaction}
+                  currency={currency}
+                />
+              ))
+            )}
+          </Card>
+        </>
+      )}
+
       <Card>
-        <Text style={styles.text}>
-          Écran de démonstration — page d'accueil après authentification.
-        </Text>
         <ThemeToggle />
         <Link href="/profile" style={styles.link}>
           Mon profil
         </Link>
       </Card>
+
       <View style={styles.footer}>
         <LogoutButton />
       </View>
@@ -38,9 +98,30 @@ const createStyles = (colors: Palette) =>
       fontWeight: '700',
       color: colors.text,
     },
-    text: {
+    row: {
+      flexDirection: 'row',
+      gap: 16,
+    },
+    centered: {
+      paddingVertical: 40,
+      alignItems: 'center',
+    },
+    errorCard: {
+      gap: 12,
+    },
+    errorText: {
       fontSize: 15,
+      color: colors.danger,
+    },
+    sectionTitle: {
+      fontSize: 16,
+      fontWeight: '600',
+      color: colors.text,
+    },
+    empty: {
+      fontSize: 14,
       color: colors.textMuted,
+      paddingVertical: 12,
     },
     link: {
       fontSize: 16,
