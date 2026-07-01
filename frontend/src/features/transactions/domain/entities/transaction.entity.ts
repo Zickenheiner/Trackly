@@ -17,3 +17,19 @@ export interface TransactionEntity {
   date: Date;
   createdAt: Date;
 }
+
+export interface TransactionFilters {
+  type?: TransactionType;
+  categoryId?: string;
+  startDate?: string;
+  endDate?: string;
+  page?: number;
+  limit?: number;
+}
+
+export interface TransactionListResult {
+  data: TransactionEntity[];
+  total: number;
+  page: number;
+  limit: number;
+}

@@ -1,5 +1,11 @@
-import type { DashboardSummaryEntity, TransactionEntity } from '../../domain/entities/dashboard-summary.entity';
-import type { DashboardSummaryResponseDto, TransactionDto } from '../dtos/dashboard-summary.dto';
+import type {
+  DashboardSummaryEntity,
+  TransactionEntity,
+} from '../../domain/entities/dashboard-summary.entity';
+import type {
+  DashboardSummaryResponseDto,
+  TransactionDto,
+} from '../dtos/dashboard-summary.dto';
 
 class DashboardSummaryMapper {
   private toTransactionEntity(dto: TransactionDto): TransactionEntity {
@@ -24,7 +30,9 @@ class DashboardSummaryMapper {
         start: new Date(dto.period.start),
         end: new Date(dto.period.end),
       },
-      recentTransactions: dto.recentTransactions.map((t) => this.toTransactionEntity(t)),
+      recentTransactions: dto.recentTransactions.map((t) =>
+        this.toTransactionEntity(t),
+      ),
     };
   }
 }

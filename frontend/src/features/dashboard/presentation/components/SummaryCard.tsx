@@ -1,4 +1,9 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/core/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@/core/components/ui/card';
 import { cn } from '@/core/utils/cn';
 import { motion } from 'motion/react';
 import type { LucideIcon } from 'lucide-react';
@@ -48,13 +53,25 @@ export default function SummaryCard({
     >
       <Card className="h-full">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium text-muted-foreground">{title}</CardTitle>
-          <div className={cn('flex h-9 w-9 items-center justify-center rounded-lg', iconBgStyles[variant])}>
+          <CardTitle className="text-sm font-medium text-muted-foreground">
+            {title}
+          </CardTitle>
+          <div
+            className={cn(
+              'flex h-9 w-9 items-center justify-center rounded-lg',
+              iconBgStyles[variant],
+            )}
+          >
             <Icon className="h-4 w-4" />
           </div>
         </CardHeader>
         <CardContent>
-          <p className={cn('text-2xl font-semibold tabular-nums', variantStyles[variant])}>
+          <p
+            className={cn(
+              'text-2xl font-semibold tabular-nums',
+              variantStyles[variant],
+            )}
+          >
             {formatAmount(amount, currency)}
           </p>
         </CardContent>

@@ -10,7 +10,9 @@ class CategoryStatsRepositoryImpl implements CategoryStatsRepository {
     private readonly mapper: CategoryStatsMapper = new CategoryStatsMapper(),
   ) {}
 
-  async getByCategory(query?: StatsByCategoryQueryDto): Promise<CategoryStatEntity[]> {
+  async getByCategory(
+    query?: StatsByCategoryQueryDto,
+  ): Promise<CategoryStatEntity[]> {
     const dtos = await this.api.getByCategory(query);
     return this.mapper.toEntityList(dtos);
   }

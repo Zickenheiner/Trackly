@@ -1,5 +1,12 @@
 import { useState } from 'react';
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Sector } from 'recharts';
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  ResponsiveContainer,
+  Sector,
+} from 'recharts';
 import type { CategoryStatEntity } from '../../domain/entities/category-stats.entity';
 
 interface Props {
@@ -48,10 +55,22 @@ function ActiveShape(props: ActiveShapeProps) {
 
   return (
     <g>
-      <text x={cx} y={cy} dy={-8} textAnchor="middle" className="fill-foreground text-sm font-medium">
+      <text
+        x={cx}
+        y={cy}
+        dy={-8}
+        textAnchor="middle"
+        className="fill-foreground text-sm font-medium"
+      >
         {payload.category.icon} {payload.category.name}
       </text>
-      <text x={cx} y={cy} dy={12} textAnchor="middle" className="fill-muted-foreground text-xs">
+      <text
+        x={cx}
+        y={cy}
+        dy={12}
+        textAnchor="middle"
+        className="fill-muted-foreground text-xs"
+      >
         {(percent * 100).toFixed(1)}%
       </text>
       <Sector
@@ -72,7 +91,11 @@ function ActiveShape(props: ActiveShapeProps) {
         endAngle={endAngle}
         fill={fill}
       />
-      <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
+      <path
+        d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`}
+        stroke={fill}
+        fill="none"
+      />
       <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
@@ -100,7 +123,9 @@ export default function CategoryPieChart({ stats }: Props) {
       <PieChart>
         <Pie
           activeIndex={activeIndex}
-          activeShape={(props: unknown) => <ActiveShape {...(props as ActiveShapeProps)} />}
+          activeShape={(props: unknown) => (
+            <ActiveShape {...(props as ActiveShapeProps)} />
+          )}
           data={data}
           cx="50%"
           cy="50%"
@@ -120,7 +145,10 @@ export default function CategoryPieChart({ stats }: Props) {
         </Pie>
         <Tooltip
           formatter={(value: number) =>
-            value.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })
+            value.toLocaleString('fr-FR', {
+              style: 'currency',
+              currency: 'EUR',
+            })
           }
           labelFormatter={(label: string) => label}
         />

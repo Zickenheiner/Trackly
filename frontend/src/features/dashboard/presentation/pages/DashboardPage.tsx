@@ -7,7 +7,12 @@ import RecentTransactionItem from '../components/RecentTransactionItem';
 import PeriodSelector from '../components/PeriodSelector';
 import { Skeleton } from '@/core/components/ui/skeleton';
 import { Button } from '@/core/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/core/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@/core/components/ui/card';
 import { Separator } from '@/core/components/ui/separator';
 
 type Period = 'week' | 'month' | 'year';
@@ -57,9 +62,10 @@ function DashboardError({ onRetry }: { onRetry: () => void }) {
 
 export default function DashboardPage() {
   const [period, setPeriod] = useState<Period>('month');
-  const { summary, summaryIsLoading, summaryError, refetchSummary } = useDashboardSummary({
-    period,
-  });
+  const { summary, summaryIsLoading, summaryError, refetchSummary } =
+    useDashboardSummary({
+      period,
+    });
 
   if (summaryIsLoading) return <DashboardSkeleton />;
   if (summaryError) return <DashboardError onRetry={() => refetchSummary()} />;
@@ -128,7 +134,10 @@ export default function DashboardPage() {
             >
               {summary.recentTransactions.map((transaction, index) => (
                 <div key={transaction.id}>
-                  <RecentTransactionItem transaction={transaction} index={index} />
+                  <RecentTransactionItem
+                    transaction={transaction}
+                    index={index}
+                  />
                   {index < summary.recentTransactions.length - 1 && (
                     <Separator />
                   )}

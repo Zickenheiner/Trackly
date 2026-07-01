@@ -29,7 +29,9 @@ export default function MonthlyBarChart({ stats, type }: Props) {
   const data = stats.map((stat) => ({
     name: formatMonth(stat.month),
     ...(type === 'income' || type === 'both' ? { Revenus: stat.income } : {}),
-    ...(type === 'expense' || type === 'both' ? { Dépenses: stat.expenses } : {}),
+    ...(type === 'expense' || type === 'both'
+      ? { Dépenses: stat.expenses }
+      : {}),
   }));
 
   return (

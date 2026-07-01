@@ -5,7 +5,8 @@ import type { DashboardSummaryQueryDto } from '../../data/dtos/dashboard-summary
 const repository = new DashboardSummaryRepositoryImpl();
 
 const QUERY_KEYS = {
-  summary: (query?: DashboardSummaryQueryDto) => ['dashboard', 'summary', query] as const,
+  summary: (query?: DashboardSummaryQueryDto) =>
+    ['dashboard', 'summary', query] as const,
 };
 
 export function useDashboardSummary(query?: DashboardSummaryQueryDto) {

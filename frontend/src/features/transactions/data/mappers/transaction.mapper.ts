@@ -1,5 +1,11 @@
-import type { TransactionEntity } from '../../domain/entities/transaction.entity';
-import type { TransactionResponseDto } from '../dtos/transaction.dto';
+import type {
+  TransactionEntity,
+  TransactionListResult,
+} from '../../domain/entities/transaction.entity';
+import type {
+  GetTransactionsResponseDto,
+  TransactionResponseDto,
+} from '../dtos/transaction.dto';
 
 class TransactionMapper {
   toEntity(dto: TransactionResponseDto): TransactionEntity {
@@ -22,6 +28,15 @@ class TransactionMapper {
 
   toEntityList(dtos: TransactionResponseDto[]): TransactionEntity[] {
     return dtos.map((dto) => this.toEntity(dto));
+  }
+
+  toListResult(dto: GetTransactionsResponseDto): TransactionListResult {
+    return {
+      data: this.toEntityList(dto.data),
+      total: dto.total,
+      page: dto.page,
+      limit: dto.limit,
+    };
   }
 }
 

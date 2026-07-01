@@ -10,7 +10,9 @@ class DashboardSummaryRepositoryImpl implements DashboardSummaryRepository {
     private readonly mapper: DashboardSummaryMapper = new DashboardSummaryMapper(),
   ) {}
 
-  async getSummary(query?: DashboardSummaryQueryDto): Promise<DashboardSummaryEntity> {
+  async getSummary(
+    query?: DashboardSummaryQueryDto,
+  ): Promise<DashboardSummaryEntity> {
     const dto = await this.api.getSummary(query);
     return this.mapper.toEntity(dto);
   }

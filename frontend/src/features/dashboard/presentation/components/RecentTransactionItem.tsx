@@ -24,7 +24,10 @@ function formatAmount(amount: number, type: 'income' | 'expense'): string {
   }).format(Math.abs(amount))}`;
 }
 
-export default function RecentTransactionItem({ transaction, index = 0 }: Props) {
+export default function RecentTransactionItem({
+  transaction,
+  index = 0,
+}: Props) {
   const isIncome = transaction.type === 'income';
 
   return (
@@ -40,7 +43,9 @@ export default function RecentTransactionItem({ transaction, index = 0 }: Props)
         <div
           className={cn(
             'flex h-8 w-8 items-center justify-center rounded-full',
-            isIncome ? 'bg-success/10 text-success' : 'bg-destructive/10 text-destructive',
+            isIncome
+              ? 'bg-success/10 text-success'
+              : 'bg-destructive/10 text-destructive',
           )}
         >
           {isIncome ? (
@@ -50,9 +55,13 @@ export default function RecentTransactionItem({ transaction, index = 0 }: Props)
           )}
         </div>
         <div className="flex flex-col">
-          <span className="text-sm font-medium leading-none">{transaction.label}</span>
+          <span className="text-sm font-medium leading-none">
+            {transaction.label}
+          </span>
           {transaction.categoryName && (
-            <span className="mt-0.5 text-xs text-muted-foreground">{transaction.categoryName}</span>
+            <span className="mt-0.5 text-xs text-muted-foreground">
+              {transaction.categoryName}
+            </span>
           )}
         </div>
       </div>
@@ -65,7 +74,9 @@ export default function RecentTransactionItem({ transaction, index = 0 }: Props)
         >
           {formatAmount(transaction.amount, transaction.type)}
         </span>
-        <span className="mt-0.5 text-xs text-muted-foreground">{formatDate(transaction.date)}</span>
+        <span className="mt-0.5 text-xs text-muted-foreground">
+          {formatDate(transaction.date)}
+        </span>
       </div>
     </motion.div>
   );
