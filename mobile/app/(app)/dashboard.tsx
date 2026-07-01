@@ -14,6 +14,7 @@ import { RecentTransactionItem } from '@/features/dashboard/RecentTransactionIte
 import { PeriodSelector } from '@/features/dashboard/PeriodSelector';
 import { useDashboardSummary } from '@/features/dashboard/use-dashboard-summary';
 import type { DashboardPeriod } from '@/features/dashboard/dashboard.types';
+import { CategoryStatsSection } from '@/features/statistics/CategoryStatsSection';
 
 const PERIOD_LABELS: Record<DashboardPeriod, string> = {
   week: 'de la semaine',
@@ -84,6 +85,8 @@ export default function DashboardScreen() {
               ))
             )}
           </Card>
+
+          <CategoryStatsSection period={period} currency={currency} />
         </>
       )}
 
