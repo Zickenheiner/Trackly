@@ -59,4 +59,18 @@ export class TransactionService implements ITransactionService {
     }
     return updated;
   }
+
+  async delete(id: string, userId: string): Promise<void> {
+    const ownerId = await this.transactionRepository.findOwnerId(id);
+    if (!ownerId) {
+      throw new NotFoundException('Transaction not found');
+    }
+    if (ownerId !== userId) {
+      throw new ForbiddenException('Transaction belongs to another user');
+    }
+    const deleted = await this.transactionRepository.delete(id);
+    if (!deleted) {
+      throw new NotFoundException('Transaction not found');
+    }
+  }
 }

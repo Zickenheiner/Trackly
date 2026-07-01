@@ -95,4 +95,9 @@ export class TransactionRepository implements ITransactionRepository {
       category as CategoryDocument,
     );
   }
+
+  async delete(id: string): Promise<boolean> {
+    const result = await this.transactionModel.findByIdAndDelete(id).exec();
+    return !!result;
+  }
 }

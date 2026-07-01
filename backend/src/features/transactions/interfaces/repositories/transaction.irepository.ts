@@ -11,4 +11,5 @@ export interface ITransactionRepository {
     id: string,
     dto: UpdateTransactionDto,
   ): Promise<TransactionEntity | null>;
+  delete(id: string): Promise<boolean>;
 }

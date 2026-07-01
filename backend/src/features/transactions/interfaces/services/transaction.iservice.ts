@@ -11,4 +11,5 @@ export interface ITransactionService {
     dto: UpdateTransactionDto,
     userId: string,
   ): Promise<TransactionEntity>;
+  delete(id: string, userId: string): Promise<void>;
 }

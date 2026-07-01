@@ -7,6 +7,8 @@ import { ITransactionService } from '@features/transactions/interfaces/services/
 import {
   Body,
   Controller,
+  Delete,
+  HttpCode,
   Inject,
   Param,
   Patch,
@@ -99,5 +101,37 @@ export class TransactionController {
     @Req() req: { user: { sub: string } },
   ) {
     return this.transactionService.update(id, dto, req.user.sub);
+  }
+
+  @ApiOperation({
+    summary: 'Delete a transaction',
+    description:
+      'Delete an existing transaction owned by the authenticated user',
+  })
+  @ApiParam({
+    name: 'id',
+    type: String,
+    description: 'The unique identifier of the transaction to delete',
+  })
+  @ApiResponse({
+    status: 204,
+    description: 'Transaction deleted',
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthenticated',
+  })
+  @ApiResponse({
+    status: 403,
+    description: 'Transaction belongs to another user',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Transaction not found',
+  })
+  @Delete(':id')
+  @HttpCode(204)
+  async delete(@Param('id') id: string, @Req() req: { user: { sub: string } }) {
+    return this.transactionService.delete(id, req.user.sub);
   }
 }
