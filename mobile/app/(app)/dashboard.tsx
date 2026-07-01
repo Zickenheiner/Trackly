@@ -73,7 +73,12 @@ export default function DashboardScreen() {
           </View>
 
           <Card>
-            <Text style={styles.sectionTitle}>Transactions récentes</Text>
+            <View style={styles.sectionHeader}>
+              <Text style={styles.sectionTitle}>Transactions récentes</Text>
+              <Link href="/transactions" style={styles.link}>
+                + Ajouter
+              </Link>
+            </View>
             {summary.recentTransactions.length === 0 ? (
               <Text style={styles.empty}>Aucune transaction récente.</Text>
             ) : (
@@ -128,6 +133,11 @@ const createStyles = (colors: Palette) =>
     errorText: {
       fontSize: 15,
       color: colors.danger,
+    },
+    sectionHeader: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
     },
     sectionTitle: {
       fontSize: 16,

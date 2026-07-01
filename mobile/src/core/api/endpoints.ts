@@ -15,6 +15,12 @@ const endpoints = {
     byCategory: '/statistics/by-category',
     monthly: '/statistics/monthly',
   },
+  categories: {
+    list: '/categories',
+  },
+  transactions: {
+    base: '/transactions',
+  },
 };
 
 export default endpoints;
