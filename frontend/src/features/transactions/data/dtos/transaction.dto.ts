@@ -9,6 +9,14 @@ export interface CreateTransactionRequestDto {
   note?: string;
 }
 
+export interface UpdateTransactionRequestDto {
+  amount?: number;
+  label?: string;
+  categoryId?: string;
+  date?: string;
+  note?: string;
+}
+
 export interface TransactionCategoryDto {
   id: string;
   name: string;

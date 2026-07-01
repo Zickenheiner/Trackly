@@ -1,6 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import TransactionRepositoryImpl from '../../data/repositories/transaction.repository.impl';
-import type { CreateTransactionRequestDto } from '../../data/dtos/transaction.dto';
+import type {
+  CreateTransactionRequestDto,
+  UpdateTransactionRequestDto,
+} from '../../data/dtos/transaction.dto';
 
 const repository = new TransactionRepositoryImpl();
 
@@ -23,5 +26,31 @@ export function useCreateTransaction() {
     createTransactionAsync: mutateAsync,
     createTransactionIsLoading: isPending,
     createTransactionError: error,
+  };
+}
+
+export function useUpdateTransaction() {
+  const queryClient = useQueryClient();
+
+  const { mutate, mutateAsync, isPending, error } = useMutation({
+    mutationFn: ({
+      id,
+      data,
+    }: {
+      id: string;
+      data: UpdateTransactionRequestDto;
+    }) => repository.update(id, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.all });
+      queryClient.invalidateQueries({ queryKey: ['dashboard'] });
+      queryClient.invalidateQueries({ queryKey: ['statistics'] });
+    },
+  });
+
+  return {
+    updateTransaction: mutate,
+    updateTransactionAsync: mutateAsync,
+    updateTransactionIsLoading: isPending,
+    updateTransactionError: error,
   };
 }
