@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Link } from 'expo-router';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { Screen } from '@/core/ui/Screen';
@@ -11,7 +11,15 @@ import { LogoutButton } from '@/features/auth/LogoutButton';
 import { useProfile } from '@/features/profile/use-profile';
 import { SummaryCard } from '@/features/dashboard/SummaryCard';
 import { RecentTransactionItem } from '@/features/dashboard/RecentTransactionItem';
+import { PeriodSelector } from '@/features/dashboard/PeriodSelector';
 import { useDashboardSummary } from '@/features/dashboard/use-dashboard-summary';
+import type { DashboardPeriod } from '@/features/dashboard/dashboard.types';
+
+const PERIOD_LABELS: Record<DashboardPeriod, string> = {
+  week: 'de la semaine',
+  month: 'du mois',
+  year: "de l'année",
+};
 
 export default function DashboardScreen() {
   const { colors } = useTheme();
@@ -20,12 +28,14 @@ export default function DashboardScreen() {
   const { data: profile } = useProfile();
   const currency = profile?.currency ?? 'EUR';
 
+  const [period, setPeriod] = useState<DashboardPeriod>('month');
   const { data: summary, isLoading, isError, error, refetch } =
-    useDashboardSummary('month');
+    useDashboardSummary(period);
 
   return (
     <Screen scroll>
       <Text style={styles.title}>Tableau de bord</Text>
+      <PeriodSelector value={period} onChange={setPeriod} />
 
       {isLoading ? (
         <View style={styles.centered}>
@@ -47,13 +57,13 @@ export default function DashboardScreen() {
           />
           <View style={styles.row}>
             <SummaryCard
-              title="Revenus du mois"
+              title={`Revenus ${PERIOD_LABELS[period]}`}
               amount={summary.income}
               currency={currency}
               variant="income"
             />
             <SummaryCard
-              title="Dépenses du mois"
+              title={`Dépenses ${PERIOD_LABELS[period]}`}
               amount={summary.expenses}
               currency={currency}
               variant="expense"
