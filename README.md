@@ -234,7 +234,53 @@ npm run android  # Lance sur l'émulateur Android
 npm run web      # Lance dans le navigateur
 ```
 
-Scanner le QR code affiché par `npm start` avec l'app **Expo Go** pour tester sur un appareil physique.
+### Deux façons de tester sur un appareil physique
+
+| Mode          | Prérequis                              | Quand l'utiliser                                                    |
+| ------------- | -------------------------------------- | ------------------------------------------------------------------ |
+| **Expo Go**   | App Expo Go installée depuis le store  | Tests rapides, tant qu'aucune lib native non supportée n'est ajoutée |
+| **Dev build** | App de développement compilée via EAS  | Recommandé ici : l'app utilise `expo-secure-store` (module natif)   |
+
+L'app déclare un **scheme** (`trackly`) dans `app.json`, nécessaire au dev build pour s'ouvrir depuis le QR code.
+
+#### Expo Go
+
+```bash
+cd mobile
+npm start
+```
+
+Scanner le QR code avec l'app **Expo Go** (ou l'appareil photo iOS, qui propose de l'ouvrir dans Expo Go).
+
+#### Dev build (EAS)
+
+Le dev build permet un développement **100 % sans fil** : l'app se compile dans le cloud EAS, s'installe par lien OTA, puis le rechargement du JS se fait via Metro sur le réseau local. Les profils de build sont définis dans `mobile/eas.json` (`development`, `preview`, `production`).
+
+```bash
+cd mobile
+eas login                                         # Compte Expo (accès au projet requis)
+eas init                                          # Lie le projet EAS (écrit extra.eas.projectId)
+eas device:create                                 # Enregistre l'iPhone (UDID) par QR/lien
+eas build --profile development --platform ios    # Compile l'app de dev
+```
+
+Une fois l'app installée sur le téléphone :
+
+```bash
+npm start --dev-client
+```
+
+Chaque développeur enregistre **son** appareil (`eas device:create`) ; l'ajout d'un nouvel appareil nécessite de régénérer le profil de provisioning au build suivant (EAS le propose automatiquement).
+
+#### Metro cherche `localhost` sur le téléphone ?
+
+Si le QR encode `localhost` (le téléphone tente alors de se joindre lui-même), forcer l'IP LAN de la machine :
+
+```bash
+REACT_NATIVE_PACKAGER_HOSTNAME=<IP_LAN_DU_MAC> npm start --dev-client
+```
+
+Vérifier aussi que le téléphone et la machine sont sur le **même réseau Wi-Fi** (sans VPN). En dernier recours (Wi-Fi isolé), utiliser `npm start -- --tunnel`.
 
 ---
 
