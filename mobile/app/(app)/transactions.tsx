@@ -1,5 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 import { Screen } from '@/core/ui/Screen';
 import { Card } from '@/core/ui/Card';
 import { useTheme } from '@/core/theme/theme-context';
@@ -15,10 +17,21 @@ const TABS: { type: TransactionType; label: string }[] = [
 export default function TransactionsScreen() {
   const { colors } = useTheme();
   const styles = useMemo(() => createStyles(colors), [colors]);
+  const router = useRouter();
   const [type, setType] = useState<TransactionType>('expense');
+
+  const goBack = () => {
+    if (router.canGoBack()) router.back();
+    else router.replace('/dashboard');
+  };
 
   return (
     <Screen scroll>
+      <Pressable style={styles.backButton} onPress={goBack} hitSlop={8}>
+        <Ionicons name="chevron-back" size={22} color={colors.primary} />
+        <Text style={styles.backLabel}>Retour</Text>
+      </Pressable>
+
       <Text style={styles.title}>Nouvelle transaction</Text>
       <Text style={styles.subtitle}>
         Ajoutez une dépense ou un revenu pour suivre vos finances.
@@ -52,6 +65,18 @@ export default function TransactionsScreen() {
 
 const createStyles = (colors: Palette) =>
   StyleSheet.create({
+    backButton: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      alignSelf: 'flex-start',
+      gap: 2,
+      marginLeft: -4,
+    },
+    backLabel: {
+      fontSize: 16,
+      fontWeight: '600',
+      color: colors.primary,
+    },
     title: {
       fontSize: 28,
       fontWeight: '700',
