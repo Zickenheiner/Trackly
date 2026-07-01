@@ -4,6 +4,13 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { APP_GUARD } from '@nestjs/core';
 import { AccessTokenGuard } from '@core/guards/access-token.guard';
 import { AtStrategy } from '@core/strategies/at.strategy';
+import { CategoryBaseModule } from '@features/categories/modules/category.module';
+import { TransactionBaseModule } from '@features/transactions/modules/transaction.module';
+import { UserBaseModule } from '@features/user/modules/user.module';
+import { AuthBaseModule } from '@features/auth/modules/auth.module';
+import { GoalBaseModule } from '@features/goals/modules/goal.module';
+import { DashboardBaseModule } from '@features/dashboard/modules/dashboard.module';
+import { StatisticsBaseModule } from '@features/statistics/modules/statistics.module';
 
 @Module({
   imports: [
@@ -21,6 +28,13 @@ import { AtStrategy } from '@core/strategies/at.strategy';
       }),
       inject: [ConfigService],
     }),
+    CategoryBaseModule,
+    TransactionBaseModule,
+    UserBaseModule,
+    AuthBaseModule,
+    GoalBaseModule,
+    DashboardBaseModule,
+    StatisticsBaseModule,
   ],
   providers: [
     AtStrategy,
