@@ -5,17 +5,13 @@ import { Screen } from '@/core/ui/Screen';
 import { Card } from '@/core/ui/Card';
 import { Button } from '@/core/ui/Button';
 import { useTheme } from '@/core/theme/theme-context';
-import { ThemeToggle } from '@/core/theme/ThemeToggle';
 import type { Palette } from '@/core/theme/palettes';
-import { LogoutButton } from '@/features/auth/LogoutButton';
 import { useProfile } from '@/features/profile/use-profile';
 import { SummaryCard } from '@/features/dashboard/SummaryCard';
 import { RecentTransactionItem } from '@/features/dashboard/RecentTransactionItem';
 import { PeriodSelector } from '@/features/dashboard/PeriodSelector';
 import { useDashboardSummary } from '@/features/dashboard/use-dashboard-summary';
 import type { DashboardPeriod } from '@/features/dashboard/dashboard.types';
-import { CategoryStatsSection } from '@/features/statistics/CategoryStatsSection';
-import { MonthlyStatsSection } from '@/features/statistics/MonthlyStatsSection';
 
 const PERIOD_LABELS: Record<DashboardPeriod, string> = {
   week: 'de la semaine',
@@ -31,8 +27,13 @@ export default function DashboardScreen() {
   const currency = profile?.currency ?? 'EUR';
 
   const [period, setPeriod] = useState<DashboardPeriod>('month');
-  const { data: summary, isLoading, isError, error, refetch } =
-    useDashboardSummary(period);
+  const {
+    data: summary,
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useDashboardSummary(period);
 
   return (
     <Screen scroll>
@@ -76,7 +77,7 @@ export default function DashboardScreen() {
             <View style={styles.sectionHeader}>
               <Text style={styles.sectionTitle}>Transactions récentes</Text>
               <Link href="/transactions" style={styles.link}>
-                + Ajouter
+                Voir tout
               </Link>
             </View>
             {summary.recentTransactions.length === 0 ? (
@@ -91,23 +92,8 @@ export default function DashboardScreen() {
               ))
             )}
           </Card>
-
-          <CategoryStatsSection period={period} currency={currency} />
-
-          <MonthlyStatsSection currency={currency} />
         </>
       )}
-
-      <Card>
-        <ThemeToggle />
-        <Link href="/profile" style={styles.link}>
-          Mon profil
-        </Link>
-      </Card>
-
-      <View style={styles.footer}>
-        <LogoutButton />
-      </View>
     </Screen>
   );
 }
@@ -153,8 +139,5 @@ const createStyles = (colors: Palette) =>
       fontSize: 16,
       fontWeight: '600',
       color: colors.primary,
-    },
-    footer: {
-      marginTop: 'auto',
     },
   });

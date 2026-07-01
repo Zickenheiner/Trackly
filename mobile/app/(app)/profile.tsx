@@ -5,8 +5,10 @@ import { Card } from '@/core/ui/Card';
 import { Loading } from '@/core/ui/Loading';
 import { useTheme } from '@/core/theme/theme-context';
 import type { Palette } from '@/core/theme/palettes';
+import { ThemeToggle } from '@/core/theme/ThemeToggle';
 import { ProfileForm } from '@/features/profile/ProfileForm';
 import { useProfile } from '@/features/profile/use-profile';
+import { LogoutButton } from '@/features/auth/LogoutButton';
 
 export default function ProfileScreen() {
   const { colors } = useTheme();
@@ -36,6 +38,14 @@ export default function ProfileScreen() {
         </View>
         <ProfileForm profile={profile} />
       </Card>
+
+      <Card>
+        <ThemeToggle />
+      </Card>
+
+      <View style={styles.footer}>
+        <LogoutButton />
+      </View>
     </Screen>
   );
 }
@@ -62,5 +72,8 @@ const createStyles = (colors: Palette) =>
     error: {
       fontSize: 15,
       color: colors.danger,
+    },
+    footer: {
+      marginTop: 'auto',
     },
   });
