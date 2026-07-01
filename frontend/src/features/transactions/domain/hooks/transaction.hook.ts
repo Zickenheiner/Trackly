@@ -1,15 +1,41 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  keepPreviousData,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import TransactionRepositoryImpl from '../../data/repositories/transaction.repository.impl';
 import type {
   CreateTransactionRequestDto,
   UpdateTransactionRequestDto,
 } from '../../data/dtos/transaction.dto';
+import type { TransactionFilters } from '../entities/transaction.entity';
 
 const repository = new TransactionRepositoryImpl();
 
 const QUERY_KEYS = {
   all: ['transactions'] as const,
+  list: (filters: TransactionFilters) =>
+    ['transactions', 'list', filters] as const,
 };
+
+export function useTransactionList(filters: TransactionFilters = {}) {
+  const { data, isLoading, isFetching, error } = useQuery({
+    queryKey: QUERY_KEYS.list(filters),
+    queryFn: () => repository.getAll(filters),
+    placeholderData: keepPreviousData,
+  });
+
+  return {
+    transactions: data?.data,
+    transactionsTotal: data?.total,
+    transactionsPage: data?.page,
+    transactionsLimit: data?.limit,
+    transactionsIsLoading: isLoading,
+    transactionsIsFetching: isFetching,
+    transactionsError: error,
+  };
+}
 
 export function useCreateTransaction() {
   const queryClient = useQueryClient();

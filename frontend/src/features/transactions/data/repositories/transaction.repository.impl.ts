@@ -1,5 +1,9 @@
 import type { TransactionRepository } from '../../domain/repositories/transaction.repository';
-import type { TransactionEntity } from '../../domain/entities/transaction.entity';
+import type {
+  TransactionEntity,
+  TransactionFilters,
+  TransactionListResult,
+} from '../../domain/entities/transaction.entity';
 import type {
   CreateTransactionRequestDto,
   UpdateTransactionRequestDto,
@@ -12,6 +16,11 @@ class TransactionRepositoryImpl implements TransactionRepository {
     private readonly transactionApi: TransactionApi = new TransactionApi(),
     private readonly transactionMapper: TransactionMapper = new TransactionMapper(),
   ) {}
+
+  async getAll(filters?: TransactionFilters): Promise<TransactionListResult> {
+    const dto = await this.transactionApi.getAll(filters);
+    return this.transactionMapper.toListResult(dto);
+  }
 
   async create(data: CreateTransactionRequestDto): Promise<TransactionEntity> {
     const dto = await this.transactionApi.create(data);

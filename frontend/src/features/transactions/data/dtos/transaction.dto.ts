@@ -34,3 +34,19 @@ export interface TransactionResponseDto {
   date: string;
   createdAt: string;
 }
+
+export interface GetTransactionsQueryDto {
+  type?: TransactionType;
+  categoryId?: string;
+  startDate?: string;
+  endDate?: string;
+  page?: number;
+  limit?: number;
+}
+
+export interface GetTransactionsResponseDto {
+  data: TransactionResponseDto[];
+  total: number;
+  page: number;
+  limit: number;
+}
