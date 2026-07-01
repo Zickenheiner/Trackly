@@ -1,8 +1,19 @@
-import { CreateTransactionDto } from '@features/transactions/domains/dtos/transaction.dto';
+import {
+  CreateTransactionDto,
+  UpdateTransactionDto,
+} from '@features/transactions/domains/dtos/transaction.dto';
 import { TransactionEntity } from '@features/transactions/domains/entities/transaction.entity';
 import { ITransactionService } from '@features/transactions/interfaces/services/transaction.iservice';
-import { Body, Controller, Inject, Post, Req } from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  Inject,
+  Param,
+  Patch,
+  Post,
+  Req,
+} from '@nestjs/common';
+import { ApiBody, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
 
 @Controller('transactions')
 export class TransactionController {
@@ -43,5 +54,50 @@ export class TransactionController {
     @Req() req: { user: { sub: string } },
   ) {
     return this.transactionService.create(dto, req.user.sub);
+  }
+
+  @ApiOperation({
+    summary: 'Update a transaction',
+    description:
+      'Update an existing transaction owned by the authenticated user',
+  })
+  @ApiParam({
+    name: 'id',
+    type: String,
+    description: 'The unique identifier of the transaction to update',
+  })
+  @ApiBody({
+    type: UpdateTransactionDto,
+    description: 'The data to update the transaction',
+    required: true,
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Transaction updated',
+    type: TransactionEntity,
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Validation failed',
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthenticated',
+  })
+  @ApiResponse({
+    status: 403,
+    description: 'Transaction belongs to another user',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Transaction not found',
+  })
+  @Patch(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() dto: UpdateTransactionDto,
+    @Req() req: { user: { sub: string } },
+  ) {
+    return this.transactionService.update(id, dto, req.user.sub);
   }
 }
