@@ -7,6 +7,7 @@ import { TextField } from '@/core/ui/TextField';
 import { ApiError } from '@/core/api/api-error';
 import { useTheme } from '@/core/theme/theme-context';
 import type { Palette } from '@/core/theme/palettes';
+import { ColorPicker } from './ColorPicker';
 import { useCreateCategory } from './use-create-category';
 import { useUpdateCategory } from './use-update-category';
 import { categoryFormSchema, type CategoryFormValues } from './category.schema';
@@ -47,7 +48,7 @@ export function CategoryForm({
     defaultValues: {
       name: category?.name ?? '',
       icon: category?.icon ?? '',
-      color: category?.color ?? '',
+      color: category?.color ?? '#615fff',
     },
   });
 
@@ -98,14 +99,11 @@ export function CategoryForm({
       <Controller
         control={control}
         name="color"
-        render={({ field: { value, onChange, onBlur } }) => (
-          <TextField
+        render={({ field: { value, onChange } }) => (
+          <ColorPicker
             label="Couleur"
-            placeholder="#RRGGBB"
             value={value}
-            onChangeText={onChange}
-            onBlur={onBlur}
-            autoCapitalize="none"
+            onChange={onChange}
             error={errors.color?.message}
           />
         )}
