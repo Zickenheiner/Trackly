@@ -3,6 +3,8 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AuthProvider } from '@/core/auth/auth-context';
+import { LockProvider } from '@/core/auth/lock-context';
+import { BiometricGate } from '@/core/auth/BiometricGate';
 import { queryClient } from '@/core/query/query-client';
 import { ThemeProvider, useTheme } from '@/core/theme/theme-context';
 
@@ -17,8 +19,11 @@ export default function RootLayout() {
       <ThemeProvider>
         <QueryClientProvider client={queryClient}>
           <AuthProvider>
-            <ThemedStatusBar />
-            <Stack screenOptions={{ headerShown: false }} />
+            <LockProvider>
+              <ThemedStatusBar />
+              <Stack screenOptions={{ headerShown: false }} />
+              <BiometricGate />
+            </LockProvider>
           </AuthProvider>
         </QueryClientProvider>
       </ThemeProvider>

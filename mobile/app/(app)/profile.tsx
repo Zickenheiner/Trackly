@@ -6,6 +6,7 @@ import { Loading } from '@/core/ui/Loading';
 import { useTheme } from '@/core/theme/theme-context';
 import type { Palette } from '@/core/theme/palettes';
 import { ThemeToggle } from '@/core/theme/ThemeToggle';
+import { BiometricToggle } from '@/core/auth/BiometricToggle';
 import { ProfileForm } from '@/features/profile/ProfileForm';
 import { useProfile } from '@/features/profile/use-profile';
 import { LogoutButton } from '@/features/auth/LogoutButton';
@@ -41,6 +42,10 @@ export default function ProfileScreen() {
 
       <Card>
         <ThemeToggle />
+      </Card>
+
+      <Card>
+        <BiometricToggle />
       </Card>
 
       <View style={styles.footer}>

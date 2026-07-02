@@ -33,7 +33,13 @@
     },
     "plugins": [
       "expo-router",
-      "expo-secure-store"
+      "expo-secure-store",
+      [
+        "expo-local-authentication",
+        {
+          "faceIDPermission": "Trackly utilise Face ID pour déverrouiller l'application."
+        }
+      ]
     ],
     "extra": {
       "router": {},
